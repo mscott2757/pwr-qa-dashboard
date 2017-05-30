@@ -6,15 +6,7 @@ class Test < ApplicationRecord
   has_many :test_application_tags
   has_many :application_tags, :through => :test_application_tags
 
-  def json_object
-    response = HTTParty.get("#{job_url}/api/json?")
-    response.parsed_response
-  end
-
-  def json_object_with_tree(tree_attr)
-    response = HTTParty.get("#{job_url}/api/json?tree=#{tree_attr}")
-  end
-
+  belongs_to :environment_tag
 
   def self.base_url
     "http://ci.powerreviews.io/job/qa-tests/view/All/"
@@ -49,9 +41,9 @@ class Test < ApplicationRecord
       # resolve job url
       test.job_url = URI.join(base_url, tds[2].css('a')[0]["href"]).to_s
 
-      # figure out what applications are relevant to this test
-      test_json = test.json_object_with_tree("description")
-      test_json["description"].split(',').each do | app_tag |
+      # figure out what applications would cause this test to fail
+      test_json = test.json_object_with_tree("description,lastCompletedBuild[url,number")
+      test_json["description"].split(',').each do | app_name |
         if ApplicationTag.exists?(name: app_name )
           app_tag = ApplicationTag.where(name: app_name).first
         else
@@ -59,6 +51,22 @@ class Test < ApplicationRecord
         end
 
         test.application_tags << app_tag
+      end
+
+      # figure out what environment this test is running in
+      env_name = "dev" # need to figure out how to get the environment..
+      if EnvironmentTag.exists?(name: env_name)
+        env_tag = EnvironmentTag.where(name: env_name).first
+      else
+        env_tag = EnvironmentTag.create(name: env_name)
+      end
+
+      if env_tag != test.environment_tag
+        if !test.environment_tag.nil?
+          test.environment_tag.tests.delete(test)
+        end
+
+        env_tag.tests << test
       end
 
       # last successful build
@@ -81,4 +89,35 @@ class Test < ApplicationRecord
       test.save! if test.changed?
     end
   end
+
+  def json_object
+    response = HTTParty.get("#{job_url}/api/json?")
+    response.parsed_response
+  end
+
+  def json_object_with_tree(tree_attr)
+    response = HTTParty.get("#{job_url}/api/json?tree=#{tree_attr}")
+    response.parsed_response
+  end
+
+  def in_progress?
+    self.status == "In progress"
+  end
+
+  def passing?
+    self.status == "Success"
+  end
+
+  def failing?
+    self.status == "Failed"
+  end
+
+  def not_built?
+    self.status == "Not built"
+  end
+
+  def disabled?
+    self.status == "Disabled"
+  end
+
 end

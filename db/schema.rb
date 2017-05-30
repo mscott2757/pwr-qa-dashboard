@@ -10,9 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170530170348) do
+ActiveRecord::Schema.define(version: 20170530185500) do
 
   create_table "application_tags", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "environment_tags", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -38,6 +44,7 @@ ActiveRecord::Schema.define(version: 20170530170348) do
     t.datetime "last_failed_build"
     t.string "last_failed_build_url"
     t.integer "last_duration"
+    t.integer "environment_tag_id"
   end
 
 end
