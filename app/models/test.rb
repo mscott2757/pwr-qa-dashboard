@@ -13,7 +13,7 @@ class Test < ApplicationRecord
   end
 
   def self.parse_all_tests
-    response = HTTParty.get("#{base_url}/api/json?")
+    response = HTTParty.get("#{base_url}/api/json?tree=jobs[name,url]")
     response = response.parsed_response
 
     response["jobs"].first(10).each do |job|
@@ -26,9 +26,9 @@ class Test < ApplicationRecord
       end
 
       test.job_url = job["url"]
-
-      # figure out what applications would cause this test to fail
       test_json = test.json_object_with_tree("description,color,healthReport[*],lastBuild[url,number],lastSuccessfulBuild[url,number],lastFailedBuild[url,number]")
+
+      # figure out what applications this test is related to
       test_json["description"].split(',').each do | app_name |
         if ApplicationTag.exists?(name: app_name )
           app_tag = ApplicationTag.where(name: app_name).first
@@ -95,23 +95,27 @@ class Test < ApplicationRecord
   end
 
   def in_progress?
-    self.status == "In progress"
+    self.status.inlcude?("anime")
   end
 
   def passing?
-    self.status == "Success"
+    self.status == "blue"
   end
 
   def failing?
-    self.status == "Failed"
+    self.status == "red"
   end
 
   def not_built?
-    self.status == "Not built"
+    self.status == "notbuilt"
+  end
+
+  def aborted?
+    self.status == "aborted"
   end
 
   def disabled?
-    self.status == "Disabled"
+    self.status == "disabled"
   end
 
 end
