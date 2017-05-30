@@ -13,11 +13,11 @@ class Test < ApplicationRecord
   end
 
   def self.parse_all_tests
-    doc = Nokogiri::HTML(open(base_url))
-    doc.css('tr[id^="job_"]').first(10).each do |tr|
-      name = tr["id"]
-      name.slice!("job_")
+    response = HTTParty.get("#{base_url}/api/json?")
+    response = response.parsed_response
 
+    response["jobs"].first(10).each do |job|
+      name = job["name"]
       if Test.exists?(name: name)
         test = Test.where(name: name).first
       else
@@ -25,24 +25,10 @@ class Test < ApplicationRecord
         test.name = name
       end
 
-      tds = tr.xpath('./td')
-      test.status = tds[0].css('img')[0]["alt"]
-
-      # resolve last build url
-      if !tds[1].css('a').empty?
-        test.last_build_url = URI.join(base_url, tds[1].css('a')[0]["href"]).to_s
-      end
-
-      # get health report score
-      if tds[1]["data"]
-        test.health_report = tds[1]["data"].to_i
-      end
-
-      # resolve job url
-      test.job_url = URI.join(base_url, tds[2].css('a')[0]["href"]).to_s
+      test.job_url = job["url"]
 
       # figure out what applications would cause this test to fail
-      test_json = test.json_object_with_tree("description,lastCompletedBuild[url,number")
+      test_json = test.json_object_with_tree("description,color,healthReport[*],lastBuild[url,number],lastSuccessfulBuild[url,number],lastFailedBuild[url,number]")
       test_json["description"].split(',').each do | app_name |
         if ApplicationTag.exists?(name: app_name )
           app_tag = ApplicationTag.where(name: app_name).first
@@ -51,6 +37,19 @@ class Test < ApplicationRecord
         end
 
         test.application_tags << app_tag
+      end
+
+      # last build information
+      if test_json["lastBuild"]
+        test.last_build = test_json["lastBuild"]["number"]
+        test.last_build_url = test_json["lastBuild"]["url"]
+      end
+
+      test.status = test_json["color"]
+
+      # get health score
+      if test_json["healthReport"] and test_json["healthReport"][0]
+        test.health_report = test_json["healthReport"][0]["score"]
       end
 
       # figure out what environment this test is running in
@@ -70,20 +69,15 @@ class Test < ApplicationRecord
       end
 
       # last successful build
-      if tds[3]["data"] != "-"
-        test.last_successful_build = Time.parse(tds[3]["data"])
-        test.last_successful_build_url = URI.join(base_url, tds[3].css('a')[0]["href"]).to_s
+      if test_json["lastSuccessfulBuild"]
+        test.last_successful_build = test_json["lastSuccessfulBuild"]["number"]
+        test.last_successful_build_url = test_json["lastSuccessfulBuild"]["url"]
       end
 
       # last failed build
-      if tds[4]["data"] != "-"
-        test.last_failed_build = Time.parse(tds[4]["data"])
-        test.last_failed_build_url = URI.join(base_url, tds[4].css('a')[0]["href"]).to_s
-      end
-
-      # duration
-      if tds[5]["data"].to_i > 0
-        test.last_duration = tds[5]["data"].to_i/1000
+      if test_json["lastFailedBuild"]
+        test.last_failed_build = test_json["lastFailedBuild"]["number"]
+        test.last_failed_build_url = test_json["lastFailedBuild"]["url"]
       end
 
       test.save! if test.changed?

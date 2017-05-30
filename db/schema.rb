@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170530185500) do
+ActiveRecord::Schema.define(version: 20170530195005) do
 
   create_table "application_tags", force: :cascade do |t|
     t.string "name"
@@ -39,12 +39,12 @@ ActiveRecord::Schema.define(version: 20170530185500) do
     t.string "last_build_url"
     t.integer "health_report"
     t.string "job_url"
-    t.datetime "last_successful_build"
+    t.integer "last_successful_build"
     t.string "last_successful_build_url"
-    t.datetime "last_failed_build"
+    t.integer "last_failed_build"
     t.string "last_failed_build_url"
-    t.integer "last_duration"
     t.integer "environment_tag_id"
+    t.integer "last_build"
   end
 
 end
