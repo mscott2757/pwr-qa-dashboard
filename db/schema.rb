@@ -10,7 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170526194401) do
+ActiveRecord::Schema.define(version: 20170530170348) do
+
+  create_table "application_tags", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "test_application_tags", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "test_id"
+    t.integer "application_tag_id"
+  end
 
   create_table "tests", force: :cascade do |t|
     t.string "name"
