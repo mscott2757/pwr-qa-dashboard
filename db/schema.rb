@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20170530195005) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "status"
+    t.string "author"
     t.integer "health_report"
     t.string "job_url"
     t.integer "last_successful_build"

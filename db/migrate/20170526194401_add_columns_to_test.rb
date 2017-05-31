@@ -3,6 +3,7 @@ class AddColumnsToTest < ActiveRecord::Migration[5.1]
     add_column :tests, :status, :string
     add_column :tests, :health_report, :integer
     add_column :tests, :job_url, :string
+    add_column :tests, :author, :string
     add_column :tests, :last_successful_build, :integer
     add_column :tests, :last_failed_build, :integer
   end

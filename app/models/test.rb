@@ -6,7 +6,7 @@ class Test < ApplicationRecord
   has_many :test_application_tags
   has_many :application_tags, :through => :test_application_tags
 
-  belongs_to :environment_tag
+  belongs_to :environment_tag, optional: true
 
   def self.base_url
     "http://ci.powerreviews.io/job/qa-tests/view/All/"
@@ -64,22 +64,31 @@ class Test < ApplicationRecord
       end
 
       # figure out what environment this test is running in
-      last_build_json = HTTParty.get("#{test.last_build_url}/api/json?tree=actions[*[*]]")
+      last_build_json = HTTParty.get("#{test.last_build_url}/api/json?tree=actions[causes[userName],parameters[value]]")
       last_build_json = last_build_json.parsed_response
 
-      env_name = "dev" # need to figure out how to get the environment..
-      if EnvironmentTag.exists?(name: env_name)
-        env_tag = EnvironmentTag.where(name: env_name).first
-      else
-        env_tag = EnvironmentTag.create(name: env_name)
-      end
+      last_build_json["actions"].each do |action|
+        if action["parameters"]
+          env_name = action["parameters"][0]["value"]
+          if EnvironmentTag.exists?(name: env_name)
+            env_tag = EnvironmentTag.where(name: env_name).first
+          else
+            env_tag = EnvironmentTag.create(name: env_name)
+          end
 
-      if env_tag != test.environment_tag
-        if !test.environment_tag.nil?
-          test.environment_tag.tests.delete(test)
+          env_tag.tests << test
+          #if env_tag != test.environment_tag
+          #  if !test.environment_tag.nil?
+          #    test.environment_tag.tests.delete(test)
+          #  end
+
+          #  env_tag.tests << test
+          #end
         end
 
-        env_tag.tests << test
+        if action["causes"]
+          author = action["causes"][0]["userName"]
+        end
       end
 
       test.save!
