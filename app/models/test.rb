@@ -16,7 +16,7 @@ class Test < ApplicationRecord
     response = HTTParty.get("#{base_url}/api/json?tree=jobs[name,url]")
     response = response.parsed_response
 
-    response["jobs"].first(10).each do |job|
+    response["jobs"].each do |job|
       name = job["name"]
       if Test.exists?(name: name)
         test = Test.where(name: name).first
@@ -42,7 +42,6 @@ class Test < ApplicationRecord
       # last build information
       if test_json["lastBuild"]
         test.last_build = test_json["lastBuild"]["number"]
-        test.last_build_url = test_json["lastBuild"]["url"]
       end
 
       test.status = test_json["color"]
@@ -51,6 +50,9 @@ class Test < ApplicationRecord
       if test_json["healthReport"] and test_json["healthReport"][0]
         test.health_report = test_json["healthReport"][0]["score"]
       end
+
+      last_build_json = HTTParty.get("#{test.last_build_url}/api/json?tree=actions[*[*]]")
+      last_build_json = last_build_json.parsed_response
 
       # figure out what environment this test is running in
       env_name = "dev" # need to figure out how to get the environment..
@@ -71,13 +73,11 @@ class Test < ApplicationRecord
       # last successful build
       if test_json["lastSuccessfulBuild"]
         test.last_successful_build = test_json["lastSuccessfulBuild"]["number"]
-        test.last_successful_build_url = test_json["lastSuccessfulBuild"]["url"]
       end
 
       # last failed build
       if test_json["lastFailedBuild"]
         test.last_failed_build = test_json["lastFailedBuild"]["number"]
-        test.last_failed_build_url = test_json["lastFailedBuild"]["url"]
       end
 
       test.save! if test.changed?
@@ -92,6 +92,18 @@ class Test < ApplicationRecord
   def json_object_with_tree(tree_attr)
     response = HTTParty.get("#{job_url}/api/json?tree=#{tree_attr}")
     response.parsed_response
+  end
+
+  def last_build_url
+    "#{job_url}/#{last_build}"
+  end
+
+  def last_successful_build_url
+    "#{job_url}/#{last_successful_build}"
+  end
+
+  def last_failed_build_url
+    "#{job_url}/#{last_failed_build}"
   end
 
   def in_progress?

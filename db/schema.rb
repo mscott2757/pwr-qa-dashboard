@@ -36,13 +36,10 @@ ActiveRecord::Schema.define(version: 20170530195005) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "status"
-    t.string "last_build_url"
     t.integer "health_report"
     t.string "job_url"
     t.integer "last_successful_build"
-    t.string "last_successful_build_url"
     t.integer "last_failed_build"
-    t.string "last_failed_build_url"
     t.integer "environment_tag_id"
     t.integer "last_build"
   end
