@@ -13,20 +13,44 @@ class Test < ApplicationRecord
   end
 
   def self.parse_all_tests
-    response = HTTParty.get("#{base_url}/api/json?tree=jobs[name,url]")
-    response = response.parsed_response
+    jobs_json = HTTParty.get("#{base_url}/api/json?tree=jobs[name,url]")
+    jobs_json = jobs_json.parsed_response
 
-    response["jobs"].each do |job|
+    jobs_json["jobs"].each do |job|
       name = job["name"]
       if Test.exists?(name: name)
         test = Test.where(name: name).first
       else
-        test = Test.new
-        test.name = name
+        test = Test.new(name: name, job_url: job["url"])
       end
 
-      test.job_url = job["url"]
-      test_json = test.json_object_with_tree("description,color,healthReport[*],lastBuild[url,number],lastSuccessfulBuild[url,number],lastFailedBuild[url,number]")
+      test_json = test.json_object_with_tree("description,color,healthReport[*],lastBuild[number],lastSuccessfulBuild[number],lastFailedBuild[number]")
+      # last build information
+      if test_json["lastBuild"]
+        # jump to next test if no new build
+        if !test.last_build.nil? and test.last_build == test_json["lastBuild"]["number"]
+          next
+        end
+        test.last_build = test_json["lastBuild"]["number"]
+      end
+
+      # last successful build
+      if test_json["lastSuccessfulBuild"]
+        test.last_successful_build = test_json["lastSuccessfulBuild"]["number"]
+      end
+
+      # last failed build
+      if test_json["lastFailedBuild"]
+        test.last_failed_build = test_json["lastFailedBuild"]["number"]
+      end
+
+      # get health score
+      if test_json["healthReport"] and test_json["healthReport"][0]
+        test.health_report = test_json["healthReport"][0]["score"]
+      end
+
+      # get status of test
+      test.status = test_json["color"]
 
       # figure out what applications this test is related to
       test_json["description"].split(',').each do | app_name |
@@ -39,22 +63,10 @@ class Test < ApplicationRecord
         test.application_tags << app_tag
       end
 
-      # last build information
-      if test_json["lastBuild"]
-        test.last_build = test_json["lastBuild"]["number"]
-      end
-
-      test.status = test_json["color"]
-
-      # get health score
-      if test_json["healthReport"] and test_json["healthReport"][0]
-        test.health_report = test_json["healthReport"][0]["score"]
-      end
-
+      # figure out what environment this test is running in
       last_build_json = HTTParty.get("#{test.last_build_url}/api/json?tree=actions[*[*]]")
       last_build_json = last_build_json.parsed_response
 
-      # figure out what environment this test is running in
       env_name = "dev" # need to figure out how to get the environment..
       if EnvironmentTag.exists?(name: env_name)
         env_tag = EnvironmentTag.where(name: env_name).first
@@ -70,17 +82,7 @@ class Test < ApplicationRecord
         env_tag.tests << test
       end
 
-      # last successful build
-      if test_json["lastSuccessfulBuild"]
-        test.last_successful_build = test_json["lastSuccessfulBuild"]["number"]
-      end
-
-      # last failed build
-      if test_json["lastFailedBuild"]
-        test.last_failed_build = test_json["lastFailedBuild"]["number"]
-      end
-
-      test.save! if test.changed?
+      test.save!
     end
   end
 
