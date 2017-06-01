@@ -6,6 +6,7 @@ class Test < ApplicationRecord
   has_many :test_application_tags
   has_many :application_tags, :through => :test_application_tags
 
+  belongs_to :primary_app, class_name: "ApplicationTag", foreign_key: "primary_app_id", optional: true
   belongs_to :environment_tag, optional: true
 
   def self.base_url
@@ -24,11 +25,11 @@ class Test < ApplicationRecord
         test = Test.new(name: name, job_url: job["url"])
       end
 
-      test_json = test.json_object_with_tree("description,color,healthReport[*],lastBuild[number],lastSuccessfulBuild[number],lastFailedBuild[number]")
+      test_json = test.json_object_with_tree("description,color,healthReport[score],lastBuild[number],lastSuccessfulBuild[number],lastFailedBuild[number]")
       # last build information
       if test_json["lastBuild"]
         # jump to next test if no new build
-        if !test.last_build.nil? and test.last_build == test_json["lastBuild"]["number"]
+        if test.last_build and test.last_build == test_json["lastBuild"]["number"]
           next
         end
         test.last_build = test_json["lastBuild"]["number"]
@@ -54,12 +55,7 @@ class Test < ApplicationRecord
 
       # figure out what applications this test is related to
       test_json["description"].split(',').each do | app_name |
-        if ApplicationTag.exists?(name: app_name )
-          app_tag = ApplicationTag.where(name: app_name).first
-        else
-          app_tag = ApplicationTag.create(name: app_name)
-        end
-
+        app_tag = ApplicationTag.find_by_name(app_name)
         test.application_tags << app_tag
       end
 
@@ -70,13 +66,9 @@ class Test < ApplicationRecord
       last_build_json["actions"].each do |action|
         if action["parameters"]
           env_name = action["parameters"][0]["value"]
-          if EnvironmentTag.exists?(name: env_name)
-            env_tag = EnvironmentTag.where(name: env_name).first
-          else
-            env_tag = EnvironmentTag.create(name: env_name)
-          end
-
+          env_tag = EnvironmentTag.find_by_name(env_name)
           env_tag.tests << test
+
           #if env_tag != test.environment_tag
           #  if !test.environment_tag.nil?
           #    test.environment_tag.tests.delete(test)
@@ -84,10 +76,6 @@ class Test < ApplicationRecord
 
           #  env_tag.tests << test
           #end
-        end
-
-        if action["causes"]
-          author = action["causes"][0]["userName"]
         end
       end
 
