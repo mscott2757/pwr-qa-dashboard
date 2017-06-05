@@ -17,12 +17,12 @@ class Test < ApplicationRecord
     jobs_json = HTTParty.get("#{base_url}/api/json?tree=jobs[name,url]")
     jobs_json = jobs_json.parsed_response
 
-    jobs_json["jobs"].first(10).each do |job|
+    jobs_json["jobs"].each do |job|
       name = job["name"]
-      if Test.exists?(name: name)
-        test = Test.where(name: name).first
+      if exists?(name: name)
+        test = where(name: name).first
       else
-        test = Test.new(name: name, job_url: job["url"])
+        test = new(name: name, job_url: job["url"])
       end
 
       test_json = test.json_tree("color,lastBuild[number],lastSuccessfulBuild[number],lastFailedBuild[number]")
@@ -42,19 +42,11 @@ class Test < ApplicationRecord
         test.last_build_time = Time.at(last_build_json["timestamp"]).to_datetime
 
         last_build_json["actions"].each do |action|
-          if action["parameters"]
-            env_name = action["parameters"][0]["value"]
-            env_tag = EnvironmentTag.find_by_name(env_name)
-            env_tag.tests << test
-
-            #if env_tag != test.environment_tag
-            #  if !test.environment_tag.nil?
-            #    test.environment_tag.tests.delete(test)
-            #  end
-
-            #  env_tag.tests << test
-            #end
-          end
+          # if action["parameters"]
+          #   env_name = action["parameters"][0]["value"]
+          #   env_tag = EnvironmentTag.find_by_name(env_name)
+          #   env_tag.tests << test
+          # end
 
           if action["causes"]
             test.author = action["causes"][0]["userName"]
