@@ -3,8 +3,8 @@ require 'nokogiri'
 require 'open-uri'
 
 class Test < ApplicationRecord
-  has_many :test_application_tags
-  has_many :application_tags, :through => :test_application_tags
+  has_many :test_application_tags, dependent: :destroy
+  has_many :application_tags, -> { distinct }, through: :test_application_tags
 
   belongs_to :primary_app, class_name: "ApplicationTag", foreign_key: "primary_app_id", optional: true
   belongs_to :environment_tag, optional: true

@@ -1,6 +1,6 @@
 class ApplicationTag < ApplicationRecord
-  has_many :test_application_tags
-  has_many :tests, :through => :test_application_tags
+  has_many :test_application_tags, dependent: :destroy
+  has_many :tests, -> { distinct }, through: :test_application_tags
 
   has_many :primary_tests, class_name: "Test", foreign_key: "primary_app_id"
 

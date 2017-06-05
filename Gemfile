@@ -34,6 +34,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 gem 'httparty'
 gem 'react-rails', '~> 1.0'
+gem 'jquery-rails'
 gem 'bootstrap-sass', '~> 3.3.4'
 
 group :development, :test do

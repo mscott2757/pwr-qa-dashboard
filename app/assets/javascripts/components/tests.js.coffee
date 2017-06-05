@@ -5,6 +5,11 @@
   getDefaultProps: ->
     tests: []
 
+  updateTest: (test, data) ->
+    index = @state.tests.indexOf test
+    tests = React.addons.update(@state.tests, {$splice: [[index, 1, data]] })
+    @replaceState tests: tests
+
   render: ->
     React.DOM.div
       className: 'tests'
@@ -18,5 +23,5 @@
             React.DOM.th null, 'Indirect Applications'
         React.DOM.tbody null,
           for test in @state.tests
-            React.createElement EditTest, key: test.id, test: test
+            React.createElement EditTest, key: test.id, test: test, handleEditRecord: @updateTest
 
