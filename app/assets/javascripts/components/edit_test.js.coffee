@@ -2,6 +2,10 @@
   getInitialState: ->
     edit: false
 
+  getDefaultProps: ->
+    applications: []
+    environments: []
+
   applicationTagsFormat: ->
     app_tag_names = @props.test.application_tags.map (app_tag) -> app_tag.name
     app_tag_names.join()
@@ -68,17 +72,26 @@
             onClick: @handleToggle
             'cancel'
       React.DOM.td null,
-        React.DOM.input
+        React.DOM.select
           className: 'form-control'
-          type: 'text'
           defaultValue: @props.test.primary_app.name if "primary_app" of @props.test
           ref: 'primary_app'
+          for app_tag in @props.applications
+            React.DOM.option
+              key: app_tag.id
+              value: app_tag.name
+              app_tag.name
       React.DOM.td null,
-        React.DOM.input
+        React.DOM.select
           className: 'form-control'
           type: 'text'
           defaultValue: @props.test.environment_tag.name if "environment_tag" of @props.test
           ref: 'environment_tag'
+          for env_tag in @props.environments
+            React.DOM.option
+              key: env_tag.id
+              value: env_tag.name
+              env_tag.name
       React.DOM.td null,
         React.DOM.input
           className: 'form-control'

@@ -4,6 +4,8 @@
 
   getDefaultProps: ->
     tests: []
+    applications: []
+    environments: []
 
   updateTest: (test, data) ->
     index = @state.tests.indexOf test
@@ -23,5 +25,5 @@
             React.DOM.th null, 'Indirect Applications'
         React.DOM.tbody null,
           for test in @state.tests
-            React.createElement EditTest, key: test.id, test: test, handleEditRecord: @updateTest
+            React.createElement EditTest, key: test.id, test: test, handleEditRecord: @updateTest, applications: @props.applications, environments: @props.environments
 
