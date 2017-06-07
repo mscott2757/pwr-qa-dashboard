@@ -92,7 +92,7 @@
         React.DOM.div
           className: "edit-test-toggle"
           React.DOM.a
-            className: 'btn btn-default btn-sm'
+            className: 'btn btn-default btn-sm edit-test-update'
             onClick: @handleEdit
             'update'
           React.DOM.a

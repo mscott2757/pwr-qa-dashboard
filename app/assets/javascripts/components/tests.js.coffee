@@ -22,9 +22,8 @@
     React.DOM.div
       className: 'tests'
       React.createElement AppForm, handleNewApp: @addApp
-      React.DOM.hr null
       React.DOM.table
-        className: 'table table-bordered'
+        className: 'table table-bordered edit-test-table'
         React.DOM.thead null,
           React.DOM.tr null,
             React.DOM.th null, 'Test'

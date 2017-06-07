@@ -16,3 +16,40 @@
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+body {
+  background-color: #f1f1f1;
+}
+
+a.navbar-brand {
+  padding-top: 3px;
+}
+
+a.navbar-brand > img {
+  height: 45px;
+  width: auto;
+}
+
+#qa-navbar {
+  margin: 0;
+  background-color: #222;
+  border-radius: 0;
+}
+
+#qa-navbar-nav > li >  a {
+  color: #ffffff;
+}
+
+
+#qa-header {
+  margin-top: 0;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  height: 100px;
+}
+
+#qa-container {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}

@@ -2,15 +2,27 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.tests {
+	margin: 0 auto;
+	width: 75%;
+}
 .edit-test-name {
   float: left;
-  width: 70%;
+  width: 65%;
 }
 
 .edit-test-toggle {
   float: right;
   text-align: right;
-  width: 30%;
+  width: 35%;
+}
+
+.edit-test-update {
+	margin-right: 8px;
+}
+
+.edit-test-table {
+	background-color: #ffffff;
 }
 
 .ui-autocomplete {
