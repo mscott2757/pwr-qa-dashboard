@@ -10,6 +10,34 @@
     app_tag_names = @props.test.application_tags.map (app_tag) -> app_tag.name
     app_tag_names.join()
 
+  bindAutocomplete: ->
+    appNames = @props.applications.map (app) -> app.name
+    testID = @props.test.id
+    $ ->
+      split = (val) ->
+        val.split( /,\s*/ )
+
+      extractLast = (term) ->
+        split(term).pop()
+
+      $("#tags-#{ testID }").on("keydown", (e) ->
+          if e.keyCode == $.ui.keyCode.TAB and $(this).autocomplete("instance").menu.active
+            e.preventDefault()
+        ).autocomplete
+          minLength: 0
+          source: (request, response) ->
+            response $.ui.autocomplete.filter(appNames, extractLast(request.term))
+            return
+          focus: ->
+            false
+          select: (e, ui) ->
+            terms = split(this.value)
+            terms.pop()
+            terms.push ui.item.value
+            terms.push ''
+            this.value = terms.join(",")
+            false
+
   handleToggle: (e) ->
     e.preventDefault()
     @setState edit: !@state.edit
@@ -93,11 +121,14 @@
               value: env_tag.name
               env_tag.name
       React.DOM.td null,
-        React.DOM.input
-          className: 'form-control'
-          type: 'text'
-          defaultValue: @applicationTagsFormat()
-          ref: 'application_tags'
+        React.DOM.div
+          className: 'ui-widget'
+          React.DOM.input
+            className: 'form-control'
+            ref: 'application_tags'
+            defaultValue: @applicationTagsFormat()
+            onFocus: @bindAutocomplete
+            id: "tags-#{ @props.test.id }"
 
   render: ->
     if @state.edit

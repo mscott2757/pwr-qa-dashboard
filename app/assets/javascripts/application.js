@@ -12,6 +12,7 @@
 //
 //= require rails-ujs
 //= require jquery
+//= require jquery-ui/widgets/autocomplete
 //= require jquery_ujs
 //= require turbolinks
 //= require react
