@@ -11,4 +11,8 @@ class EnvironmentTag < ApplicationRecord
     return env_tag
   end
 
+  def self.all_as_json
+    EnvironmentTag.all.as_json(only: [:id, :name])
+  end
+
 end

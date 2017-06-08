@@ -1,0 +1,15 @@
+<%= render partial: '/layouts/header', locals: { title: ApplicationTag.page_title(@method) } %>
+
+<div class="app-body">
+  <% @applications.each_slice(3) do |app_row| %>
+    <div class="row">
+      <% app_row.each do |app| %>
+        <div class="col-sm-4" id="app-summary-col">
+          <div class="app-summary-container">
+            <h3><%= app.name %></h3>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

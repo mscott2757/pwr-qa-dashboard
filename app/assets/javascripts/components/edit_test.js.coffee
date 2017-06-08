@@ -9,7 +9,7 @@
 
   applicationTagsFormat: ->
     app_tag_names = @props.test.application_tags.map (app_tag) -> app_tag.name
-    app_tag_names.join()
+    app_tag_names.join(', ')
 
   bindAutocomplete: ->
     appNames = @props.applications.map (app) -> app.name
@@ -36,7 +36,7 @@
             terms.pop()
             terms.push ui.item.value
             terms.push ''
-            this.value = terms.join(",")
+            this.value = terms.join(", ")
             false
 
   handleToggle: (e) ->

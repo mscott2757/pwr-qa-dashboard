@@ -1,7 +1,2 @@
-<div class="page-header" id="qa-header">
-	<div class="page-title">
-		<h2>Settings</h2>
-	</div>
-</div>
-
+<%= render partial: '/layouts/header', locals: { title: "Settings" } %>
 <%= react_component 'Tests', { data: @tests, applications: @applications, environments: @environments } %>

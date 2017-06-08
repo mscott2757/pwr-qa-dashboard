@@ -19,15 +19,16 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="#">
+          <%= link_to root_path, class: "navbar-brand" do %>
 						<img alt="PWR" src="http://www.powerreviews.com/wp-content/uploads/2017/02/PWR-Logo.png">
+          <% end %>
 					</a>
 				</div>
 
 				<div class="collapse navbar-collapse" id="qa-navbar-collapse">
 					<ul class="nav navbar-nav" id="qa-navbar-nav">
-						<li><a href="#">Applications</a></li>
-						<li><a href="#">Indirect Applications</a></li>
+            <li><%= link_to "Applications", application_tags_path %></li>
+            <li><%= link_to "Indirect Applications", application_tags_path(indirect_apps: true) %></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right" id="qa-navbar-nav">
 						<li><%= link_to "Settings", tests_path %></li>

@@ -9,6 +9,10 @@ class Test < ApplicationRecord
   belongs_to :primary_app, class_name: "ApplicationTag", foreign_key: "primary_app_id", optional: true
   belongs_to :environment_tag, optional: true
 
+  def self.edit_all_as_json
+    Test.all.includes(:primary_app, :environment_tag, :application_tags).as_json(only: [:name, :id], include: { primary_app: { only: [:name, :id] }, application_tags: { only: [:name, :id] }, environment_tag: { only: [:name, :id] } })
+  end
+
   def self.base_url
     "http://ci.powerreviews.io/job/qa-tests/view/All/"
   end
@@ -42,11 +46,11 @@ class Test < ApplicationRecord
         test.last_build_time = Time.at(last_build_json["timestamp"]).to_datetime
 
         last_build_json["actions"].each do |action|
-          # if action["parameters"]
-          #   env_name = action["parameters"][0]["value"]
-          #   env_tag = EnvironmentTag.find_by_name(env_name)
-          #   env_tag.tests << test
-          # end
+          if action["parameters"]
+            env_name = action["parameters"][0]["value"]
+            env_tag = EnvironmentTag.find_by_name(env_name)
+            env_tag.tests << test
+          end
 
           if action["causes"]
             test.author = action["causes"][0]["userName"]
