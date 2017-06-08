@@ -1,6 +1,7 @@
 @EditTest = React.createClass
   getInitialState: ->
     edit: false
+    newApp: false
 
   getDefaultProps: ->
     applications: []
@@ -41,6 +42,16 @@
   handleToggle: (e) ->
     e.preventDefault()
     @setState edit: !@state.edit
+    @setState newApp: false
+
+  handleNewAppToggle: (e) ->
+    e.preventDefault()
+    if ReactDOM.findDOMNode(@refs.primary_app).value == "+"
+      @setState newApp: true
+
+  handleCancelNewApp: (e) ->
+    e.preventDefault()
+    @setState newApp: false
 
   handleEdit: (e) ->
     e.preventDefault()
@@ -55,10 +66,11 @@
       data:
         test: data
       success: (data) =>
+        @setState newApp: false
         @setState edit: false
         @props.handleEditRecord @props.test, data
 
-  editTestRow: ->
+  testRow: ->
     React.DOM.tr null,
       React.DOM.td null,
         React.DOM.div
@@ -83,56 +95,77 @@
 
       React.DOM.td null, @applicationTagsFormat()
 
-  editTestForm: ->
-    React.DOM.tr null,
-      React.DOM.td null,
-        React.DOM.div
-          className: "edit-test-name"
-          @props.test.name
-        React.DOM.div
-          className: "edit-test-toggle"
-          React.DOM.a
-            className: 'btn btn-default btn-sm edit-test-update'
-            onClick: @handleEdit
-            'update'
-          React.DOM.a
-            className: 'btn btn-danger btn-sm'
-            onClick: @handleToggle
-            'cancel'
-      React.DOM.td null,
-        React.DOM.select
-          className: 'form-control'
-          defaultValue: @props.test.primary_app.name if "primary_app" of @props.test
-          ref: 'primary_app'
-          for app_tag in @props.applications
-            React.DOM.option
-              key: app_tag.id
-              value: app_tag.name
-              app_tag.name
-      React.DOM.td null,
-        React.DOM.select
-          className: 'form-control'
-          type: 'text'
-          defaultValue: @props.test.environment_tag.name if "environment_tag" of @props.test
-          ref: 'environment_tag'
-          for env_tag in @props.environments
-            React.DOM.option
-              key: env_tag.id
-              value: env_tag.name
-              env_tag.name
-      React.DOM.td null,
-        React.DOM.div
-          className: 'ui-widget'
-          React.DOM.input
-            className: 'form-control'
-            ref: 'application_tags'
-            defaultValue: @applicationTagsFormat()
-            onFocus: @bindAutocomplete
-            id: "tags-#{ @props.test.id }"
-
   render: ->
-    if @state.edit
-      @editTestForm()
+    if !@state.edit
+      @testRow()
     else
-      @editTestRow()
+      React.DOM.tr null,
+        React.DOM.td null,
+          React.DOM.div
+            className: "edit-test-name"
+            @props.test.name
+          React.DOM.div
+            className: "edit-test-toggle"
+            React.DOM.a
+              className: 'btn btn-default btn-sm edit-test-update'
+              onClick: @handleEdit
+              'update'
+            React.DOM.a
+              className: 'btn btn-danger btn-sm'
+              onClick: @handleToggle
+              'cancel'
+        if @state.newApp
+          React.DOM.td null,
+            React.DOM.div
+              className: 'input-group'
+              React.DOM.input
+                className: 'form-control'
+                type: 'text'
+                ref: 'primary_app'
+              React.DOM.span
+                className: 'input-group-btn'
+                React.DOM.button
+                  type: 'button'
+                  className: 'btn btn-default'
+                  onClick: @handleCancelNewApp
+                  htmlEncode('&times')
+        else
+          React.DOM.td null,
+            React.DOM.select
+              className: 'form-control'
+              defaultValue: @props.test.primary_app.name if "primary_app" of @props.test
+              onChange: @handleNewAppToggle
+              ref: 'primary_app'
+              for app_tag in @props.applications
+                React.DOM.option
+                  key: app_tag.id
+                  value: app_tag.name
+                  app_tag.name
+
+              React.DOM.option
+                key: 0
+                value: "+"
+                "new..."
+
+
+        React.DOM.td null,
+          React.DOM.select
+            className: 'form-control'
+            type: 'text'
+            defaultValue: @props.test.environment_tag.name if "environment_tag" of @props.test
+            ref: 'environment_tag'
+            for env_tag in @props.environments
+              React.DOM.option
+                key: env_tag.id
+                value: env_tag.name
+                env_tag.name
+        React.DOM.td null,
+          React.DOM.div
+            className: 'ui-widget'
+            React.DOM.input
+              className: 'form-control'
+              ref: 'application_tags'
+              defaultValue: @applicationTagsFormat()
+              onFocus: @bindAutocomplete
+              id: "tags-#{ @props.test.id }"
 

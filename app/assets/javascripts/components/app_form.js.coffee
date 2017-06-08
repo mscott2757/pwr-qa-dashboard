@@ -8,7 +8,7 @@
 
   render: ->
     React.DOM.div
-      className: 'form-inline'
+      className: 'form-inline add-app-form'
       React.DOM.div
         className: 'form-group'
         React.DOM.input

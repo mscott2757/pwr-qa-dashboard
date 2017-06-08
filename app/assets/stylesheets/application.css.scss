@@ -17,6 +17,10 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+html * {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+
 body {
   background-color: #f1f1f1;
 }
@@ -26,8 +30,12 @@ a.navbar-brand {
 }
 
 a.navbar-brand > img {
-  height: 45px;
+  height: 140%;
   width: auto;
+}
+
+.page-title {
+  padding-left: 20px;
 }
 
 #qa-navbar {

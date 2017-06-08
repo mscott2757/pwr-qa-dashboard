@@ -10,18 +10,15 @@
 
   updateTest: (test, data) ->
     index = @state.tests.indexOf test
-    tests = React.addons.update(@state.tests, {$splice: [[index, 1, data]] })
-    @replaceState tests: tests
+    tests = React.addons.update(@state.tests, {$splice: [[index, 1, data.test]] })
+
+    @replaceState tests: tests, applications: data.applications
 
   addApp: (app_tag) ->
-    applications = @state.applications.slice()
-    applications.push app_tag
-    @setState applications: applications
 
   render: ->
     React.DOM.div
       className: 'tests'
-      React.createElement AppForm, handleNewApp: @addApp
       React.DOM.table
         className: 'table table-bordered edit-test-table'
         React.DOM.thead null,
