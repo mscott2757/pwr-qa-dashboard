@@ -1,12 +1,30 @@
 <%= render partial: '/layouts/header', locals: { title: ApplicationTag.page_title(@method) } %>
 
 <div class="app-body">
-  <% @applications.each_slice(3) do |app_row| %>
+  <% @applications.each_slice(2) do |app_row| %>
     <div class="row">
       <% app_row.each do |app| %>
-        <div class="col-sm-4" id="app-summary-col">
+        <div class="col-sm-6" id="app-summary-col">
           <div class="app-summary-container">
-            <h3><%= app.name %></h3>
+            <div class="app-summary-header">
+              <div class="app-summary-title">
+                <h3><%= app.name %></h3>
+              </div>
+              <div class="app-summary-recent">
+                <p><b>Recent Failed tests</b></p>
+                <ul class="recent-failed-list">
+                  <% app.recent_failing_tests(@method).each do |test| %>
+                    <li><%= test.name %></li>
+                  <% end %>
+                </ul>
+              </div>
+            </div>
+            <div class="app-summary-progress">
+              <div id="progressbar-<%= app.id %>"></div>
+            </div>
+            <script>
+              <%= render partial: "progress_bar.js", locals: { app_id: app.id, total_failing: app.total_failing(@method), total_passing: app.total_passing(@method) } %>
+            </script>
           </div>
         </div>
       <% end %>

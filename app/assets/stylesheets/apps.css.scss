@@ -1,12 +1,53 @@
 .app-body {
-  padding-left: 15px;
-  padding-left: 15px;
+  padding: 0 15px;
 }
 .app-summary-container {
   width: 100%;
   background-color: #fff;
   border: 1px solid #ddd;
-  height: 100px;
+  height: 180px;
+}
+
+.app-summary-header {
+  height: 120px;
+  width: 100%;
+}
+
+.recent-failed-list {
+  padding-left: 17px;
+}
+
+.app-summary-title {
+  width: 35%;
+  float: left;
+  display: inline;
+  padding-left: 10px;
+}
+
+.app-summary-recent {
+  width: 65%;
+  float: left;
+  display: inline;
+}
+
+.app-summary-recent > p {
+  margin: 10px 0 0 0;
+}
+
+.app-summary-progress {
+  width: 100%;
+  padding: 5px 20px 0 20px;
+}
+
+.app-progress-success {
+  background-color: #2E7D32;
+  border: none;
+  margin-bottom: 0 !important;
+  padding-bottom: 0;
+}
+
+.app-progress-fail {
+  background-color: #C62828;
 }
 
 #app-summary-col {

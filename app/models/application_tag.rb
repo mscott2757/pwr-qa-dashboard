@@ -31,8 +31,20 @@ class ApplicationTag < ApplicationRecord
     self.send(method).select { |test| test.passing? }
   end
 
+  def total_passing(method)
+    passing_tests(method).count
+  end
+
   def failing_tests(method)
     self.send(method).select { |test| test.failing? }
+  end
+
+  def total_failing(method)
+    failing_tests(method).count
+  end
+
+  def recent_failing_tests(method)
+    failing_tests(method).sort { |a,b| b.last_build_time <=> a.last_build_time }.first(3)
   end
 
 end

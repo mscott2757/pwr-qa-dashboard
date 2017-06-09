@@ -1,0 +1,10 @@
+$( function() {
+  $("#progressbar-<%= app_id %>").progressbar({
+    value: <%= total_passing %>,
+    max: <%= total_passing + total_failing %>,
+    classes: {
+      "ui-progressbar-value": "ui-corner-left app-progress-success",
+      "ui-progressbar": "ui-corner-all app-progress-fail"
+    }
+  });
+});
