@@ -37,6 +37,7 @@ gem 'react-rails', '~> 1.0'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'bootstrap-sass', '~> 3.3.4'
+gem 'whenever', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
