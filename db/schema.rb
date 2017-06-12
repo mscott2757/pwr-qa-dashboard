@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170602201607) do
+ActiveRecord::Schema.define(version: 20170612165904) do
 
   create_table "application_tags", force: :cascade do |t|
     t.string "name"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 20170602201607) do
     t.datetime "last_build_time"
     t.datetime "last_failed_build_time"
     t.datetime "last_successful_build_time"
+    t.boolean "parameterized", default: false
   end
 
 end

@@ -10,7 +10,7 @@ class Test < ApplicationRecord
   belongs_to :environment_tag, optional: true
 
   def self.edit_all_as_json
-    Test.all.includes(:primary_app, :environment_tag, :application_tags).as_json(only: [:name, :id], include: { primary_app: { only: [:name, :id] }, application_tags: { only: [:name, :id] }, environment_tag: { only: [:name, :id] } })
+    Test.all.includes(:primary_app, :environment_tag, :application_tags).as_json(only: [:name, :id, :parameterized], include: { primary_app: { only: [:name, :id] }, application_tags: { only: [:name, :id] }, environment_tag: { only: [:name, :id] } })
   end
 
   def self.base_url
@@ -50,6 +50,8 @@ class Test < ApplicationRecord
             env_name = action["parameters"][0]["value"]
             env_tag = EnvironmentTag.find_by_name(env_name)
             env_tag.tests << test
+
+            test.parameterized = true
           end
 
           if action["causes"]

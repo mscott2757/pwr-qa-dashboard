@@ -39,6 +39,16 @@
             this.value = terms.join(", ")
             false
 
+  componentDidUpdate: (prevProps, prevState) ->
+    if @state.edit
+      @bindAutocomplete()
+      if @props.test.parameterized
+        $('[data-toggle="tooltip"]').tooltip()
+
+  componentDidMount: ->
+    if @props.test.parameterized
+      $('[data-toggle="tooltip"]').tooltip()
+
   handleToggle: (e) ->
     e.preventDefault()
     @setState edit: !@state.edit
@@ -70,6 +80,20 @@
         @setState edit: false
         @props.handleEditTest @props.test, data
 
+  envLabel: ->
+    if "environment_tag" of @props.test
+      React.DOM.td null,
+        if @props.test.parameterized
+          React.DOM.a
+            className: 'parameterized-env-label'
+            title: "This test is parameterized"
+            "data-toggle": "tooltip"
+            @props.test.environment_tag.name
+        else
+          @props.test.environment_tag.name
+    else
+      React.DOM.td null,
+
   testRow: ->
     React.DOM.tr null,
       React.DOM.td null,
@@ -88,11 +112,7 @@
       else
         React.DOM.td null,
 
-      if "environment_tag" of @props.test
-        React.DOM.td null, @props.test.environment_tag.name
-      else
-        React.DOM.td null,
-
+      @envLabel()
       React.DOM.td null, @applicationTagsFormat()
 
   render: ->
@@ -147,18 +167,21 @@
                 value: "+"
                 "new..."
 
+        if @props.test.parameterized
+          @envLabel()
+        else
+          React.DOM.td null,
+            React.DOM.select
+              className: 'form-control'
+              type: 'text'
+              defaultValue: @props.test.environment_tag.name if "environment_tag" of @props.test
+              ref: 'environment_tag'
+              for env_tag in @props.environments
+                React.DOM.option
+                  key: env_tag.id
+                  value: env_tag.name
+                  env_tag.name
 
-        React.DOM.td null,
-          React.DOM.select
-            className: 'form-control'
-            type: 'text'
-            defaultValue: @props.test.environment_tag.name if "environment_tag" of @props.test
-            ref: 'environment_tag'
-            for env_tag in @props.environments
-              React.DOM.option
-                key: env_tag.id
-                value: env_tag.name
-                env_tag.name
         React.DOM.td null,
           React.DOM.div
             className: 'ui-widget'
@@ -166,6 +189,5 @@
               className: 'form-control'
               ref: 'application_tags'
               defaultValue: @applicationTagsFormat()
-              onFocus: @bindAutocomplete
               id: "tags-#{ @props.test.id }"
 

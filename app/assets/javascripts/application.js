@@ -12,6 +12,7 @@
 //
 //= require rails-ujs
 //= require jquery
+//= require tether
 //= require bootstrap
 //= require jquery-ui/widgets/autocomplete
 //= require jquery-ui/widgets/progressbar
@@ -21,3 +22,4 @@
 //= require react_ujs
 //= require components
 //= require_tree .
+
