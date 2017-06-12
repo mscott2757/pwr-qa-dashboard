@@ -12,6 +12,7 @@
 //
 //= require rails-ujs
 //= require jquery
+//= require bootstrap
 //= require jquery-ui/widgets/autocomplete
 //= require jquery-ui/widgets/progressbar
 //= require jquery_ujs

@@ -29,5 +29,5 @@
             React.DOM.th null, 'Indirect Applications'
         React.DOM.tbody null,
           for test in @state.tests
-            React.createElement EditTest, key: test.id, test: test, handleEditRecord: @updateTest, applications: @state.applications, environments: @props.environments
+            React.createElement EditTest, key: test.id, test: test, handleEditTest: @updateTest, applications: @state.applications, environments: @props.environments
 

@@ -68,7 +68,7 @@
       success: (data) =>
         @setState newApp: false
         @setState edit: false
-        @props.handleEditRecord @props.test, data
+        @props.handleEditTest @props.test, data
 
   testRow: ->
     React.DOM.tr null,

@@ -31,7 +31,13 @@
             <li><%= link_to "Indirect Applications", application_tags_path(indirect_apps: true) %></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right" id="qa-navbar-nav">
-						<li><%= link_to "Settings", tests_path %></li>
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Settings <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><%= link_to "Edit Tests", tests_path %></li>
+                <li><%= link_to "Edit Applications", edit_application_tags_path %></li>
+              </ul>
+            </li>
 					</ul>
 				</div>
 
@@ -44,3 +50,4 @@
 
   </body>
 </html>
+

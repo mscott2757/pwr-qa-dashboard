@@ -1,13 +1,24 @@
 @AppForm = React.createClass
-  handleNew: (e) ->
+  getInitialState: ->
+    name: ''
+
+  handleSubmit: (e) ->
     e.preventDefault()
-    name = ReactDOM.findDOMNode(@refs.app_name).value
-    $.post("/application_tags", { application_tag: { name: name } }, (data) =>
+    name = ReactDOM.findDOMNode(@refs.name).value
+    $.post "/application_tags", { application_tag: { name: name } }, ((data) =>
       @props.handleNewApp data
-      , 'JSON')
+      @setState @getInitialState())
+      , 'JSON'
+
+  handleChange: (e) ->
+    @setState name: e.target.name
+
+  valid: ->
+    @state.name
 
   render: ->
-    React.DOM.div
+    React.DOM.form
+      onSubmit: @handleSubmit
       className: 'form-inline add-app-form'
       React.DOM.div
         className: 'form-group'
@@ -15,8 +26,11 @@
           type: 'text'
           className: 'form-control'
           placeholder: 'Name'
-          ref: "app_name"
-        React.DOM.a
-          className: 'btn btn-primary'
-          onClick: @handleNew
-          'Add App'
+          name: 'name'
+          ref: "name"
+          onChange: @handleChange
+      React.DOM.button
+        type: 'submit'
+        className: 'btn btn-primary add-app'
+        disabled: !@valid()
+        'Add App'
