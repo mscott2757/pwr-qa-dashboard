@@ -43,7 +43,7 @@ class Test < ApplicationRecord
 
         test.last_build = test_json["lastBuild"]["number"]
         last_build_json = test.json_build_tree(test.last_build, "actions[causes[userName],parameters[value]],timestamp")
-        test.last_build_time = Time.at(last_build_json["timestamp"]).to_datetime
+        test.last_build_time = Time.at(last_build_json["timestamp"]/1000).to_datetime
 
         last_build_json["actions"].each do |action|
           if action["parameters"]
@@ -64,14 +64,14 @@ class Test < ApplicationRecord
       if test_json["lastSuccessfulBuild"]
         test.last_successful_build = test_json["lastSuccessfulBuild"]["number"]
         last_successful_build_json = test.json_build_tree(test.last_successful_build, "timestamp")
-        test.last_successful_build_time = Time.at(last_successful_build_json["timestamp"]).to_datetime
+        test.last_successful_build_time = Time.at(last_successful_build_json["timestamp"]/1000).to_datetime
       end
 
       # last failed build
       if test_json["lastFailedBuild"]
         test.last_failed_build = test_json["lastFailedBuild"]["number"]
         last_failed_build_json = test.json_build_tree(test.last_failed_build, "timestamp")
-        test.last_failed_build_time = Time.at(last_failed_build_json["timestamp"]).to_datetime
+        test.last_failed_build_time = Time.at(last_failed_build_json["timestamp"]/1000).to_datetime
       end
 
       test.save!
