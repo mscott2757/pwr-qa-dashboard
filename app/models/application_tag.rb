@@ -28,7 +28,7 @@ class ApplicationTag < ApplicationRecord
   end
 
   def passing_tests(method)
-    self.send(method).select { |test| test.passing? }
+    self.send(method).where(last_build_time: 24.hours.ago..Time.now).select { |test| test.passing? }
   end
 
   def total_passing(method)
@@ -36,7 +36,7 @@ class ApplicationTag < ApplicationRecord
   end
 
   def failing_tests(method)
-    self.send(method).select { |test| test.failing? }
+    self.send(method).where(last_build_time: 24.hours.ago..Time.now).select { |test| test.failing? }
   end
 
   def total_failing(method)
