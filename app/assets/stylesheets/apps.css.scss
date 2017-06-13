@@ -9,8 +9,14 @@
 }
 
 .app-summary-header {
-  height: 120px;
+  height: 100px;
   width: 100%;
+}
+
+.total-passing {
+}
+
+.total-failing {
 }
 
 .recent-failed-list {
@@ -49,6 +55,17 @@
 
 .app-progress-fail {
   background-color: #C62828;
+}
+
+.progress-summary {
+	width: 100%;
+	padding-left: 2px;
+}
+
+.progress-summary > p {
+	width: 49.5%;
+	margin-bottom: 0;
+	display: inline-block;
 }
 
 #app-summary-col {

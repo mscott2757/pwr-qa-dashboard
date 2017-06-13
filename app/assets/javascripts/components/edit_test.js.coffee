@@ -56,7 +56,7 @@
 
   bindTooltip: ->
     test_id = @props.test.id
-    $("#parameterized-#{test_id}").tooltip()
+    $("#parameterized-#{test_id}").tooltip(25)
 
   handleNewAppToggle: (e) ->
     e.preventDefault()

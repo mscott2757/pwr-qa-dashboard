@@ -19,5 +19,5 @@ $( function() {
       .children().eq(1).attr('title', "<%= app.failing_tests_format(method) %>");
   }
 
-  $("#progressbar-<%= app.id %>").tooltip();
+  $("#progressbar-<%= app.id %>").tooltip(25);
 });
