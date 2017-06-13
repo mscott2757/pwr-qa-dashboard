@@ -45,19 +45,22 @@ class Test < ApplicationRecord
         last_build_json = test.json_build_tree(test.last_build, "actions[causes[userName],parameters[value]],timestamp")
         test.last_build_time = Time.at(last_build_json["timestamp"]/1000).to_datetime
 
+        parameterized = false
         last_build_json["actions"].each do |action|
           if action["parameters"]
             env_name = action["parameters"][0]["value"]
             env_tag = EnvironmentTag.find_by_name(env_name)
             env_tag.tests << test
 
-            test.parameterized = true
+            parameterized = true
           end
 
           if action["causes"]
             test.author = action["causes"][0]["userName"]
           end
         end
+
+        test.parameterized = parameterized
       end
 
       # last successful build

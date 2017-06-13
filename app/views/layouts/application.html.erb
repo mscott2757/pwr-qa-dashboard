@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Qadashboard</title>
+    <title>QA Dashboard</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -27,8 +27,8 @@
 
 				<div class="collapse navbar-collapse" id="qa-navbar-collapse">
 					<ul class="nav navbar-nav" id="qa-navbar-nav">
-            <li><%= link_to "Applications", application_tags_path %></li>
-            <li><%= link_to "Indirect Applications", application_tags_path(indirect_apps: true) %></li>
+            <li><%= link_to "Applications", application_tags_path(method: "primary_tests") %></li>
+            <li><%= link_to "Indirect Applications", application_tags_path(method: "tests") %></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right" id="qa-navbar-nav">
             <li class="dropdown">

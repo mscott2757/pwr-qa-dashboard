@@ -12,6 +12,8 @@ ApplicationTag.create(name: "Read Services")
 ApplicationTag.create(name: "Write Services")
 ApplicationTag.create(name: "CDM")
 ApplicationTag.create(name: "Log Delivery")
+ApplicationTag.create(name: "Shared Services")
+ApplicationTag.create(name: "Extranet")
 
 # EnvironmentTag.create(name: "qa")
 # EnvironmentTag.create(name: "dev")

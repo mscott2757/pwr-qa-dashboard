@@ -1,12 +1,9 @@
 class ApplicationTagsController < ApplicationController
 	def index
 		@applications = ApplicationTag.all
-		if params[:indirect_apps]
-			# indirect apps
-			@method = "tests"
-
+		if params[:method]
+			@method = params[:method]
 		else
-			# primary apps
 			@method = "primary_tests"
 		end
 	end

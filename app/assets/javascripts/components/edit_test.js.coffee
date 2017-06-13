@@ -43,16 +43,20 @@
     if @state.edit
       @bindAutocomplete()
       if @props.test.parameterized
-        $('[data-toggle="tooltip"]').tooltip()
+        @bindTooltip()
 
   componentDidMount: ->
     if @props.test.parameterized
-      $('[data-toggle="tooltip"]').tooltip()
+      @bindTooltip()
 
   handleToggle: (e) ->
     e.preventDefault()
     @setState edit: !@state.edit
     @setState newApp: false
+
+  bindTooltip: ->
+    test_id = @props.test.id
+    $("#parameterized-#{test_id}").tooltip()
 
   handleNewAppToggle: (e) ->
     e.preventDefault()
@@ -87,7 +91,7 @@
           React.DOM.a
             className: 'parameterized-env-label'
             title: "This test is parameterized"
-            "data-toggle": "tooltip"
+            id: "parameterized-#{@props.test.id}"
             @props.test.environment_tag.name
         else
           @props.test.environment_tag.name

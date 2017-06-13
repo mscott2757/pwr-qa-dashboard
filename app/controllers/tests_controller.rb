@@ -25,7 +25,7 @@ class TestsController < ApplicationController
       end
     end
 
-    render json: { test: @test.as_json(only: [:name, :id], include: { primary_app: { only: [:name, :id] }, application_tags: { only: [:name, :id] }, environment_tag: { only: [:name, :id] } }),
+    render json: { test: @test.as_json(only: [:name, :id, :parameterized], include: { primary_app: { only: [:name, :id] }, application_tags: { only: [:name, :id] }, environment_tag: { only: [:name, :id] } }),
 					applications: ApplicationTag.all.as_json(only: [:id, :name]) }
   end
 

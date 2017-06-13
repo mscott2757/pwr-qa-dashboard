@@ -1,5 +1,8 @@
 $( function() {
-  $("#progressbar-<%= app_id %>").progressbar({
+  <%= total_passing = app.total_passing(method) %>;
+  <%= total_failing = app.total_failing(method) %>;
+
+  $("#progressbar-<%= app.id %>").progressbar({
     value: <%= total_passing %>,
     max: <%= total_passing + total_failing %>,
     classes: {
@@ -7,4 +10,14 @@ $( function() {
       "ui-progressbar": "ui-corner-all app-progress-fail"
     }
   });
+
+  // $("#progressbar-<%= app.id %>").children().eq(0).attr('title', "<%= app.passing_tests_format(method) %>");
+
+  if (<%= total_failing %> > 0) {
+    $div = $("<div style='display: inline-block; height: 100%; width: <%= 100 * total_failing / (total_passing + total_failing) %>%'></div>");
+    $("#progressbar-<%= app.id %>").append($div)
+      .children().eq(1).attr('title', "<%= app.failing_tests_format(method) %>");
+  }
+
+  $("#progressbar-<%= app.id %>").tooltip();
 });

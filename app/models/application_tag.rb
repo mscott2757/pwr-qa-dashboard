@@ -19,24 +19,33 @@ class ApplicationTag < ApplicationRecord
     ApplicationTag.all.as_json(only: [:id, :name])
   end
 
+  # returns page title for page header
   def self.page_title(method)
-    if method == "primary_tests"
-      return "Applications"
-    else
-      return "Indirect Applications"
-    end
+    method == "primary_tests" ? "Applications" : "Indirect Applications"
   end
 
+  # obtain all passing tests in the past 24 hours
   def passing_tests(method)
     self.send(method).where(last_build_time: 24.hours.ago..Time.now).select { |test| test.passing? }
+  end
+
+  def passing_tests_format(method)
+    # passing_tests(method).map { |test| test.name }.join("\r\n")
+    passing_tests(method).map { |test| test.name }.join(", ")
   end
 
   def total_passing(method)
     passing_tests(method).count
   end
 
+  # obtain all failing tests in the past 24 hours
   def failing_tests(method)
     self.send(method).where(last_build_time: 24.hours.ago..Time.now).select { |test| test.failing? }
+  end
+
+  def failing_tests_format(method)
+    # failing_tests(method).map { |test| test.name }.join("\r\n")
+    failing_tests(method).map { |test| test.name }.join(", ")
   end
 
   def total_failing(method)

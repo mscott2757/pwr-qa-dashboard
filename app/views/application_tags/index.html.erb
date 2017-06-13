@@ -23,7 +23,7 @@
               <div id="progressbar-<%= app.id %>"></div>
             </div>
             <script>
-              <%= render partial: "progress_bar.js", locals: { app_id: app.id, total_failing: app.total_failing(@method), total_passing: app.total_passing(@method) } %>
+              <%= render partial: "progress_bar.js", locals: { app: app, method: @method } %>
             </script>
           </div>
         </div>
