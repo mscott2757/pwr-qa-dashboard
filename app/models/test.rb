@@ -1,6 +1,9 @@
+require 'action_view'
 require 'httparty'
 require 'nokogiri'
 require 'open-uri'
+
+include ActionView::Helpers::DateHelper
 
 class Test < ApplicationRecord
   has_many :test_application_tags, dependent: :destroy
@@ -111,6 +114,13 @@ class Test < ApplicationRecord
     else
       return "other"
     end
+  end
+
+  def last_build_display
+    if last_build_time.nil?
+      return "N/A"
+    end
+    "#{distance_of_time_in_words(last_build_time, Time.now)} ago"
   end
 
   def status_display

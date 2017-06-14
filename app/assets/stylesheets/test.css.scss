@@ -7,9 +7,26 @@
   padding-top: 5px;
 	width: 75%;
 }
+
+#app-show-header {
+  margin-top: 0;
+  margin-bottom: 5px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+}
+
+#app-show-header > h2 {
+  margin-bottom: 0;
+}
+
 .edit-test-name {
   float: left;
   width: 65%;
+}
+
+.app-progress-header {
+  width: 50%;
+  padding: 0 20px 8px 20px;
 }
 
 #test-summary-col {
@@ -63,7 +80,7 @@
   vertical-align: top;
 }
 
-.last-build > p {
+.last-build > a > p {
   padding-left: 7px;
   padding-right: 7px;
   padding-top: 7px;

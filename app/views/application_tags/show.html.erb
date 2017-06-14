@@ -1,4 +1,18 @@
-<%= render partial: '/layouts/header', locals: { title: @app.name } %>
+<div class="page-header" id="app-show-header">
+	<div class="page-title">
+    <h2><%= @app.name %></h2>
+	</div>
+  <div class="app-progress-header">
+    <div class="progress-summary">
+      <p class="total-passing"><%= @app.total_passing_format(@method) %></p>
+      <p class="total-failing" align="right"><%= @app.total_failing_format(@method) %></p>
+    </div>
+    <div id="progressbar-<%= @app.id %>"></div>
+  </div>
+  <script>
+    <%= render partial: "progress_bar.js", locals: { app: @app, method: @method, tooltip: false } %>
+  </script>
+</div>
 
 <div class="app-body">
   <% @app.send(@method).each_slice(4) do |test_row| %>
@@ -16,7 +30,9 @@
                 <p><%= test.status_display %></p>
               </div>
               <div class="last-build">
-                <p>last build: </p>
+                <%= link_to test.last_build_url, class: 'link-title' do %>
+                  <p><%= test.last_build_display %></p>
+                <% end %>
               </div>
             </div>
           </div>

@@ -29,7 +29,7 @@
               <div id="progressbar-<%= app.id %>"></div>
             </div>
             <script>
-              <%= render partial: "progress_bar.js", locals: { app: app, method: @method } %>
+              <%= render partial: "progress_bar.js", locals: { app: app, method: @method, tooltip: true } %>
             </script>
           </div>
         </div>
