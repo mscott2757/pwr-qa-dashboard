@@ -24,6 +24,10 @@ class ApplicationTag < ApplicationRecord
     method == "primary_tests" ? "Applications" : "Indirect Applications"
   end
 
+  def tests_sorted_by_last_build(method)
+    self.send(method).sort_by { |test| test.last_build_time.nil? ? Time.at(0) : test.last_build_time }.reverse
+  end
+
   # obtain all passing tests in the past 24 hours
   def passing_tests(method)
     self.send(method).where(last_build_time: 24.hours.ago..Time.now).select { |test| test.passing? }
@@ -72,6 +76,10 @@ class ApplicationTag < ApplicationRecord
 
   def recent_failing_tests(method)
     failing_tests(method).sort { |a,b| b.last_build_time <=> a.last_build_time }.first(3)
+  end
+
+  def self.test_type_display(method)
+    method == "primary_tests" ? "Primary Tests" : "Indirect Tests"
   end
 
 end

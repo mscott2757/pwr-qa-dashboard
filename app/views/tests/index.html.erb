@@ -1,2 +1,3 @@
-<%= render partial: '/layouts/header', locals: { title: "Edit Tests" } %>
+<%= render partial: '/layouts/settings_header', locals: { edit_tests: true } %>
+
 <%= react_component 'Tests', { data: @tests, applications: @applications, environments: @environments } %>

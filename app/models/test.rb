@@ -34,13 +34,10 @@ class Test < ApplicationRecord
 
       test_json = test.json_tree("color,lastBuild[number],lastSuccessfulBuild[number],lastFailedBuild[number]")
 
-      # get status of test
-      test.status = test_json["color"]
-
       # last build information
       if test_json["lastBuild"]
-        # jump to next test if no new build
-        if test.last_build and test.last_build == test_json["lastBuild"]["number"]
+        # jump to next test if no new build and status hasn't changed
+        if test.last_build and test.last_build == test_json["lastBuild"]["number"] and test.status == test_json["color"]
           next
         end
 
@@ -65,6 +62,9 @@ class Test < ApplicationRecord
 
         test.parameterized = parameterized
       end
+
+      # get status of test
+      test.status = test_json["color"]
 
       # last successful build
       if test_json["lastSuccessfulBuild"]

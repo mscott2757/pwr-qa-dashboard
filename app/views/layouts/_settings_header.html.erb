@@ -1,0 +1,10 @@
+<div class="page-header" id="qa-header">
+	<div class="page-title">
+    <h2>Settings</h2>
+    <% if edit_tests %>
+      <h5 class="settings-toggle-header">Edit Tests | <%= link_to "Edit Applications", edit_application_tags_path, class: "settings-toggle" %></h5>
+    <% else %>
+      <h5 class="settings-toggle-header"><%= link_to "Edit Tests", tests_path, class: "settings-toggle" %> | Edit Applications</h5>
+    <% end %>
+	</div>
+</div>

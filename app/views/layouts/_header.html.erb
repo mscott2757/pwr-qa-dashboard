@@ -2,14 +2,4 @@
 	<div class="page-title">
     <h2><%= title %></h2>
 	</div>
-  <div class="app-progress-header">
-    <div class="progress-summary">
-      <p class="total-passing"><%= app.total_passing_format(@method) %></p>
-      <p class="total-failing" align="right"><%= app.total_failing_format(@method) %></p>
-    </div>
-    <div id="progressbar-<%= app.id %>"></div>
-  </div>
-  <script>
-    <%= render partial: "progress_bar.js", locals: { app: app, method: @method } %>
-  </script>
 </div>
