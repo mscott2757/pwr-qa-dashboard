@@ -3,6 +3,7 @@
   border-top: 1px solid #ddd;
   border-left: 1px solid #ddd;
   border-right: 1px solid #ddd;
+  background-color: #fff;
 }
 
 .add-app-form > div > a {
@@ -10,8 +11,8 @@
  }
 
 .edit-applications {
-  background-color: #fff;
 	margin: 0 auto;
+  padding-top: 5px;
 	width: 60%;
 }
 
@@ -21,4 +22,5 @@
 
 #edit-apps-table {
   margin-bottom: 0;
+  background-color: #fff;
 }

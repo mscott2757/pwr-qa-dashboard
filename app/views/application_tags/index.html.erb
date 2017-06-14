@@ -8,7 +8,9 @@
           <div class="app-summary-container">
             <div class="app-summary-header">
               <div class="app-summary-title">
-                <h3><%= app.name %></h3>
+                <%= link_to application_tag_path(id: app.id, method: @method), class: "link-title" do %>
+                  <h3><%= app.name %></h3>
+                <% end %>
               </div>
               <div class="app-summary-recent">
                 <p><b>Recent Failed tests</b></p>
@@ -21,8 +23,8 @@
             </div>
             <div class="app-summary-progress">
               <div class="progress-summary">
-                <p class="total-passing"><%= app.total_passing(@method) %> passing tests </p>
-                <p class="total-failing" align="right"><%= app.total_failing(@method) %> failing tests </p>
+                <p class="total-passing"><%= app.total_passing_format(@method) %></p>
+                <p class="total-failing" align="right"><%= app.total_failing_format(@method) %></p>
               </div>
               <div id="progressbar-<%= app.id %>"></div>
             </div>

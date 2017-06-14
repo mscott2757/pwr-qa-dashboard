@@ -13,12 +13,6 @@
   width: 100%;
 }
 
-.total-passing {
-}
-
-.total-failing {
-}
-
 .recent-failed-list {
   padding-left: 17px;
 }
@@ -62,6 +56,14 @@
 	padding-left: 2px;
 }
 
+.link-title {
+	color: #333333
+}
+
+.link-title:hover {
+	text-decoration: none;
+}
+
 .progress-summary > p {
 	width: 49.5%;
 	margin-bottom: 0;
@@ -69,6 +71,5 @@
 }
 
 #app-summary-col {
-  padding-left: 0px;
-  padding-right: 0px;
+  padding: 5px;
 }

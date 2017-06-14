@@ -103,8 +103,36 @@ class Test < ApplicationRecord
     "#{job_url}/#{last_failed_build}"
   end
 
+  def status_css
+    if passing?
+      return "passing"
+    elsif failing?
+      return "failing"
+    else
+      return "other"
+    end
+  end
+
+  def status_display
+    if passing?
+      return "passing"
+    elsif failing?
+      return "failing"
+    elsif in_progress?
+      return "in progress"
+    elsif not_built?
+      return "not built"
+    elsif aborted?
+      return "aborted"
+    elsif disabled?
+      return "disabled"
+    else
+      return "N/A"
+    end
+  end
+
   def in_progress?
-    self.status.inlcude?("anime")
+    self.status.include?("anime")
   end
 
   def passing?

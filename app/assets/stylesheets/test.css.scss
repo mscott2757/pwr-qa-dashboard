@@ -4,11 +4,77 @@
 
 .tests {
 	margin: 0 auto;
+  padding-top: 5px;
 	width: 75%;
 }
 .edit-test-name {
   float: left;
   width: 65%;
+}
+
+#test-summary-col {
+  padding: 5px;
+}
+
+.test-container {
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  height: 90px;
+}
+
+.test-body {
+  width: 100%;
+  height: 40%;
+  vertical-align: top;
+  display: inline-block;
+}
+
+.test-status {
+  height: 100%;
+  width: 49%;
+  display: inline-block;
+}
+
+.test-status-passing {
+  background-color: #2E7D32;
+}
+
+.test-status-failing {
+  background-color: #C62828;
+}
+
+.test-status-other {
+  background-color: #888;
+}
+
+.test-status > p {
+  color: #fff;
+  padding-left: 7px;
+  padding-right: 7px;
+  padding-top: 7px;
+  margin-bottom: 0;
+}
+
+.last-build {
+  height: 100%;
+  width: 49%;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.last-build > p {
+  padding-left: 7px;
+  padding-right: 7px;
+  padding-top: 7px;
+  margin-bottom: 0;
+}
+
+.test-header {
+  width: 100%;
+  height: 50%;
+  padding-left: 10px;
+  border-bottom: 1px solid #ddd;
 }
 
 .edit-test-toggle {

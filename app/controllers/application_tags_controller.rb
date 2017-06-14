@@ -17,6 +17,11 @@ class ApplicationTagsController < ApplicationController
     end
   end
 
+  def show
+    @app = ApplicationTag.find(params[:id])
+    @method = params[:method]
+  end
+
   def update
     @app_tag = ApplicationTag.find(params[:id])
     if @app_tag.update(application_tag_params)
