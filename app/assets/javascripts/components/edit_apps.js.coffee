@@ -1,9 +1,17 @@
 @EditApps = React.createClass
   getInitialState: ->
     applications: @props.data
+    delete_modal: false
 
   getDefaultProps: ->
     applications: []
+
+  showDeleteModal: (app) ->
+    @setState modal_app: app
+    @setState delete_modal: true
+
+  closeDeleteModal: ->
+    @setState delete_modal: false
 
   addApp: (app) ->
     apps = @state.applications.slice()
@@ -34,5 +42,7 @@
             React.DOM.th null, 'Actions'
         React.DOM.tbody null,
           for app in @state.applications
-            React.createElement EditApp, key: app.id, app: app, handleDeleteApp: @deleteApp, handleEditApp: @updateApp
+            React.createElement EditApp, key: app.id, app: app, handleDeleteApp: @deleteApp, handleEditApp: @updateApp, handleDeleteModal: @showDeleteModal
+      if @state.delete_modal
+        React.createElement DeleteModal, app: @state.modal_app, handleClose: @closeDeleteModal, handleDeleteApp: @deleteApp
 

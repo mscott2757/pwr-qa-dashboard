@@ -3,7 +3,7 @@
 }
 
 .settings-toggle:hover {
-  color: #333;
+  text-decoration: none;
 }
 
 .settings-toggle-header {
@@ -35,4 +35,80 @@
 #edit-apps-table {
   margin-bottom: 0;
   background-color: #fff;
+}
+
+.delete-modal-backdrop {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: transparent;
+  padding: 50px;
+}
+
+.delete-modal {
+  border: 1px solid #ddd;
+  background-color: #fff;
+  max-width: 500px;
+  min-height: 300px;
+  margin: 150px auto;
+	position: relative;
+}
+
+.delete-header {
+  padding: 30px 30px 8px 30px;
+}
+
+.delete-body {
+  padding: 0 30px 30px 30px;
+}
+
+#delete-modal-test {
+  border-left: none;
+  border-right: none;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  border-radius: 0;
+}
+
+#delete-modal-tests {
+  overflow-y: auto;
+  height: 200px;
+}
+
+.delete-title {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.delete-subtitle {
+  margin-bottom: 0;
+}
+
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
+	background-image: none;
+	background-color: #337ab7;
+	border-color: #2e6da4;
+}
+
+.delete-modal-buttons {
+	margin-top: 15px;
+	height: 34px;
+}
+
+.delete-modal-button {
+	float: right;
+	margin-left: 8px;
+}
+
+#test-tabs-list {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  background-color: transparent;
+  border-radius: 0;
+  height: 36px;
+  width: 100%;
+  padding: 0;
 }

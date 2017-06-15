@@ -13,6 +13,7 @@
  *= require jquery-ui/autocomplete
  *= require jquery-ui/progressbar
  *= require jquery-ui/tooltip
+ *= require jquery-ui/tabs
  *= require_tree .
  *= require_self
  */
@@ -21,6 +22,7 @@
 
 html * {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  //font-weight: 400;
 }
 
 body {

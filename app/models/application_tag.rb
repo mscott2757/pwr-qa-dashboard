@@ -15,6 +15,10 @@ class ApplicationTag < ApplicationRecord
     return app_tag
   end
 
+  def self.edit_all_as_json
+    ApplicationTag.all.includes(:primary_tests, :tests).as_json(only: [:id, :name], include: { primary_tests: { only: [:name, :id] }, tests: { only: [:name, :id] } })
+  end
+
   def self.all_as_json
     ApplicationTag.all.as_json(only: [:id, :name])
   end
@@ -44,11 +48,7 @@ class ApplicationTag < ApplicationRecord
 
   def total_passing_format(method)
     total = total_passing(method)
-    if total == 1
-      return "#{total} passing test"
-    else
-      return "#{total} passing tests"
-    end
+    total == 1 ? "#{total} passing test" : "#{total} passing tests"
   end
 
   # obtain all failing tests in the past 24 hours

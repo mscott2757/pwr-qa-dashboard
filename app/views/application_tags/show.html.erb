@@ -20,12 +20,15 @@
     <div class="row">
       <% test_row.each do |test| %>
         <div class="col-sm-3" id="test-summary-col">
+
           <div class="test-container">
+
             <div class="test-header">
               <%= link_to test.job_url, class: 'link-title' do %>
                 <h5><%= test.name %></h5>
               <% end %>
             </div>
+
             <div class="test-body">
               <div class="test-status test-status-<%= test.status_css %>">
                 <p><%= test.status_display %></p>
@@ -36,7 +39,9 @@
                 <% end %>
               </div>
             </div>
+
           </div>
+
         </div>
       <% end %>
     </div>

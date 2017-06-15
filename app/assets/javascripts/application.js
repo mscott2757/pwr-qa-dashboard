@@ -17,6 +17,7 @@
 //= require jquery-ui/widgets/autocomplete
 //= require jquery-ui/widgets/progressbar
 //= require jquery-ui/widgets/tooltip
+//= require jquery-ui/widgets/tabs
 //= require jquery_ujs
 //= require turbolinks
 //= require react

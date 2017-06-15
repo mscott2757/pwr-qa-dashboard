@@ -20,6 +20,10 @@
         @setState edit: false
         @props.handleEditApp @props.app, data
 
+  showModal: (e) ->
+    e.preventDefault()
+    @props.handleDeleteModal @props.app
+
   handleDelete: (e) ->
     e.preventDefault()
     $.ajax
@@ -28,6 +32,9 @@
       dataType: 'JSON'
       success: () =>
         @props.handleDeleteApp @props.app
+
+  hasTests: ->
+    @props.tests.length > 0 or @props.primary_tests.length > 0
 
   editAppForm: ->
     React.DOM.tr null,
@@ -57,8 +64,8 @@
           'Edit'
         React.DOM.a
           className: 'btn btn-danger btn-sm'
-          onClick: @handleDelete
-          'Delete'
+          onClick: @showModal
+          "Delete"
 
   render: ->
     if @state.edit
