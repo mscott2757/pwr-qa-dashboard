@@ -4,5 +4,8 @@ Rails.application.routes.draw do
   resources :application_tags do
     get 'edit', on: :collection
   end
+
+  get '/settings/:id', to: 'settings#select_environment', as: 'change_env'
+
   root to: 'application_tags#index'
 end

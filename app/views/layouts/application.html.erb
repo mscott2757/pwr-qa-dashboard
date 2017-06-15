@@ -29,6 +29,14 @@
 					<ul class="nav navbar-nav" id="qa-navbar-nav">
             <li><%= link_to "Applications", application_tags_path(method: "primary_tests") %></li>
             <li><%= link_to "Indirect Applications", application_tags_path(method: "tests") %></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Environment: <b><%= @env_tag.name %></b> <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <% EnvironmentTag.all.select { |env_tag| env_tag != @env_tag }.each do | env_tag | %>
+                  <li><%= link_to env_tag.name, change_env_path(env_tag) %></li>
+                <% end %>
+              </ul>
+            </li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right" id="qa-navbar-nav">
             <li><%= link_to "Settings", tests_path %></li>

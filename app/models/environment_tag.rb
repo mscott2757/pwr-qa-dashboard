@@ -1,4 +1,6 @@
 class EnvironmentTag < ApplicationRecord
+  belongs_to :setting, optional: true
+
   has_many :tests
 
   def self.find_by_name(env_name)
@@ -13,6 +15,10 @@ class EnvironmentTag < ApplicationRecord
 
   def self.all_as_json
     EnvironmentTag.all.as_json(only: [:id, :name])
+  end
+
+  def display_name
+    self.name.upcase
   end
 
 end

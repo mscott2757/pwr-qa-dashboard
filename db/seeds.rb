@@ -8,6 +8,8 @@
 
 Test.save_data_from_jenkins_api
 
+Setting.create
+
 ApplicationTag.create(name: "Read Services")
 ApplicationTag.create(name: "Write Services")
 ApplicationTag.create(name: "CDM")

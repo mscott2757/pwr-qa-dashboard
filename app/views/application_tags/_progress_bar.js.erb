@@ -1,25 +1,34 @@
 $( function() {
-  <%= total_passing = app.total_passing(method) %>;
-  <%= total_failing = app.total_failing(method) %>;
+  <%= total_passing = app.total_passing(method, env_tag) %>;
+  <%= total_failing = app.total_failing(method, env_tag) %>;
+  <% if total_failing + total_passing > 0 %>
+    $("#progressbar-<%= app.id %>").progressbar({
+      value: <%= total_passing %>,
+      max: <%= total_passing + total_failing %>,
+      classes: {
+        "ui-progressbar-value": "ui-corner-left app-progress-success",
+        "ui-progressbar": "ui-corner-all app-progress-fail"
+      }
+    });
 
-  $("#progressbar-<%= app.id %>").progressbar({
-    value: <%= total_passing %>,
-    max: <%= total_passing + total_failing %>,
-    classes: {
-      "ui-progressbar-value": "ui-corner-left app-progress-success",
-      "ui-progressbar": "ui-corner-all app-progress-fail"
-    }
-  });
+    // $("#progressbar-<%= app.id %>").children().eq(0).attr('title', "<%= app.passing_tests_format(method, env_tag) %>");
 
-  // $("#progressbar-<%= app.id %>").children().eq(0).attr('title', "<%= app.passing_tests_format(method) %>");
+    <% if tooltip %>
+      if (<%= total_failing %> > 0) {
+        $div = $("<div style='display: inline-block; height: 100%; width: <%= 100 * total_failing / (total_passing + total_failing) %>%'></div>");
+        $("#progressbar-<%= app.id %>").append($div)
+          .children().eq(1).attr('title', "<%= app.failing_tests_format(method, env_tag) %>");
+      }
 
-  <% if tooltip %>
-    if (<%= total_failing %> > 0) {
-      $div = $("<div style='display: inline-block; height: 100%; width: <%= 100 * total_failing / (total_passing + total_failing) %>%'></div>");
-      $("#progressbar-<%= app.id %>").append($div)
-        .children().eq(1).attr('title', "<%= app.failing_tests_format(method) %>");
-    }
-
-    $("#progressbar-<%= app.id %>").tooltip(25);
+      $("#progressbar-<%= app.id %>").tooltip(25);
+    <% end %>
+  <% else %>
+    $("#progressbar-<%= app.id %>").progressbar({
+      value: 0,
+      classes: {
+        "ui-progressbar-value": "ui-corner-left app-progress-success",
+        "ui-progressbar": "ui-corner-all app-progress-disabled"
+      }
+    });
   <% end %>
 });

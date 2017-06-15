@@ -6,6 +6,8 @@ require 'open-uri'
 include ActionView::Helpers::DateHelper
 
 class Test < ApplicationRecord
+  validates_uniqueness_of :name
+
   has_many :test_application_tags, dependent: :destroy
   has_many :application_tags, -> { distinct }, through: :test_application_tags
 
@@ -60,6 +62,18 @@ class Test < ApplicationRecord
           end
         end
 
+        if !parameterized
+          if test.name.downcase.include?("dev")
+            env_tag = EnvironmentTag.find_by_name("dev")
+            env_tag.tests << test
+          elsif test.name.downcase.include?("qa")
+            env_tag = EnvironmentTag.find_by_name("qa")
+            env_tag.tests << test
+          elsif test.name.downcase.include?("prod")
+            env_tag = EnvironmentTag.find_by_name("prod")
+            env_tag.tests << test
+          end
+        end
         test.parameterized = parameterized
       end
 
@@ -80,7 +94,7 @@ class Test < ApplicationRecord
         test.last_failed_build_time = Time.at(last_failed_build_json["timestamp"]/1000).to_datetime
       end
 
-      test.save!
+      test.save
     end
   end
 
@@ -92,6 +106,10 @@ class Test < ApplicationRecord
   def json_build_tree(build_number, tree_attr)
     response = HTTParty.get("#{job_url}/#{build_number}/api/json?tree=#{tree_attr}")
     response.parsed_response
+  end
+
+  def env_tag
+    self.environment_tag
   end
 
   def last_build_url
