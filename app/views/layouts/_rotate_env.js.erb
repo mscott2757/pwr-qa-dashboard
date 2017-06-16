@@ -1,7 +1,7 @@
 var rotate_timer = setTimeout(function () {
   $.ajax({
     type: 'GET',
-    url: '/settings/select_env/' + <%= next_env.id %>,
+    url: '/environment_tags/select_env/' + <%= next_env.id %>,
     success: function (data) {
       window.location.reload(false);
     }
