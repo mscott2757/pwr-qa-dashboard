@@ -1,10 +1,15 @@
-<%= render partial: '/layouts/header', locals: { title: ApplicationTag.page_title(@method) } %>
+<div class="page-header" id="qa-header">
+	<div class="page-title">
+    <h2><%= ApplicationTag.page_title(@method) %></h2>
+    <p class="col-links">Apps per row: <%= render partial: 'app_col_link', locals: { col_num: 2 } %> <%= render partial: 'app_col_link', locals: { col_num: 3 } %> <%= render partial: 'app_col_link', locals: { col_num: 4 } %></p>
+	</div>
+</div>
 
 <div class="app-body">
-  <% @applications.each_slice(2) do |app_row| %>
+  <% @applications.each_slice(@app_col) do |app_row| %>
     <div class="row">
       <% app_row.each do |app| %>
-        <div class="col-sm-6" id="app-summary-col">
+        <div class="col-sm-<%= 12 / @app_col %>" id="app-summary-col">
           <div class="app-summary-container">
             <div class="app-summary-header">
               <div class="app-summary-title">

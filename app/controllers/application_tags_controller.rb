@@ -1,4 +1,20 @@
 class ApplicationTagsController < ApplicationController
+	before_action :set_columns
+
+  def set_columns
+    if !session.include?(:app_col)
+      session[:app_col] = 2
+    end
+
+    @app_col = session[:app_col].to_i
+
+    if !session.include?(:test_col)
+      session[:test_col] = 4
+    end
+
+    @test_col = session[:test_col].to_i
+  end
+
 	def index
 		@applications = ApplicationTag.all
 		if params[:method]
@@ -43,5 +59,15 @@ class ApplicationTagsController < ApplicationController
 
   def edit
     @applications = ApplicationTag.edit_all_as_json
+  end
+
+  def edit_app_col
+    session[:app_col] = params[:app_col]
+    redirect_back(fallback_location: root_path)
+  end
+
+  def edit_test_col
+    session[:test_col] = params[:test_col]
+    redirect_back(fallback_location: root_path)
   end
 end

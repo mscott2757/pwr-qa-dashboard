@@ -9,6 +9,7 @@
       <p class="total-failing" align="right"><%= @app.total_failing_format(@method, @env_tag) %></p>
     </div>
     <div id="progressbar-<%= @app.id %>"></div>
+    <p class="col-links">Tests per row: <%= render partial: 'test_col_link', locals: { col_num: 3 } %> <%= render partial: 'test_col_link', locals: { col_num: 4 } %> <%= render partial: 'test_col_link', locals: { col_num: 5 } %> <%= render partial: 'test_col_link', locals: { col_num: 6 } %></p>
   </div>
   <script>
     <%= render partial: "progress_bar.js", locals: { app: @app, method: @method, tooltip: false, env_tag: @env_tag } %>
@@ -16,10 +17,10 @@
 </div>
 
 <div class="app-body">
-  <% @app.tests_by_env(@method, @env_tag).each_slice(4) do |test_row| %>
+  <% @app.tests_by_env(@method, @env_tag).each_slice(@test_col) do |test_row| %>
     <div class="row">
       <% test_row.each do |test| %>
-        <div class="col-sm-3" id="test-summary-col">
+        <div class="col-sm-<%= 12 / @test_col %>" id="test-summary-col">
 
           <div class="test-container">
 

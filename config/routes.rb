@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   resources :tests
   resources :application_tags do
     get 'edit', on: :collection
+    get 'edit_app_col', on: :collection
+    get 'edit_test_col', on: :collection
   end
 
   get '/environment_tags/select_env/:id', to: 'environment_tags#select_environment', as: 'change_env'
