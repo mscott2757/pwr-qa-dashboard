@@ -37,6 +37,12 @@
                 <% end %>
               </ul>
             </li>
+            <li class="dropdown" id="rotate-env">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Rotate: <b><%= session[:rotate] %></b> <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><%= link_to "turn #{ session[:rotate] == true ? "off" : "on" } rotation", toggle_rotate_path, remote: true %></li>
+              </ul>
+            </li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right" id="qa-navbar-nav">
             <li><%= link_to "Settings", tests_path %></li>
@@ -49,6 +55,12 @@
     <div class="container" id="qa-container">
       <%= yield %>
     </div>
+
+    <% if session[:rotate] %>
+      <script>
+        <%= render partial: '/layouts/rotate_env.js', locals: { next_env: EnvironmentTag.get_next_env(@env_tag) } %>
+      </script>
+    <% end %>
 
   </body>
 </html>

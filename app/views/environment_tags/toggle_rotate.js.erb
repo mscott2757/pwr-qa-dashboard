@@ -1,0 +1,12 @@
+<% if !session[:rotate] %>
+  clearTimeout(rotate_timer);
+<% else %>
+  <%= render partial: '/layouts/rotate_env.js', locals: { next_env: EnvironmentTag.get_next_env(@env_tag) } %>
+<% end %>
+
+$('#rotate-env a').text("Rotate: ")
+  .append($('<b></b>')
+  .text("<%= session[:rotate] %> "))
+  .append($('<span></span>').addClass('caret'));
+
+$('#rotate-env ul li a').text("Turn <%= session[:rotate] == false ? 'off' : 'on' %> rotation");

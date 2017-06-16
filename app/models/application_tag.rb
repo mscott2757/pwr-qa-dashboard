@@ -36,13 +36,16 @@ class ApplicationTag < ApplicationRecord
     self.send(method).select { |test| test.env_tag == env_tag }.sort_by { |test| test.last_build_time.nil? ? Time.at(0) : test.last_build_time }.reverse
   end
 
-  # obtain all passing tests in the past 24 hours
+  def tests_by_env(method, env_tag)
+    self.send(method).select { |test| test.env_tag == env_tag }
+  end
+
   def passing_tests(method, env_tag)
-    self.send(method).where(last_build_time: 24.hours.ago..Time.now).select { |test| test.passing? and test.env_tag == env_tag }
+    self.send(method).where(last_build_time: 7.days.ago..Time.now).select { |test| test.passing? and test.env_tag == env_tag }
+    # self.send(method).select { |test| test.passing? and test.env_tag == env_tag }
   end
 
   def passing_tests_format(method, env_tag)
-    # passing_tests(method).map { |test| test.name }.join("\r\n")
     passing_tests(method, env_tag).map { |test| test.name }.join(", ")
   end
 
@@ -55,13 +58,12 @@ class ApplicationTag < ApplicationRecord
     total == 1 ? "#{total} passing test" : "#{total} passing tests"
   end
 
-  # obtain all failing tests in the past 24 hours
   def failing_tests(method, env_tag)
-    self.send(method).where(last_build_time: 24.hours.ago..Time.now).select { |test| test.failing? and test.env_tag == env_tag }
+    self.send(method).where(last_build_time: 7.days.ago..Time.now).select { |test| test.failing? and test.env_tag == env_tag }
+    # self.send(method).select { |test| test.failing? and test.env_tag == env_tag }
   end
 
   def failing_tests_format(method, env_tag)
-    # failing_tests(method).map { |test| test.name }.join("\r\n")
     failing_tests(method, env_tag).map { |test| test.name }.join(", ")
   end
 

@@ -16,7 +16,7 @@
 </div>
 
 <div class="app-body">
-  <% @app.tests_sorted_by_last_build(@method, @env_tag).each_slice(4) do |test_row| %>
+  <% @app.tests_by_env(@method, @env_tag).each_slice(4) do |test_row| %>
     <div class="row">
       <% test_row.each do |test| %>
         <div class="col-sm-3" id="test-summary-col">

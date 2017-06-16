@@ -17,8 +17,11 @@ class EnvironmentTag < ApplicationRecord
     EnvironmentTag.all.as_json(only: [:id, :name])
   end
 
-  def display_name
-    self.name.upcase
-  end
+  def self.get_next_env(env_tag)
+    if env_tag.id == self.count
+      return self.first
+    end
 
+    return self.find(env_tag.id + 1)
+  end
 end
