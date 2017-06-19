@@ -69,10 +69,16 @@
 
   handleEdit: (e) ->
     e.preventDefault()
+    if @props.test.parameterized
+      env_tag = @props.test.environment_tag.id
+    else
+      env_tag = ReactDOM.findDOMNode(@refs.environment_tag).value
+
     data =
       primary_app: ReactDOM.findDOMNode(@refs.primary_app).value
-      environment_tag: ReactDOM.findDOMNode(@refs.environment_tag).value
+      environment_tag: env_tag
       application_tags: ReactDOM.findDOMNode(@refs.application_tags).value
+      test_type: ReactDOM.findDOMNode(@refs.test_type).value
     $.ajax
       method: 'PUT'
       url: "/tests/#{ @props.test.id }"
@@ -111,12 +117,18 @@
             onClick: @handleToggle
             'Edit'
 
+      if "test_type" of @props.test
+        React.DOM.td null, @props.test.test_type.name
+      else
+        React.DOM.td null,
+
       if "primary_app" of @props.test
         React.DOM.td null, @props.test.primary_app.name
       else
         React.DOM.td null,
 
       @envLabel()
+
       React.DOM.td null, @applicationTagsFormat()
 
   render: ->
@@ -138,6 +150,18 @@
               className: 'btn btn-danger btn-sm'
               onClick: @handleToggle
               'cancel'
+
+        React.DOM.td null,
+          React.DOM.select
+            className: 'form-control'
+            defaultValue: @props.test.test_type.name if "test_type" of @props.test
+            ref: 'test_type'
+            for test_type in @props.types
+              React.DOM.option
+                key: test_type.id
+                value: test_type.id
+                test_type.name
+
         if @state.newApp
           React.DOM.td null,
             React.DOM.div
@@ -178,12 +202,12 @@
             React.DOM.select
               className: 'form-control'
               type: 'text'
-              defaultValue: @props.test.environment_tag.name if "environment_tag" of @props.test
+              defaultValue: @props.test.environment_tag.id if "environment_tag" of @props.test
               ref: 'environment_tag'
               for env_tag in @props.environments
                 React.DOM.option
                   key: env_tag.id
-                  value: env_tag.name
+                  value: env_tag.id
                   env_tag.name
 
         React.DOM.td null,

@@ -24,10 +24,11 @@
         React.DOM.thead null,
           React.DOM.tr null,
             React.DOM.th null, 'Test'
+            React.DOM.th null, 'Type'
             React.DOM.th null, 'Application'
             React.DOM.th null, 'Environment'
             React.DOM.th null, 'Indirect Applications'
         React.DOM.tbody null,
           for test in @state.tests
-            React.createElement EditTest, key: test.id, test: test, handleEditTest: @updateTest, applications: @state.applications, environments: @props.environments
+            React.createElement EditTest, key: test.id, test: test, handleEditTest: @updateTest, applications: @state.applications, environments: @props.environments, types: @props.types
 

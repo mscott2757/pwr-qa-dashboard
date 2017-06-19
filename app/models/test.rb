@@ -13,9 +13,14 @@ class Test < ApplicationRecord
 
   belongs_to :primary_app, class_name: "ApplicationTag", foreign_key: "primary_app_id", optional: true
   belongs_to :environment_tag, optional: true
+  belongs_to :test_type, optional: true
 
   def self.edit_all_as_json
-    Test.all.includes(:primary_app, :environment_tag, :application_tags).as_json(only: [:name, :id, :parameterized], include: { primary_app: { only: [:name, :id] }, application_tags: { only: [:name, :id] }, environment_tag: { only: [:name, :id] } })
+    Test.all.includes(:primary_app, :environment_tag, :test_type, :application_tags).as_json(only: [:name, :id, :parameterized], include: { primary_app: { only: [:name, :id] }, test_type: {only: [:name, :id] }, application_tags: { only: [:name, :id] }, environment_tag: { only: [:name, :id] } })
+  end
+
+  def edit_as_json
+    self.as_json(only: [:name, :id, :parameterized], include: { primary_app: { only: [:name, :id] }, test_type: { only: [:name, :id] }, application_tags: { only: [:name, :id] }, environment_tag: { only: [:name, :id] } })
   end
 
   def self.base_url

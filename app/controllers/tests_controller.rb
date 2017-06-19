@@ -3,6 +3,7 @@ class TestsController < ApplicationController
     @tests = Test.edit_all_as_json
     @applications = ApplicationTag.all_as_json
     @environments = EnvironmentTag.all_as_json
+		@types = TestType.all_as_json
   end
 
   def update
@@ -11,8 +12,11 @@ class TestsController < ApplicationController
     primary_app = ApplicationTag.find_by_name(params[:test][:primary_app])
     primary_app.primary_tests << @test
 
-    environment = EnvironmentTag.find_by_name(params[:test][:environment_tag])
+    environment = EnvironmentTag.find(params[:test][:environment_tag])
     environment.tests << @test
+
+		test_type = TestType.find(params[:test][:test_type])
+		test_type.tests << @test
 
     indirect_apps = params[:test][:application_tags].split(',').map { |app_name| ApplicationTag.find_by_name(app_name) }
     indirect_apps.each do |app|
@@ -25,8 +29,7 @@ class TestsController < ApplicationController
       end
     end
 
-    render json: { test: @test.as_json(only: [:name, :id, :parameterized], include: { primary_app: { only: [:name, :id] }, application_tags: { only: [:name, :id] }, environment_tag: { only: [:name, :id] } }),
-					applications: ApplicationTag.all.as_json(only: [:id, :name]) }
+    render json: { test: @test.edit_as_json, applications: ApplicationTag.all.as_json(only: [:id, :name]) }
   end
 
 end
