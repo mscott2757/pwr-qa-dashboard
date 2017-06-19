@@ -40,6 +40,10 @@ class ApplicationTag < ApplicationRecord
     self.send(method).select { |test| test.env_tag == env_tag }
   end
 
+  def tests_by_env_json(method, env_tag)
+    self.tests_by_env(method, env_tag).includes(:primary_app, :environment_tag, :test_type, :application_tags).as_json(include: { primary_app: { only: [:name, :id] }, test_type: {only: [:name, :id] }, application_tags: { only: [:name, :id] }, environment_tag: { only: [:name, :id] } })
+  end
+
   def passing_tests(method, env_tag)
     self.send(method).where(last_build_time: 7.days.ago..Time.now).select { |test| test.passing? and test.env_tag == env_tag }
     # self.send(method).select { |test| test.passing? and test.env_tag == env_tag }

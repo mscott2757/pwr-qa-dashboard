@@ -17,7 +17,7 @@
 </div>
 
 <div class="app-body">
-  <% @app.tests_by_env(@method, @env_tag).each_slice(@test_col) do |test_row| %>
+  <% @tests.each_slice(@test_col) do |test_row| %>
     <div class="row">
       <% test_row.each do |test| %>
         <div class="col-sm-<%= 12 / @test_col %>" id="test-summary-col">
@@ -28,16 +28,15 @@
               <%= link_to test.job_url, class: 'link-title' do %>
                 <h5><%= test.name %></h5>
               <% end %>
+              <div>
+                <p class="test-type-title"><%= test.test_type.name if test.test_type %></p>
+                <p align="right" class="test-link-title"><%= link_to test.last_build_display, test.last_build_url, class: 'test-link' %> </p>
+              </div>
             </div>
 
             <div class="test-body">
               <div class="test-status test-status-<%= test.status_css %>">
                 <p><%= test.status_display %></p>
-              </div>
-              <div class="last-build">
-                <%= link_to test.last_build_url, class: 'link-title' do %>
-                  <p><%= test.last_build_display %></p>
-                <% end %>
               </div>
             </div>
 

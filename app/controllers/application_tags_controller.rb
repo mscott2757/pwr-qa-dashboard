@@ -36,6 +36,11 @@ class ApplicationTagsController < ApplicationController
   def show
     @app = ApplicationTag.find(params[:id])
     @method = params[:method]
+
+    @tests = @app.tests_by_env(@method, @env_tag)
+    @applications = ApplicationTag.all_as_json
+    @environments = EnvironmentTag.all_as_json
+		@types = TestType.all_as_json
   end
 
   def update
