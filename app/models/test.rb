@@ -146,6 +146,13 @@ class Test < ApplicationRecord
     "#{distance_of_time_in_words(last_build_time, Time.now)} ago"
   end
 
+  def last_successful_build_display
+    if last_build_time.nil?
+      return "N/A"
+    end
+    "#{distance_of_time_in_words(last_successful_build_time, Time.now)} ago"
+  end
+
   def status_display
     if passing?
       return "passing"

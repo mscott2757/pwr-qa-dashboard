@@ -50,7 +50,7 @@
 .test-status {
   height: 100%;
   width: 100%;
-  display: inline-block;
+  position: relative;
 }
 
 .test-status-passing {
@@ -63,21 +63,6 @@
 
 .test-status-other {
   background-color: #888;
-}
-
-.test-status > p {
-  color: #fff;
-  padding-left: 7px;
-  padding-right: 7px;
-  padding-top: 7px;
-  margin-bottom: 0;
-}
-
-.last-build {
-  height: 100%;
-  width: 49%;
-  display: inline-block;
-  vertical-align: top;
 }
 
 .last-build > a > p {
@@ -97,20 +82,47 @@
 .test-header > div {
   position: absolute;
   bottom: 0;
+  vertical-align: bottom;
+  display: inline-block;
   width: 100%;
+}
+
+.last-successful {
+  color: #fff;
+  display: inline-block;
+  padding-right: 5px;
+  position: absolute;
+  margin-bottom: 3px;
+  bottom: 0;
+  right: 0;
+  font-size: 90%;
 }
 
 .test-type-title {
   color: #a8a8a8;
-  float: left;
+  display: inline-block;
+  width: 49%;
   margin-bottom: 0;
-  padding-left: 3px;
+  padding-left: 5px;
+	vertical-align: bottom;
+}
+
+.test-status-title {
+  color: #fff;
+  padding-left: 5px;
+  margin-bottom: 3px;
+  position: absolute;
+  bottom: 0;
+  font-size: 85%;
 }
 
 .test-link-title {
-  float: right;
-  padding-right: 10px;
+  display: inline-block;
+  padding-right: 5px;
   margin-bottom: 3px;;
+  width: 49%;
+  font-size: 90%;
+	vertical-align: bottom;
 }
 
 .test-link {
@@ -120,6 +132,31 @@
 .test-link:hover {
 	text-decoration: none;
 }
+
+.last-successful-link {
+  color: #fff;
+}
+
+.last-successful-link:hover {
+  text-decoration: none;
+  color: #a8a8a8;
+}
+
+.test-type-tag {
+	background: #eee;
+  border-radius: 3px 0 0 3px;
+  color: #999;
+  display: inline-block;
+  height: 100%;
+  line-height: 26px;
+  padding: 0 5px 0 5px;
+  position: relative;
+  margin: 0 0 5px 0;
+  text-decoration: none;
+  -webkit-transition: color 0.2s;
+	font-size: 85%;
+}
+
 
 .test-header > a > h5 {
   margin: 0;

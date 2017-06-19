@@ -29,14 +29,20 @@
                 <h5><%= test.name %></h5>
               <% end %>
               <div>
-                <p class="test-type-title"><%= test.test_type.name if test.test_type %></p>
+                <div class="test-type-title">
+                  <p class="test-type-tag"><%= test.test_type.name if test.test_type %></p>
+                </div>
                 <p align="right" class="test-link-title"><%= link_to test.last_build_display, test.last_build_url, class: 'test-link' %> </p>
               </div>
             </div>
 
             <div class="test-body">
               <div class="test-status test-status-<%= test.status_css %>">
-                <p><%= test.status_display %></p>
+                <% if test.failing? and test.last_successful_build %>
+                  <p class="test-status-title"><%= link_to "last successful #{test.last_successful_build_display}", test.last_successful_build_url, class: 'last-successful-link' %></p>
+                <% elsif !test.passing? %>
+                  <p class="test-status-title"><%= test.status_display %></p>
+                <% end %>
               </div>
             </div>
 
