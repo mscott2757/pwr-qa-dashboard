@@ -10,9 +10,9 @@
 
   updateTest: (test, data) ->
     index = @state.tests.indexOf test
-    tests = React.addons.update(@state.tests, {$splice: [[index, 1, data.test]] })
+    tests = React.addons.update(@state.tests, {$splice: [[index, 1, data]] })
 
-    @replaceState tests: tests, applications: data.applications
+    @replaceState tests: tests
 
   addApp: (app_tag) ->
 

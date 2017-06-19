@@ -1,7 +1,6 @@
 @EditTest = React.createClass
   getInitialState: ->
     edit: false
-    newApp: false
 
   getDefaultProps: ->
     applications: []
@@ -10,6 +9,17 @@
   applicationTagsFormat: ->
     app_tag_names = @props.test.application_tags.map (app_tag) -> app_tag.name
     app_tag_names.join(', ')
+
+  mapAppNames: (appNames) ->
+    name_to_id = {}
+    for app in @props.applications
+      name_to_id[app.name] = app.id
+
+    ids = []
+    for name in appNames.split(", ")
+      ids.push(name_to_id[name]) if name of name_to_id
+
+    return ids
 
   bindAutocomplete: ->
     appNames = @props.applications.map (app) -> app.name
@@ -52,20 +62,10 @@
   handleToggle: (e) ->
     e.preventDefault()
     @setState edit: !@state.edit
-    @setState newApp: false
 
   bindTooltip: ->
     test_id = @props.test.id
     $("#parameterized-#{test_id}").tooltip(25)
-
-  handleNewAppToggle: (e) ->
-    e.preventDefault()
-    if ReactDOM.findDOMNode(@refs.primary_app).value == "+"
-      @setState newApp: true
-
-  handleCancelNewApp: (e) ->
-    e.preventDefault()
-    @setState newApp: false
 
   handleEdit: (e) ->
     e.preventDefault()
@@ -77,7 +77,7 @@
     data =
       primary_app: ReactDOM.findDOMNode(@refs.primary_app).value
       environment_tag: env_tag
-      application_tags: ReactDOM.findDOMNode(@refs.application_tags).value
+      application_tags: @mapAppNames(ReactDOM.findDOMNode(@refs.application_tags).value)
       test_type: ReactDOM.findDOMNode(@refs.test_type).value
     $.ajax
       method: 'PUT'
@@ -86,23 +86,15 @@
       data:
         test: data
       success: (data) =>
-        @setState newApp: false
         @setState edit: false
         @props.handleEditTest @props.test, data
 
-  envLabel: ->
-    if "environment_tag" of @props.test
-      React.DOM.td null,
-        if @props.test.parameterized
-          React.DOM.a
-            className: 'parameterized-env-label'
-            title: "This test is parameterized"
-            id: "parameterized-#{@props.test.id}"
-            @props.test.environment_tag.name
-        else
-          @props.test.environment_tag.name
-    else
-      React.DOM.td null,
+  parameterizedEnvLabel: ->
+    React.DOM.a
+      className: 'parameterized-env-label'
+      title: "This test is parameterized"
+      id: "parameterized-#{@props.test.id}"
+      @props.test.environment_tag.name
 
   testRow: ->
     React.DOM.tr null,
@@ -117,17 +109,14 @@
             onClick: @handleToggle
             'Edit'
 
-      if "test_type" of @props.test
-        React.DOM.td null, @props.test.test_type.name
-      else
-        React.DOM.td null,
+      React.DOM.td null, @props.test.test_type.name if "test_type" of @props.test
+      React.DOM.td null, @props.test.primary_app.name if "primary_app" of @props.test
 
-      if "primary_app" of @props.test
-        React.DOM.td null, @props.test.primary_app.name
-      else
-        React.DOM.td null,
-
-      @envLabel()
+      React.DOM.td null,
+        if @props.test.parameterized
+          @parameterizedEnvLabel()
+        else
+          @props.test.environment_tag.name if "environment_tag" of @props.test
 
       React.DOM.td null, @applicationTagsFormat()
 
@@ -162,43 +151,21 @@
                 value: test_type.id
                 test_type.name
 
-        if @state.newApp
-          React.DOM.td null,
-            React.DOM.div
-              className: 'input-group'
-              React.DOM.input
-                className: 'form-control'
-                type: 'text'
-                ref: 'primary_app'
-              React.DOM.span
-                className: 'input-group-btn'
-                React.DOM.button
-                  type: 'button'
-                  className: 'btn btn-default'
-                  onClick: @handleCancelNewApp
-                  htmlEncode('&times')
-        else
-          React.DOM.td null,
-            React.DOM.select
-              className: 'form-control'
-              defaultValue: @props.test.primary_app.name if "primary_app" of @props.test
-              onChange: @handleNewAppToggle
-              ref: 'primary_app'
-              for app_tag in @props.applications
-                React.DOM.option
-                  key: app_tag.id
-                  value: app_tag.name
-                  app_tag.name
-
+        React.DOM.td null,
+          React.DOM.select
+            className: 'form-control'
+            defaultValue: @props.test.primary_app.id if "primary_app" of @props.test
+            ref: 'primary_app'
+            for app_tag in @props.applications
               React.DOM.option
-                key: 0
-                value: "+"
-                "new..."
+                key: app_tag.id
+                value: app_tag.id
+                app_tag.name
 
-        if @props.test.parameterized
-          @envLabel()
-        else
-          React.DOM.td null,
+        React.DOM.td null,
+          if @props.test.parameterized
+            @parameterizedEnvLabel()
+          else
             React.DOM.select
               className: 'form-control'
               type: 'text'

@@ -9,7 +9,7 @@ class TestsController < ApplicationController
   def update
     @test = Test.find(params[:id])
 
-    primary_app = ApplicationTag.find_by_name(params[:test][:primary_app])
+    primary_app = ApplicationTag.find(params[:test][:primary_app])
     primary_app.primary_tests << @test
 
     environment = EnvironmentTag.find(params[:test][:environment_tag])
@@ -18,7 +18,8 @@ class TestsController < ApplicationController
 		test_type = TestType.find(params[:test][:test_type])
 		test_type.tests << @test
 
-    indirect_apps = params[:test][:application_tags].split(',').map { |app_name| ApplicationTag.find_by_name(app_name) }
+    indirect_apps = params[:test][:application_tags] ? params[:test][:application_tags].map { |app_id| ApplicationTag.find(app_id) } : []
+
     indirect_apps.each do |app|
       @test.application_tags << app
     end
@@ -29,7 +30,7 @@ class TestsController < ApplicationController
       end
     end
 
-    render json: { test: @test.edit_as_json, applications: ApplicationTag.all.as_json(only: [:id, :name]) }
+    render json: { test: @test.edit_as_json }
   end
 
 end
