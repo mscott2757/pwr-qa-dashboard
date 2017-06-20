@@ -38,6 +38,7 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'bootstrap-sass', '~> 3.3.4'
 gem 'tether-rails'
+gem 'font-awesome-rails'
 gem 'whenever', require: false
 
 group :development, :test do

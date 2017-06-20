@@ -1,10 +1,14 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  resources :tests
+  resources :tests do
+    get 'edit', on: :member
+  end
   resources :application_tags do
-    get 'edit', on: :collection
-    get 'edit_app_col', on: :collection
-    get 'edit_test_col', on: :collection
+    collection do
+      get 'edit'
+      get 'edit_app_col'
+      get 'edit_test_col'
+    end
   end
 
   get '/environment_tags/select_env/:id', to: 'environment_tags#select_environment', as: 'change_env'

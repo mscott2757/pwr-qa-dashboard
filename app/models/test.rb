@@ -139,6 +139,10 @@ class Test < ApplicationRecord
     end
   end
 
+  def indirect_apps_display
+    application_tags.map{ |app_tag| app_tag.name }.join(", ")
+  end
+
   def last_build_display
     if last_build_time.nil?
       return "N/A"

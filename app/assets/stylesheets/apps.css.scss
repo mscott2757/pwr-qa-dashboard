@@ -82,3 +82,43 @@
 #app-summary-col {
   padding: 5px;
 }
+
+.test-modal-body {
+  padding: 15px 30px 30px 30px;
+}
+
+.test-modal-header {
+  padding: 30px 30px 8px 30px;
+}
+
+.test-modal-header > h4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+#test-modal-row {
+  padding: 5px;
+}
+
+#test-modal-label {
+  text-align: right;
+}
+
+.test-modal {
+  border: 1px solid #ddd;
+  background-color: #fff;
+  max-width: 500px;
+  min-height: 300px;
+  margin: 150px auto;
+	position: relative;
+}
+
+.test-modal-buttons {
+  width: 100%;
+  margin-top: 15px;
+  text-align: right;
+}
+
+.test-modal-button {
+  margin-left: 8px;
+}

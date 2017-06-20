@@ -77,10 +77,10 @@
           React.DOM.div
             className: 'delete-modal-buttons'
             React.DOM.a
-              className: 'btn btn-default btn-sm delete-modal-button'
-              onClick: @props.handleClose
-              'Cancel'
-            React.DOM.a
               className: 'btn btn-danger btn-sm delete-modal-button'
               onClick: @handleDelete
               'Confirm'
+            React.DOM.a
+              className: 'btn btn-default btn-sm delete-modal-button'
+              onClick: @props.handleClose
+              'Cancel'

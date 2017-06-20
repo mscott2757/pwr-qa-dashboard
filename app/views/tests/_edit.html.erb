@@ -1,0 +1,55 @@
+<div class="delete-modal-backdrop">
+	<div class="test-modal">
+		<div class="test-modal-header">
+			<h4>Edit <%= test.name %></h4>
+		</div>
+		<div class="test-modal-body">
+			<%= form_for test do |f| %>
+					<div class="form-group">
+						<div class="row" id="test-modal-row">
+							<div class="col-sm-5" id="test-modal-label">
+								<%= f.label "Test Type" %>
+							</div>
+							<div class="col-sm-7">
+								<%= f.select :test_type, options_for_select(types, test.test_type.id), {}, { class: 'form-control' } %>
+							</div>
+						</div>
+
+						<div class="row" id="test-modal-row">
+							<div class="col-sm-5" id="test-modal-label">
+								<%= f.label "Primary App" %>
+							</div>
+							<div class="col-sm-7">
+								<%= f.select :primary_app, options_for_select(applications, test.primary_app.id), {}, { class: 'form-control' } %>
+							</div>
+						</div>
+
+						<div class="row" id="test-modal-row">
+							<div class="col-sm-5" id="test-modal-label">
+								<%= f.label "Environment" %>
+							</div>
+							<div class="col-sm-7">
+								<%= f.select :environment_tag, options_for_select(environments, test.environment_tag.id), {},  { class: 'form-control' } %>
+							</div>
+						</div>
+
+						<div class="row" id="test-modal-row">
+							<div class="col-sm-5" id="test-modal-label">
+								<%= f.label "Indirect Applications" %>
+							</div>
+							<div class="col-sm-7">
+								<%= f.text_field :application_tags, value: test.indirect_apps_display , class: 'form-control', id: "indirect-autocomplete" %>
+							</div>
+						</div>
+
+						<%= f.hidden_field :modal, value: true %>
+
+						<div class="test-modal-buttons">
+							<a href="#" class="btn btn-default btn-sm test-modal-button" id="close-test-modal">Cancel</a>
+							<%= f.submit "Update", class: "btn btn-primary btn-sm test-modal-button" %>
+						</div>
+					</div>
+			<% end %>
+		</div>
+	</div>
+</div>
