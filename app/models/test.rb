@@ -16,7 +16,7 @@ class Test < ApplicationRecord
   belongs_to :test_type, optional: true
 
   def self.edit_all_as_json
-    Test.all.includes(:primary_app, :environment_tag, :test_type, :application_tags).as_json(only: [:name, :id, :parameterized], include: { primary_app: { only: [:name, :id] }, test_type: {only: [:name, :id] }, application_tags: { only: [:name, :id] }, environment_tag: { only: [:name, :id] } })
+    Test.all.includes(:primary_app, :environment_tag, :test_type, :application_tags).as_json(only: [:name, :id, :parameterized], include: { primary_app: { only: [:name, :id] }, test_type: {only: [:name, :id] }, application_tags: { only: [:name, :id] }, environment_tag: { only: [:name, :id] } }).sort_by { |test| test["name"].downcase }
   end
 
   def edit_as_json

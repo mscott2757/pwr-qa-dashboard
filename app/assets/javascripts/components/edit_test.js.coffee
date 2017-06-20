@@ -109,8 +109,15 @@
             onClick: @handleToggle
             'Edit'
 
-      React.DOM.td null, @props.test.test_type.name if "test_type" of @props.test
-      React.DOM.td null, @props.test.primary_app.name if "primary_app" of @props.test
+      if "test_type" of @props.test
+        React.DOM.td null, @props.test.test_type.name
+      else
+        React.DOM.td null, ""
+
+      if "primary_app" of @props.test
+        React.DOM.td null, @props.test.primary_app.name
+      else
+        React.DOM.td null, ""
 
       React.DOM.td null,
         if @props.test.parameterized

@@ -37,7 +37,7 @@ class ApplicationTag < ApplicationRecord
   end
 
   def tests_by_env(method, env_tag)
-    self.send(method).select { |test| test.env_tag == env_tag }
+    self.send(method).select { |test| test.env_tag == env_tag }.sort_by{ |test| test.name.downcase }
   end
 
   def tests_by_env_json(method, env_tag)
