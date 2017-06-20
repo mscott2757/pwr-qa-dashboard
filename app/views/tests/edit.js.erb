@@ -12,6 +12,12 @@ $("#close-test-modal").click(function() {
 	$(".delete-modal-backdrop").remove();
 });
 
+<% if @test.parameterized %>
+	$("#test_environment_tag").prop('disabled', 'disabled')
+		.prop('title', 'This test is parameterized')
+		.tooltip(25);
+<% end %>
+
 $( function() {
     var availableTags = [];
 
