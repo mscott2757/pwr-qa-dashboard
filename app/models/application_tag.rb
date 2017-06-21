@@ -1,4 +1,6 @@
 class ApplicationTag < ApplicationRecord
+  validates :name, presence: true, allow_blank: false
+
   has_many :test_application_tags, dependent: :destroy
   has_many :tests, -> { distinct }, through: :test_application_tags
 
@@ -21,6 +23,10 @@ class ApplicationTag < ApplicationRecord
 
   def self.all_as_json
     ApplicationTag.all.as_json(only: [:id, :name])
+  end
+
+  def self.select_options
+    self.all.map{ |app_tag| [app_tag.name, app_tag.id] }
   end
 
   def edit_as_json

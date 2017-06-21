@@ -1,15 +1,16 @@
 require 'action_view'
 require 'httparty'
-require 'nokogiri'
 require 'open-uri'
 
 include ActionView::Helpers::DateHelper
 
 class Test < ApplicationRecord
   validates_uniqueness_of :name
+  validates :name, presence: true, allow_blank: false
 
   has_many :test_application_tags, dependent: :destroy
   has_many :application_tags, -> { distinct }, through: :test_application_tags
+  has_many :jira_tickets
 
   belongs_to :primary_app, class_name: "ApplicationTag", foreign_key: "primary_app_id", optional: true
   belongs_to :environment_tag, optional: true
@@ -21,6 +22,10 @@ class Test < ApplicationRecord
 
   def edit_as_json
     self.as_json(only: [:name, :id, :parameterized], include: { primary_app: { only: [:name, :id] }, test_type: { only: [:name, :id] }, application_tags: { only: [:name, :id] }, environment_tag: { only: [:name, :id] } })
+  end
+
+  def jira_tickets_json
+    self.as_json(only: [:name, :id], include: { jira_tickets: { only: [:ticket_number, :ticket_url] } } )
   end
 
   def self.base_url
@@ -62,9 +67,9 @@ class Test < ApplicationRecord
             parameterized = true
           end
 
-          if action["causes"]
-            test.author = action["causes"][0]["userName"]
-          end
+          # if action["causes"]
+          #   test.author = action["causes"][0]["userName"]
+          # end
         end
 
         if !parameterized
@@ -93,11 +98,11 @@ class Test < ApplicationRecord
       end
 
       # last failed build
-      if test_json["lastFailedBuild"]
-        test.last_failed_build = test_json["lastFailedBuild"]["number"]
-        last_failed_build_json = test.json_build_tree(test.last_failed_build, "timestamp")
-        test.last_failed_build_time = Time.at(last_failed_build_json["timestamp"]/1000).to_datetime
-      end
+      # if test_json["lastFailedBuild"]
+      #   test.last_failed_build = test_json["lastFailedBuild"]["number"]
+      #   last_failed_build_json = test.json_build_tree(test.last_failed_build, "timestamp")
+      #   test.last_failed_build_time = Time.at(last_failed_build_json["timestamp"]/1000).to_datetime
+      # end
 
       test.save
     end

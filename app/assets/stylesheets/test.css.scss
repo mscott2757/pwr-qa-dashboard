@@ -166,6 +166,8 @@
 
 .edit-test-link {
   color: #a8a8a8;
+  font-size: 90%;
+  display: none;
 }
 
 .edit-test-toggle {
@@ -240,4 +242,43 @@
       background-image: none;
     }
   }
+}
+
+ul.sub {
+	position: absolute;
+  z-index: 200;
+  width: 40%;
+  display: none;
+	background: #fff;
+  list-style-type: none;
+	padding: 0;
+  border: 1px solid #ddd;
+}
+
+ul.sub > li {
+  float: none;
+  margin: 0;
+  list-style-type: none;
+	padding: 5px;
+}
+
+ul.sub > li > a {
+  border-right: none;
+  color: #000;
+}
+
+ul.sub > li {
+}
+
+ul.sub > li:last-child {
+  border-top: 1px solid #ddd;
+}
+
+.jira-section {
+	display: inline-block;
+}
+
+a.test-type-tag:hover {
+	text-decoration: none;
+	color: #999;
 }

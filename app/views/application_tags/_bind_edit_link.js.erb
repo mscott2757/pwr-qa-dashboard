@@ -1,0 +1,13 @@
+$(".test-container-<%= test.id %>").hover(function() {
+  $("#edit-test-<%= test.id %>").show();
+}, function() {
+  $("#edit-test-<%= test.id %>").hide();
+});
+
+$("#jira-toggle-<%= test.id %>").click(function() {
+  if ($("#sub-<%= test.id %>").css("display") == "none") {
+    $("#sub-<%= test.id %>").css("display", "block");
+  } else {
+    $("#sub-<%= test.id %>").hide();
+  }
+});

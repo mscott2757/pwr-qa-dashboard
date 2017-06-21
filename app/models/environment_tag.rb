@@ -24,4 +24,8 @@ class EnvironmentTag < ApplicationRecord
 
     return self.find(env_tag.id + 1)
   end
+
+  def self.select_options
+    self.all.map{ |env_tag| [env_tag.name, env_tag.id] }
+  end
 end

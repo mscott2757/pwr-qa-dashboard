@@ -57,7 +57,6 @@
         @bindTooltip()
 
   componentDidMount: ->
-    console.log(@props.applications)
     if @props.test.parameterized
       @bindTooltip()
 

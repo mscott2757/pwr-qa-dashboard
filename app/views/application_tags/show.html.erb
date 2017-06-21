@@ -22,7 +22,7 @@
       <% test_row.each do |test| %>
         <div class="col-sm-<%= 12 / @test_col %>" id="test-summary-col">
 
-          <div class="test-container">
+          <div class="test-container test-container-<%= test.id %>">
 
             <div class="test-header">
               <%= link_to test.job_url, class: 'link-title' do %>
@@ -31,7 +31,25 @@
               <div>
                 <div class="test-type-title">
                   <p class="test-type-tag"><%= test.test_type.name if test.test_type %></p>
-									<%= link_to '...', edit_test_path(test), remote: true, class: 'edit-test-link'  %>
+
+                  <div class="jira-section">
+                    <a class="test-type-tag" id="jira-toggle-<%= test.id %>">JIRA
+                      <% if test.jira_tickets.count > 0 %>
+                        <span class="badge"><%= test.jira_tickets.count %></span>
+                      <%end %>
+                    </a>
+                    <ul class="sub" id="sub-<%= test.id %>">
+                      <% test.jira_tickets.each do |ticket| %>
+                        <li><a href="<%= ticket.ticket_url %>"><%= ticket.ticket_number %></a></li>
+                      <% end %>
+                      <li><a>add new ticket</a></li>
+                    </ul>
+                  </div>
+
+                  <%= link_to 'edit', edit_test_path(test), remote: true, class: 'edit-test-link', id: "edit-test-#{ test.id }"  %>
+  <script>
+    <%= render partial: "bind_edit_link.js.erb", locals: { test: test } %>
+  </script>
                 </div>
                 <p align="right" class="test-link-title"><%= link_to test.last_build_display, test.last_build_url, class: 'test-link' %> </p>
               </div>

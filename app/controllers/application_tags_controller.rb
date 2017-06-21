@@ -27,7 +27,7 @@ class ApplicationTagsController < ApplicationController
   def create
     @app_tag = ApplicationTag.new(application_tag_params)
     if @app_tag.save
-      render json: @app_tag.as_json(only: [:name, :id], include: { primary_tests: { only: [:name, :id] }, tests: { only: [:name, :id] } })
+      render json: @app_tag.edit_as_json
     else
       render json: @app_tag.errors, status: :unprocessable_entity
     end
@@ -43,7 +43,7 @@ class ApplicationTagsController < ApplicationController
   def update
     @app_tag = ApplicationTag.find(params[:id])
     if @app_tag.update(application_tag_params)
-      render json: @app_tag.as_json(only: [:name, :id], include: { primary_tests: { only: [:name, :id] }, tests: { only: [:name, :id] } })
+      render json: @app_tag.edit_as_json
     else
       render json: @app_tag.errors, status: :unprocessable_entity
     end

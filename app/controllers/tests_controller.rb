@@ -44,9 +44,10 @@ class TestsController < ApplicationController
 
   def edit
     @test = Test.find(params[:id])
-    @applications = ApplicationTag.all.map{ |app_tag| [app_tag.name, app_tag.id] }
-    @environments = EnvironmentTag.all.map{ |env_tag| [env_tag.name, env_tag.id] }
-    @types = TestType.all.map{ |test_type| [test_type.name, test_type.id] }
+    @applications = ApplicationTag.select_options
+    @environments = EnvironmentTag.select_options
+    @types = TestType.all.select_options
+
     respond_to do |format|
       format.js
     end

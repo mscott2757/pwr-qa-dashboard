@@ -32,4 +32,9 @@ Test.all.each do |test|
   test.application_tags << ApplicationTag.find(rand(ApplicationTag.count) + 1)
 
   TestType.find(rand(TestType.count) + 1).tests << test
+
+  if test.id % 3 == 0
+    test.jira_tickets << JiraTicket.create(ticket_number: test.id.to_s, ticket_url: "#")
+    test.jira_tickets << JiraTicket.create(ticket_number: (test.id * 100).to_s, ticket_url: "#")
+  end
 end
