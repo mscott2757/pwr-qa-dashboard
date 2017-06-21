@@ -37,7 +37,7 @@ class TestsController < ApplicationController
     if params[:test][:modal]
       redirect_back(fallback_location: root_path)
     else
-      render json: { test: @test.edit_as_json }
+      render json: @test.edit_as_json
     end
 
   end

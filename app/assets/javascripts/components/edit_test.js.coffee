@@ -5,6 +5,7 @@
   getDefaultProps: ->
     applications: []
     environments: []
+    types: []
 
   applicationTagsFormat: ->
     app_tag_names = @props.test.application_tags.map (app_tag) -> app_tag.name
@@ -56,6 +57,7 @@
         @bindTooltip()
 
   componentDidMount: ->
+    console.log(@props.applications)
     if @props.test.parameterized
       @bindTooltip()
 
@@ -96,6 +98,14 @@
       id: "parameterized-#{@props.test.id}"
       @props.test.environment_tag.name
 
+  envDisplay: ->
+    if @props.test.parameterized
+      return @parameterizedEnvLabel()
+    else if "environment_tag" of @props.test
+      return @props.test.environment_tag.name
+    else
+      return ""
+
   testRow: ->
     React.DOM.tr null,
       React.DOM.td null,
@@ -119,11 +129,7 @@
       else
         React.DOM.td null, ""
 
-      React.DOM.td null,
-        if @props.test.parameterized
-          @parameterizedEnvLabel()
-        else
-          @props.test.environment_tag.name if "environment_tag" of @props.test
+      React.DOM.td null, @envDisplay()
 
       React.DOM.td null, @applicationTagsFormat()
 
