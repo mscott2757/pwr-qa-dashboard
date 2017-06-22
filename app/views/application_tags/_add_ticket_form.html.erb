@@ -1,0 +1,17 @@
+<div class="add-ticket-form" id="add-ticket-<%= test.id %>">
+  <%= form_for @jira_ticket, remote: true do |f| %>
+    <div class="form-group">
+      <%= f.label "Ticket number" %>
+      <%= f.text_field :ticket_number, class: 'form-control' %>
+
+      <%= f.label "Ticket URL" %>
+      <%= f.text_field :ticket_url, class: 'form-control' %>
+
+      <%= f.hidden_field :test_id, value: test.id %>
+      <div class="add-ticket-buttons">
+        <%= f.submit "Create", class: 'btn btn-primary btn-sm' %>
+        <a id="close-ticket-form-<%= test.id %>" class="btn btn-default btn-sm">Cancel</a>
+      </div>
+    </div>
+  <% end %>
+</div>

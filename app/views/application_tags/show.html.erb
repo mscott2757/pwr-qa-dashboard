@@ -35,15 +35,11 @@
                   <div class="jira-section">
                     <a class="test-type-tag" id="jira-toggle-<%= test.id %>">JIRA
                       <% if test.jira_tickets.count > 0 %>
-                        <span class="badge"><%= test.jira_tickets.count %></span>
+                        <span class="badge" id="jira-badge-<%= test.id %>"><%= test.jira_tickets.count %></span>
                       <%end %>
                     </a>
-                    <ul class="sub" id="sub-<%= test.id %>">
-                      <% test.jira_tickets.each do |ticket| %>
-                        <li><a href="<%= ticket.ticket_url %>"><%= ticket.ticket_number %></a></li>
-                      <% end %>
-                      <li><a>add new ticket</a></li>
-                    </ul>
+                    <%= render partial: "jira_tickets", locals: { test: test } %>
+                    <%= render partial: "add_ticket_form", locals: {test: test} %>
                   </div>
 
                   <%= link_to 'edit', edit_test_path(test), remote: true, class: 'edit-test-link', id: "edit-test-#{ test.id }"  %>

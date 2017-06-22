@@ -5,9 +5,19 @@ $(".test-container-<%= test.id %>").hover(function() {
 });
 
 $("#jira-toggle-<%= test.id %>").click(function() {
-  if ($("#sub-<%= test.id %>").css("display") == "none") {
+  if ($("#sub-<%= test.id %>").css("display") == "none" && $("#add-ticket-<%= test.id %>").css("display") == "none") {
     $("#sub-<%= test.id %>").css("display", "block");
   } else {
     $("#sub-<%= test.id %>").hide();
   }
+  $("#add-ticket-<%= test.id %>").hide();
+});
+
+$("#add-ticket-toggle-<%= test.id %>").click(function() {
+  $("#sub-<%= test.id %>").hide();
+  $("#add-ticket-<%= test.id %>").show();
+});
+
+$("#close-ticket-form-<%= test.id %>").click(function() {
+  $("#add-ticket-<%= test.id %>").hide();
 });

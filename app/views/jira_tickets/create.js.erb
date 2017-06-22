@@ -1,0 +1,12 @@
+$("#sub-<%= @test.id %>").replaceWith("<%= j render(partial: '/application_tags/jira_tickets', locals: { test: @test }) %>");
+
+$("#add-ticket-toggle-<%= @test.id %>").click(function() {
+  $("#sub-<%= @test.id %>").hide();
+  $("#add-ticket-<%= @test.id %>").show();
+});
+
+$("#add-ticket-<%= @test.id %>").hide();
+$("#sub-<%= @test.id %>").show();
+
+$("#jira-badge-<%= @test.id %>").remove();
+$("#jira-toggle-<%= @test.id %>").append($('<span class="badge" id="jira-badge-<%= @test.id %>"><%= @test.jira_tickets.count %></span>'))

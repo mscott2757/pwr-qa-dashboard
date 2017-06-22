@@ -1,0 +1,6 @@
+<ul class="sub" id="sub-<%= test.id %>">
+  <% test.jira_tickets.each do |ticket| %>
+    <li><a href="<%= ticket.ticket_url %>"><%= ticket.ticket_number %></a></li>
+  <% end %>
+  <li><a id="add-ticket-toggle-<%= test.id %>">add new ticket</a></li>
+</ul>

@@ -36,6 +36,7 @@ class ApplicationTagsController < ApplicationController
   def show
     @app = ApplicationTag.find(params[:id])
     @method = params[:method]
+    @jira_ticket = JiraTicket.new
 
     @tests = @app.tests_by_env(@method, @env_tag)
   end

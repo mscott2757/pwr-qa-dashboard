@@ -11,6 +11,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :jira_tickets
+
   get '/environment_tags/select_env/:id', to: 'environment_tags#select_environment', as: 'change_env'
   get '/environment_tags/toggle_rotate', to: 'environment_tags#toggle_rotate', as: 'toggle_rotate'
 

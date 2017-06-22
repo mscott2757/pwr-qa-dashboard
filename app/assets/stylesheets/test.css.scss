@@ -37,12 +37,12 @@
   width: 100%;
   background-color: #fff;
   border: 1px solid #ddd;
-  height: 115px;
+  height: 125px;
 }
 
 .test-body {
   width: 100%;
-  height: 30%;
+  height: 25%;
   vertical-align: top;
   display: inline-block;
 }
@@ -74,7 +74,7 @@
 
 .test-header {
   width: 100%;
-  height: 70%;
+  height: 75%;
   border-bottom: 1px solid #ddd;
   position: relative;
 }
@@ -281,4 +281,13 @@ ul.sub > li:last-child {
 a.test-type-tag:hover {
 	text-decoration: none;
 	color: #999;
+}
+
+.add-ticket-form {
+	position: absolute;
+  z-index: 200;
+  width: 75%;
+	background: #fff;
+  border: 1px solid #ddd;
+	display: none;
 }
