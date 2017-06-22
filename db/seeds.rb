@@ -20,11 +20,6 @@ ApplicationTag.create(name: "Extranet")
 TestType.create(name: "Frontend")
 TestType.create(name: "Backend")
 
-# EnvironmentTag.create(name: "qa")
-# EnvironmentTag.create(name: "dev")
-# EnvironmentTag.create(name: "prod")
-# EnvironmentTag.create(name: "staging")
-
 Test.all.each do |test|
   # EnvironmentTag.find(rand(EnvironmentTag.count) + 1).tests << test
   ApplicationTag.find(rand(ApplicationTag.count) + 1).primary_tests << test

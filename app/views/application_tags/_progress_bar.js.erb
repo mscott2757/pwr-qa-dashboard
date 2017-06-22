@@ -11,16 +11,17 @@ $( function() {
       }
     });
 
-    // $("#progressbar-<%= app.id %>").children().eq(0).attr('title', "<%= app.passing_tests_format(method, env_tag) %>");
-
     <% if tooltip %>
       if (<%= total_failing %> > 0) {
         $div = $("<div style='display: inline-block; height: 100%; width: <%= 100 * total_failing / (total_passing + total_failing) %>%'></div>");
-        $("#progressbar-<%= app.id %>").append($div)
-          .children().eq(1).attr('title', "<%= app.failing_tests_format(method, env_tag) %>");
+        $("#progressbar-<%= app.id %>").append($div);
+
+        $div.tooltip({
+          items: "div",
+          content: "<%= j render partial: "failing_tests", locals: { failing_tests: app.failing_tests(method, env_tag) } %>"
+        });
       }
 
-      $("#progressbar-<%= app.id %>").tooltip(25);
     <% end %>
   <% else %>
     $("#progressbar-<%= app.id %>").progressbar({
