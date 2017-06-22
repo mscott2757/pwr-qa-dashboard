@@ -40,12 +40,14 @@ class ApplicationController < ActionController::Base
 		[:error, :warning, :success, :info].each do |type|
 			return flash[type] unless flash[type].blank?
 		end
+		return ""
 	end
 
 	def flash_type
 		[:error, :warning, :success, :info].each do |type|
 			return type unless flash[type].blank?
 		end
+		return ""
 	end
 
 end
