@@ -34,8 +34,8 @@
 
                   <div class="jira-section">
                     <a class="test-type-tag" id="jira-toggle-<%= test.id %>">JIRA
-                      <% if test.jira_tickets.count > 0 %>
-                        <span class="badge" id="jira-badge-<%= test.id %>"><%= test.jira_tickets.count %></span>
+                      <% if test.active_jira_tickets.count > 0 %>
+                        <span class="badge" id="jira-badge-<%= test.id %>"><%= test.active_jira_tickets.count %></span>
                       <%end %>
                     </a>
                     <%= render partial: "jira_tickets", locals: { test: test } %>

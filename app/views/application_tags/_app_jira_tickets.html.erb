@@ -3,5 +3,13 @@
     <a class="test-type-tag" id="jira-toggle-<%= app.id %>">JIRA
       <span class="badge"><%= tickets.count %></span>
     </a>
+    <ul class="sub" id="sub-<%= app.id %>">
+      <% tickets.each do |ticket| %>
+        <li><a href="<%= ticket.ticket_url %>"><%= ticket.ticket_number %></a></li>
+      <% end %>
+    </ul>
   </div>
+  <script>
+    <%= render partial: "bind_jira.js.erb", locals: { app: app } %>
+  </script>
 <% end %>

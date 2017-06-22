@@ -247,7 +247,7 @@
 ul.sub {
 	position: absolute;
   z-index: 200;
-  width: 40%;
+  width: 45%;
   display: none;
 	background: #fff;
   list-style-type: none;
@@ -270,12 +270,16 @@ ul.sub > li > a {
 ul.sub > li {
 }
 
-ul.sub > li:last-child {
+ul.sub > li.add-link {
   border-top: 1px solid #ddd;
 }
 
 .jira-section {
 	display: inline-block;
+}
+
+.resolve-link {
+	float: right;
 }
 
 a.test-type-tag:hover {

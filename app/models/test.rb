@@ -24,8 +24,8 @@ class Test < ApplicationRecord
     self.as_json(only: [:name, :id, :parameterized], include: { primary_app: { only: [:name, :id] }, test_type: { only: [:name, :id] }, application_tags: { only: [:name, :id] }, environment_tag: { only: [:name, :id] } })
   end
 
-  def jira_tickets_json
-    self.as_json(only: [:name, :id], include: { jira_tickets: { only: [:ticket_number, :ticket_url] } } )
+  def active_jira_tickets
+    self.jira_tickets.select{ |ticket| !ticket.resolved }
   end
 
   def self.base_url

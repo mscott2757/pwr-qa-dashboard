@@ -105,7 +105,7 @@ class ApplicationTag < ApplicationRecord
   end
 
   def jira_tickets(method, env_tag)
-    self.send(jira_method(method)).select { |ticket| ticket.test.env_tag == env_tag }
+    self.send(jira_method(method)).select { |ticket| ticket.test.env_tag == env_tag and !ticket.resolved }
   end
 
 end

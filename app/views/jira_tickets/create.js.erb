@@ -9,4 +9,4 @@ $("#add-ticket-<%= @test.id %>").hide();
 $("#sub-<%= @test.id %>").show();
 
 $("#jira-badge-<%= @test.id %>").remove();
-$("#jira-toggle-<%= @test.id %>").append($('<span class="badge" id="jira-badge-<%= @test.id %>"><%= @test.jira_tickets.count %></span>'))
+$("#jira-toggle-<%= @test.id %>").append($('<span class="badge" id="jira-badge-<%= @test.id %>"><%= @test.active_jira_tickets.count %></span>'))
