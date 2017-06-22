@@ -18,10 +18,19 @@
 }
 
 .app-summary-title {
+	height: 100%;
   width: 35%;
   float: left;
   display: inline;
   padding-left: 20px;
+	position: relative;
+}
+
+.app-jira {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	padding-left: 20px;
 }
 
 .app-summary-recent {

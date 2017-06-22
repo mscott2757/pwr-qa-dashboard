@@ -33,8 +33,7 @@ Test.all.each do |test|
 
   TestType.find(rand(TestType.count) + 1).tests << test
 
-  if test.id % 3 == 0
+  if test.id % 5 == 0
     test.jira_tickets << JiraTicket.create(ticket_number: test.id.to_s, ticket_url: "#")
-    test.jira_tickets << JiraTicket.create(ticket_number: (test.id * 100).to_s, ticket_url: "#")
   end
 end

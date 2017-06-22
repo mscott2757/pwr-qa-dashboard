@@ -3,8 +3,10 @@ class ApplicationTag < ApplicationRecord
 
   has_many :test_application_tags, dependent: :destroy
   has_many :tests, -> { distinct }, through: :test_application_tags
+  has_many :indirect_jira_tickets, through: :tests, source: :jira_tickets
 
   has_many :primary_tests, class_name: "Test", foreign_key: "primary_app_id"
+  has_many :primary_jira_tickets, through: :primary_tests, source: :jira_tickets
 
   def self.find_by_name(app_name)
     app_name = app_name.strip
@@ -96,6 +98,14 @@ class ApplicationTag < ApplicationRecord
 
   def self.test_type_display(method)
     method == "primary_tests" ? "Primary Tests" : "Indirect Tests"
+  end
+
+  def jira_method(method)
+    method == "primary_tests" ? "primary_jira_tickets" : "indirect_jira_tickets"
+  end
+
+  def jira_tickets(method, env_tag)
+    self.send(jira_method(method)).select { |ticket| ticket.test.env_tag == env_tag }
   end
 
 end

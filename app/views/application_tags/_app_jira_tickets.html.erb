@@ -1,0 +1,7 @@
+<% if tickets.count > 0 %>
+  <div class="app-jira">
+    <a class="test-type-tag" id="jira-toggle-<%= app.id %>">JIRA
+      <span class="badge"><%= tickets.count %></span>
+    </a>
+  </div>
+<% end %>
