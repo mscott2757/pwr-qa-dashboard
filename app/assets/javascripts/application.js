@@ -29,6 +29,6 @@ $(document).ajaxComplete(function(event, request) {
 	var msg = request.getResponseHeader('X-Message');
 	var type = request.getResponseHeader('X-Message-Type');
 	if (msg) {
-		$("nav").after('<div class="alert alert-'+type+'"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'+msg+'</div>');
+		$("nav").after('<div class="alert alert-'+type+'" id="qa-alert"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'+msg+'</div>');
 	}
 });
