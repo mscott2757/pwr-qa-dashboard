@@ -25,19 +25,10 @@
 //= require components
 //= require_tree .
 
-// var time = new Date().getTime();
-//
-// $(document.body).bind("mousemove keypress", function(e) {
-//   time = new Date().getTime();
-// });
-//
-// function refresh() {
-//   if (new Date().getTime() - time >= 60000) {
-//     window.location.reload(true);
-//   } else {
-//     setTimeout(refresh, 10000);
-//   }
-// }
-//
-// setTimeout(refresh, 10000);
-
+$(document).ajaxComplete(function(event, request) {
+	var msg = request.getResponseHeader('X-Message');
+	var type = request.getResponseHeader('X-Message-Type');
+	if (msg) {
+		$("nav").after('<div class="alert alert-'+type+'"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'+msg+'</div>');
+	}
+});
