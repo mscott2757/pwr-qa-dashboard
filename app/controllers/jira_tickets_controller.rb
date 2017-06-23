@@ -1,9 +1,13 @@
 class JiraTicketsController < ApplicationController
+	def index
+		@tickets = JiraTicket.edit_all_as_json
+	end
+
   def create
     @ticket = JiraTicket.create(jira_params)
     @test = Test.find(params[:jira_ticket][:test_id])
 
-		flash[:info] = "Successfully added JIRA ticket #{ @ticket.ticket_number }"
+		flash[:info] = "Successfully added JIRA ticket #{ @ticket.number }"
     respond_to do |format|
       format.js
       format.html { redirect_back(fallback_location: root_path) }
@@ -15,7 +19,7 @@ class JiraTicketsController < ApplicationController
     @ticket.update(resolved: true)
     @test = @ticket.test
 
-		flash[:info] = "Successfully resolved JIRA ticket #{ @ticket.ticket_number }"
+		flash[:info] = "Successfully resolved JIRA ticket #{ @ticket.number }"
     respond_to do |format|
       format.js
       format.html { redirect_back(fallback_location: root_path) }
@@ -23,6 +27,6 @@ class JiraTicketsController < ApplicationController
   end
 
   def jira_params
-    params.require(:jira_ticket).permit(:ticket_number, :ticket_url, :test_id)
+    params.require(:jira_ticket).permit(:number, :test_id)
   end
 end

@@ -5,7 +5,7 @@
     </a>
     <ul class="sub" id="sub-<%= app.id %>">
       <% tickets.each do |ticket| %>
-        <li><a href="<%= ticket.ticket_url %>"><%= ticket.ticket_number %></a></li>
+        <li><a href="<%= ticket.jira_url %>"><%= ticket.number %></a></li>
       <% end %>
     </ul>
   </div>

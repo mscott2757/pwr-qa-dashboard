@@ -26,8 +26,7 @@ ActiveRecord::Schema.define(version: 20170622192254) do
   end
 
   create_table "jira_tickets", force: :cascade do |t|
-    t.string "ticket_number"
-    t.string "ticket_url"
+    t.string "number"
     t.integer "test_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
