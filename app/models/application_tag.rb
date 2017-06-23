@@ -20,11 +20,11 @@ class ApplicationTag < ApplicationRecord
   end
 
   def self.edit_all_as_json
-    ApplicationTag.all.includes(:primary_tests, :tests).as_json(only: [:id, :name], include: { primary_tests: { only: [:name, :id] }, tests: { only: [:name, :id] } })
+    ApplicationTag.all.includes(:primary_tests, :tests).as_json(only: [:id, :name, :threshold], include: { primary_tests: { only: [:name, :id] }, tests: { only: [:name, :id] } })
   end
 
   def self.all_as_json
-    ApplicationTag.all.as_json(only: [:id, :name])
+    ApplicationTag.all.as_json(only: [:id, :name, :threshold])
   end
 
   def self.select_options
@@ -32,7 +32,7 @@ class ApplicationTag < ApplicationRecord
   end
 
   def edit_as_json
-    self.as_json(only: [:name, :id], include: { primary_tests: { only: [:name, :id] }, tests: { only: [:name, :id] } })
+    self.as_json(only: [:name, :id, :threshold], include: { primary_tests: { only: [:name, :id] }, tests: { only: [:name, :id] } })
   end
 
   # returns page title for page header

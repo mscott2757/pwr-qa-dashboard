@@ -10,6 +10,7 @@
     e.preventDefault()
     data =
       name: ReactDOM.findDOMNode(@refs.name).value
+      threshold: ReactDOM.findDOMNode(@refs.threshold).value
     $.ajax
       method: 'PUT'
       url: "/application_tags/#{ @props.app.id }"
@@ -36,6 +37,9 @@
   hasTests: ->
     @props.tests.length > 0 or @props.primary_tests.length > 0
 
+  thresholdFormat: ->
+    @props.app.threshold + "%"
+
   editAppForm: ->
     React.DOM.tr null,
       React.DOM.td null,
@@ -44,6 +48,12 @@
           type: 'text'
           defaultValue: @props.app.name
           ref: 'name'
+      React.DOM.td null,
+        React.DOM.input
+          className: 'form-control'
+          type: 'type'
+          defaultValue: @props.app.threshold
+          ref: 'threshold'
       React.DOM.td null,
         React.DOM.a
           className: 'btn btn-default btn-sm edit-test-update'
@@ -57,6 +67,7 @@
   editAppRow: ->
     React.DOM.tr null,
       React.DOM.td null, @props.app.name
+      React.DOM.td null, @thresholdFormat()
       React.DOM.td null,
         React.DOM.a
           className: 'btn btn-default btn-sm edit-test-update'

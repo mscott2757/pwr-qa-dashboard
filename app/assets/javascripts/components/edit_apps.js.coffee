@@ -39,6 +39,7 @@
         React.DOM.thead null,
           React.DOM.tr null,
             React.DOM.th null, 'Application'
+            React.DOM.th null, 'Threshold'
             React.DOM.th null, 'Actions'
         React.DOM.tbody null,
           for app in @state.applications

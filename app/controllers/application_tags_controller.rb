@@ -26,7 +26,7 @@ class ApplicationTagsController < ApplicationController
 	end
 
   def create
-    @app_tag = ApplicationTag.new(application_tag_params)
+    @app_tag = ApplicationTag.new(app_params)
     if @app_tag.save
 			flash[:info] = "Successfully added app"
       render json: @app_tag.edit_as_json
@@ -44,7 +44,7 @@ class ApplicationTagsController < ApplicationController
 
   def update
     @app_tag = ApplicationTag.find(params[:id])
-    if @app_tag.update(application_tag_params)
+    if @app_tag.update(app_params)
 			flash[:info] = "Application successfully updated"
       render json: @app_tag.edit_as_json
     else
@@ -59,8 +59,8 @@ class ApplicationTagsController < ApplicationController
     head :no_content
   end
 
-  def application_tag_params
-    params.require(:application_tag).permit(:name)
+  def app_params
+    params.require(:application_tag).permit(:name, :threshold)
   end
 
   def edit
