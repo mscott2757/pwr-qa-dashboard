@@ -43,8 +43,8 @@ class ApplicationTagsController < ApplicationController
 
   def update
     @app_tag = ApplicationTag.find(params[:id])
-		flash[:info] = "Application successfully updated"
     if @app_tag.update(application_tag_params)
+			flash[:info] = "Application successfully updated"
       render json: @app_tag.edit_as_json
     else
       render json: @app_tag.errors, status: :unprocessable_entity

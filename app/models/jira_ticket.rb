@@ -8,7 +8,7 @@ class JiraTicket < ApplicationRecord
   end
 
   def self.edit_all_as_json
-    JiraTicket.all.includes(:test).as_json(only: [:number, :id, :resolved], include: { test: { only: [:name, :id] } } )
+    JiraTicket.all.includes(:test).as_json(only: [:number, :id, :resolved], include: { test: { only: [:name, :id] } } ).sort_by { |ticket| ticket["resolved"] ? 1 : 0 }
   end
 
   def edit_as_json
