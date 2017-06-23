@@ -16,12 +16,13 @@ class ApplicationTagsController < ApplicationController
   end
 
 	def index
-		@applications = ApplicationTag.all
 		if params[:method]
 			@method = params[:method]
 		else
 			@method = "primary_tests"
 		end
+
+		@applications = ApplicationTag.relevant_apps(@method, @env_tag)
 	end
 
   def create
