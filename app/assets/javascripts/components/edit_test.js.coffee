@@ -132,6 +132,12 @@
 
       React.DOM.td null, @applicationTagsFormat()
 
+  defaultTestType: ->
+    if "test_type" of @props.test
+      return @props.test.test_type.id
+    else
+      return 0
+
   render: ->
     if !@state.edit
       @testRow()
@@ -155,13 +161,16 @@
         React.DOM.td null,
           React.DOM.select
             className: 'form-control'
-            defaultValue: @props.test.test_type.name if "test_type" of @props.test
+            defaultValue: @defaultTestType()
             ref: 'test_type'
             for test_type in @props.types
               React.DOM.option
                 key: test_type.id
                 value: test_type.id
                 test_type.name
+            React.DOM.option
+              value: 0
+              "None"
 
         React.DOM.td null,
           React.DOM.select

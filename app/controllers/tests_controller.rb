@@ -15,8 +15,12 @@ class TestsController < ApplicationController
     environment = EnvironmentTag.find(params[:test][:environment_tag])
     environment.tests << @test
 
-		test_type = TestType.find(params[:test][:test_type])
-		test_type.tests << @test
+		if params[:test][:test_type] != "0"
+			test_type = TestType.find(params[:test][:test_type])
+			test_type.tests << @test
+		elsif @test.test_type
+			@test.test_type.tests.delete(@test)
+		end
 
     if params[:test][:modal]
       indirect_apps = params[:test][:application_tags].split(", ").map { |app_name| ApplicationTag.find_by_name(app_name) }

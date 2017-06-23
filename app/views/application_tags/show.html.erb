@@ -30,7 +30,9 @@
               <% end %>
               <div>
                 <div class="test-type-title">
-                  <p class="test-type-tag"><%= test.test_type.name if test.test_type %></p>
+                  <% if test.test_type %>
+                    <p class="test-type-tag"><%= test.test_type.name %></p>
+                  <% end %>
 
                   <div class="jira-section">
                     <a class="test-type-tag" id="jira-toggle-<%= test.id %>">JIRA

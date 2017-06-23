@@ -11,7 +11,7 @@
 								<%= f.label "Test Type" %>
 							</div>
 							<div class="col-sm-7">
-								<%= f.select :test_type, options_for_select(types, test.test_type.id), {}, { class: 'form-control' } %>
+								<%= f.select :test_type, options_for_select(types, test.default_test_type_id), {}, { class: 'form-control' } %>
 							</div>
 						</div>
 

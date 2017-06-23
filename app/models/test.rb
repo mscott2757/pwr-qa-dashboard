@@ -28,6 +28,10 @@ class Test < ApplicationRecord
     self.jira_tickets.select{ |ticket| !ticket.resolved }
   end
 
+  def default_test_type_id
+    self.test_type ? self.test_type.id : 0
+  end
+
   def self.base_url
     "http://ci.powerreviews.io/job/qa-tests/view/All/"
   end

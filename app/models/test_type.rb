@@ -6,6 +6,6 @@ class TestType < ApplicationRecord
   end
 
   def self.select_options
-    self.all.map{ |test_type| [test_type.name, test_type.id] }
+    self.all.map{ |test_type| [test_type.name, test_type.id] } << ["None", 0]
   end
 end
