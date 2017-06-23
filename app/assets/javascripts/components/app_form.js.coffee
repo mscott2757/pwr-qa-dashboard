@@ -1,20 +1,29 @@
 @AppForm = React.createClass
   getInitialState: ->
     name: ''
+    threshold: 0
 
   handleSubmit: (e) ->
     e.preventDefault()
-    name = ReactDOM.findDOMNode(@refs.name).value
-    $.post "/application_tags", { application_tag: { name: name } }, ((data) =>
+    data =
+      name: ReactDOM.findDOMNode(@refs.name).value
+      threshold: ReactDOM.findDOMNode(@refs.threshold).value
+
+    $.post "/application_tags", { application_tag: data }, ((data) =>
       @props.handleNewApp data
+      @clearFields()
       @setState @getInitialState())
       , 'JSON'
 
   handleChange: (e) ->
-    @setState name: e.target.name
+    @setState "#{ e.target.name }": e.target.value
+
+  clearFields: ->
+    @refs.name.value = ""
+    @refs.threshold.value = ""
 
   valid: ->
-    @state.name
+    @state.name and @state.threshold and @state.threshold >= 0 and @state.threshold <= 100
 
   render: ->
     React.DOM.form
@@ -28,6 +37,13 @@
           placeholder: 'Name'
           name: 'name'
           ref: "name"
+          onChange: @handleChange
+        React.DOM.input
+          type: 'number'
+          className: 'form-control'
+          placeholder: 'Threshold'
+          name: 'threshold'
+          ref: "threshold"
           onChange: @handleChange
       React.DOM.button
         type: 'submit'
