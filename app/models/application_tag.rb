@@ -10,13 +10,7 @@ class ApplicationTag < ApplicationRecord
 
   def self.find_by_name(app_name)
     app_name = app_name.strip
-    if ApplicationTag.exists?(name: app_name)
-      app_tag = ApplicationTag.where(name: app_name).first
-    else
-      app_tag = ApplicationTag.create(name: app_name)
-    end
-
-    return app_tag
+    self.exists?(name: app_name) ? self.where(name: app_name).first : self.create(name: app_name)
   end
 
   def self.edit_all_as_json
@@ -31,8 +25,9 @@ class ApplicationTag < ApplicationRecord
     self.all.map{ |app_tag| [app_tag.name, app_tag.id] }
   end
 
-  def edit_as_json
-    self.as_json(only: [:name, :id, :threshold], include: { primary_tests: { only: [:name, :id] }, tests: { only: [:name, :id] } })
+  # returns apps with any passing or failing tests in the last 7 days
+  def self.relevant_apps(method, env_tag)
+    self.all.select { |app| app.total_passing(method, env_tag) + app.total_failing(method, env_tag) > 0 }
   end
 
   # returns page title for page header
@@ -40,14 +35,21 @@ class ApplicationTag < ApplicationRecord
     method == "primary_tests" ? "Applications" : "Indirect Applications"
   end
 
+  def self.test_type_display(method)
+    method == "primary_tests" ? "Primary Tests" : "Indirect Tests"
+  end
+
+  def self.possible_culprits(env_tag)
+    self.relevant_apps("tests", env_tag).map { |app| [app, app.percent_failing(env_tag)] }.select{ |app| app[1] > app[0].threshold / 100.0 }.map { |app| "Warning #{ (app[1] * 100).to_i }% of tests for #{ app[0].name } are failing" }
+  end
+
+  def edit_as_json
+    self.as_json(only: [:name, :id, :threshold], include: { primary_tests: { only: [:name, :id] }, tests: { only: [:name, :id] } })
+  end
+
   # returns the portion of an app's tests in and env sorted by name
   def tests_by_env(method, env_tag)
     self.send(method).select { |test| test.env_tag == env_tag }.sort_by{ |test| test.name.downcase }
-  end
-
-  # returns apps with any passing or failing tests in the last 7 days
-  def self.relevant_apps(method, env_tag)
-    self.all.select { |app| app.total_passing(method, env_tag) + app.total_failing(method, env_tag) > 0 }
   end
 
   def tests_by_env_json(method, env_tag)
@@ -85,29 +87,18 @@ class ApplicationTag < ApplicationRecord
 
   def total_failing_format(method, env_tag)
     total = total_failing(method, env_tag)
-    return (total == 1) ? "#{total} failing test" : "#{total} failing tests"
+    (total == 1) ? "#{total} failing test" : "#{total} failing tests"
   end
 
   def percent_failing(env_tag)
     failing = self.total_failing("tests", env_tag)
     total = failing + self.total_passing("tests", env_tag)
-    if total > 0
-      return failing.to_f / total
-    end
-    return 0.0
-  end
-
-  def self.possible_culprits(env_tag)
-    self.relevant_apps("tests", env_tag).map { |app| [app, app.percent_failing(env_tag)] }.select{ |app| app[1] > app[0].threshold / 100.0 }.map { |app| "Warning #{ (app[1] * 100).to_i }% of tests for #{ app[0].name } are failing" }
+    (total > 0) ? failing.to_f / total : 0.0
   end
 
   # returns 3 most recent failing tests
   def recent_failing_tests(method, env_tag)
     failing_tests(method, env_tag).sort { |a,b| b.last_build_time <=> a.last_build_time }.first(3)
-  end
-
-  def self.test_type_display(method)
-    method == "primary_tests" ? "Primary Tests" : "Indirect Tests"
   end
 
   # obtain which field to query jira tickets, based on method

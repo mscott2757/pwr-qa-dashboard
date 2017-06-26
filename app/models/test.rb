@@ -16,21 +16,6 @@ class Test < ApplicationRecord
   belongs_to :environment_tag, optional: true
   belongs_to :test_type, optional: true
 
-  def self.edit_all_as_json
-    Test.all.includes(:primary_app, :environment_tag, :test_type, :application_tags).as_json(only: [:name, :id, :parameterized], include: { primary_app: { only: [:name, :id] }, test_type: {only: [:name, :id] }, application_tags: { only: [:name, :id] }, environment_tag: { only: [:name, :id] } }).sort_by { |test| test["name"].downcase }
-  end
-
-  def edit_as_json
-    self.as_json(only: [:name, :id, :parameterized], include: { primary_app: { only: [:name, :id] }, test_type: { only: [:name, :id] }, application_tags: { only: [:name, :id] }, environment_tag: { only: [:name, :id] } })
-  end
-
-  def active_jira_tickets
-    self.jira_tickets.select{ |ticket| !ticket.resolved }
-  end
-
-  def default_test_type_id
-    self.test_type ? self.test_type.id : 0
-  end
 
   def self.base_url
     "http://ci.powerreviews.io/job/qa-tests/view/All/"
@@ -101,15 +86,24 @@ class Test < ApplicationRecord
         test.last_successful_build_time = Time.at(last_successful_build_json["timestamp"]/1000).to_datetime
       end
 
-      # last failed build
-      # if test_json["lastFailedBuild"]
-      #   test.last_failed_build = test_json["lastFailedBuild"]["number"]
-      #   last_failed_build_json = test.json_build_tree(test.last_failed_build, "timestamp")
-      #   test.last_failed_build_time = Time.at(last_failed_build_json["timestamp"]/1000).to_datetime
-      # end
-
       test.save
     end
+  end
+
+  def self.edit_all_as_json
+    Test.all.includes(:primary_app, :environment_tag, :test_type, :application_tags).as_json(only: [:name, :id, :parameterized], include: { primary_app: { only: [:name, :id] }, test_type: {only: [:name, :id] }, application_tags: { only: [:name, :id] }, environment_tag: { only: [:name, :id] } }).sort_by { |test| test["name"].downcase }
+  end
+
+  def edit_as_json
+    self.as_json(only: [:name, :id, :parameterized], include: { primary_app: { only: [:name, :id] }, test_type: { only: [:name, :id] }, application_tags: { only: [:name, :id] }, environment_tag: { only: [:name, :id] } })
+  end
+
+  def active_jira_tickets
+    self.jira_tickets.select{ |ticket| !ticket.resolved }
+  end
+
+  def default_test_type_id
+    self.test_type ? self.test_type.id : 0
   end
 
   def json_tree(tree_attr)
@@ -153,17 +147,11 @@ class Test < ApplicationRecord
   end
 
   def last_build_display
-    if last_build_time.nil?
-      return "N/A"
-    end
-    "#{distance_of_time_in_words(last_build_time, Time.now)} ago"
+    last_build_time.nil? ? "N/A" : "#{distance_of_time_in_words(last_build_time, Time.now)} ago"
   end
 
   def last_successful_build_display
-    if last_build_time.nil?
-      return "N/A"
-    end
-    "#{distance_of_time_in_words(last_successful_build_time, Time.now)} ago"
+    last_build_time.nil? ? "N/A" : "#{distance_of_time_in_words(last_successful_build_time, Time.now)} ago"
   end
 
   def status_display
