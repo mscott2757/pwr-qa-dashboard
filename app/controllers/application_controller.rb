@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 	before_action :set_cache_headers
   before_action :set_environment
-  before_action :set_session
+  before_action :set_rotate
   before_action :disable_rotate
 
 	after_action :flash_to_headers
@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
     @env_tag = EnvironmentTag.find(session[:env_id])
   end
 
-  def set_session
+  def set_rotate
     if !session.include?(:rotate)
       session[:rotate] = false
     end

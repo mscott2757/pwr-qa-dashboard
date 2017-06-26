@@ -17,6 +17,7 @@ class ApplicationTagsController < ApplicationController
   end
 
 	def index
+		session[:rotate] = true
 		@method = "primary_tests"
 		@applications = ApplicationTag.relevant_apps(@method, @env_tag)
 	end
