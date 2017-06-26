@@ -34,7 +34,7 @@ class ApplicationTagsController < ApplicationController
   def create
     @app_tag = ApplicationTag.new(app_params)
     if @app_tag.save
-			flash[:info] = "Successfully added app"
+			flash[:info] = "Successfully added #{ @app_tag.name }"
       render json: @app_tag.edit_as_json
     else
       render json: @app_tag.errors, status: :unprocessable_entity
@@ -51,7 +51,7 @@ class ApplicationTagsController < ApplicationController
   def update
     @app_tag = ApplicationTag.find(params[:id])
     if @app_tag.update(app_params)
-			flash[:info] = "Application successfully updated"
+			flash[:info] = "#{ @app_tag.name } successfully updated"
       render json: @app_tag.edit_as_json
     else
       render json: @app_tag.errors, status: :unprocessable_entity
@@ -61,7 +61,7 @@ class ApplicationTagsController < ApplicationController
   def destroy
     @app_tag = ApplicationTag.find(params[:id])
     @app_tag.destroy
-		flash[:info] = "Application successfully deleted"
+		flash[:info] = "Successfully deleted #{ @app_tag.name }"
     head :no_content
   end
 

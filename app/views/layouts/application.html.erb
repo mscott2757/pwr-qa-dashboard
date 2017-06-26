@@ -54,6 +54,17 @@
 			</div>
     </nav>
 
+    <% flash.each do |key, value| %>
+      <% if key == "danger" %>
+        <% value.each do |culprit| %>
+          <div class="alert alert-<%= key %>" id="qa-alert"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><%= culprit %></div>
+        <% end %>
+      <% else %>
+        <div class="alert alert-<%= key %>" id="qa-alert"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><%= value %></div>
+      <% end %>
+    <% end %>
+    <% flash.discard %>
+
     <div class="container" id="qa-container">
       <%= yield %>
     </div>

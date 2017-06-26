@@ -40,14 +40,12 @@ class ApplicationTag < ApplicationRecord
     method == "primary_tests" ? "Applications" : "Indirect Applications"
   end
 
-  def tests_sorted_by_last_build(method, env_tag)
-    self.send(method).select { |test| test.env_tag == env_tag }.sort_by { |test| test.last_build_time.nil? ? Time.at(0) : test.last_build_time }.reverse
-  end
-
+  # returns the portion of an app's tests in and env sorted by name
   def tests_by_env(method, env_tag)
     self.send(method).select { |test| test.env_tag == env_tag }.sort_by{ |test| test.name.downcase }
   end
 
+  # returns apps with any passing or failing tests in the last 7 days
   def self.relevant_apps(method, env_tag)
     self.all.select { |app| app.total_passing(method, env_tag) + app.total_failing(method, env_tag) > 0 }
   end
@@ -58,7 +56,6 @@ class ApplicationTag < ApplicationRecord
 
   def passing_tests(method, env_tag)
     self.send(method).where(last_build_time: 7.days.ago..Time.now).select { |test| test.passing? and test.env_tag == env_tag }
-    # self.send(method).select { |test| test.passing? and test.env_tag == env_tag }
   end
 
   def passing_tests_format(method, env_tag)
@@ -76,7 +73,6 @@ class ApplicationTag < ApplicationRecord
 
   def failing_tests(method, env_tag)
     self.send(method).where(last_build_time: 7.days.ago..Time.now).select { |test| test.failing? and test.env_tag == env_tag }
-    # self.send(method).select { |test| test.failing? and test.env_tag == env_tag }
   end
 
   def failing_tests_format(method, env_tag)
@@ -89,13 +85,23 @@ class ApplicationTag < ApplicationRecord
 
   def total_failing_format(method, env_tag)
     total = total_failing(method, env_tag)
-    if total == 1
-      return "#{total} failing test"
-    else
-      return "#{total} failing tests"
-    end
+    return (total == 1) ? "#{total} failing test" : "#{total} failing tests"
   end
 
+  def percent_failing(env_tag)
+    failing = self.total_failing("tests", env_tag)
+    total = failing + self.total_passing("tests", env_tag)
+    if total > 0
+      return failing.to_f / total
+    end
+    return 0.0
+  end
+
+  def self.possible_culprits(env_tag)
+    self.relevant_apps("tests", env_tag).map { |app| [app, app.percent_failing(env_tag)] }.select{ |app| app[1] > app[0].threshold / 100.0 }.map { |app| "Warning #{ (app[1] * 100).to_i }% of tests for #{ app[0].name } are failing" }
+  end
+
+  # returns 3 most recent failing tests
   def recent_failing_tests(method, env_tag)
     failing_tests(method, env_tag).sort { |a,b| b.last_build_time <=> a.last_build_time }.first(3)
   end
@@ -104,10 +110,12 @@ class ApplicationTag < ApplicationRecord
     method == "primary_tests" ? "Primary Tests" : "Indirect Tests"
   end
 
+  # obtain which field to query jira tickets, based on method
   def jira_method(method)
     method == "primary_tests" ? "primary_jira_tickets" : "indirect_jira_tickets"
   end
 
+  # obtain unresolved tickets that match environment and method
   def jira_tickets(method, env_tag)
     self.send(jira_method(method)).select { |ticket| ticket.test.env_tag == env_tag and !ticket.resolved }
   end
