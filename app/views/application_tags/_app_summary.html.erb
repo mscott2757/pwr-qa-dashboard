@@ -8,12 +8,14 @@
         <%= render partial: "app_jira_tickets", locals: { app: app, tickets: app.jira_tickets(method, env_tag) } %>
       </div>
       <div class="app-summary-recent">
-        <p><b>Recent Failed tests</b></p>
-        <ul class="recent-failed-list">
-          <% app.recent_failing_tests(method, env_tag).each do |test| %>
-            <li><%= test.name %></li>
-          <% end %>
-        </ul>
+        <% if app.total_failing(method, env_tag) > 0 %>
+          <p><b>Recent Failed tests</b></p>
+          <ul class="recent-failed-list">
+            <% app.recent_failing_tests(method, env_tag).each do |test| %>
+              <li><%= test.name %></li>
+            <% end %>
+          </ul>
+        <% end %>
       </div>
     </div>
     <div class="app-summary-progress">

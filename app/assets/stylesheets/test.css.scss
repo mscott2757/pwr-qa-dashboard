@@ -101,7 +101,7 @@
 .test-type-title {
   color: #a8a8a8;
   display: inline-block;
-  width: 49%;
+  width: 59%;
   margin-bottom: 0;
   padding-left: 5px;
 	vertical-align: bottom;
@@ -120,7 +120,7 @@
   display: inline-block;
   padding-right: 5px;
   margin-bottom: 3px;;
-  width: 49%;
+  width: 39%;
   font-size: 90%;
 	vertical-align: bottom;
 }
@@ -144,7 +144,7 @@
 
 .test-type-tag {
 	background: #eee;
-  border-radius: 3px 0 0 3px;
+  border-radius: 5px;
   color: #999;
   display: inline-block;
   height: 100%;
@@ -155,6 +155,7 @@
   text-decoration: none;
   -webkit-transition: color 0.2s;
 	font-size: 85%;
+  cursor: pointer;
 }
 
 

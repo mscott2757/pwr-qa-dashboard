@@ -1,4 +1,6 @@
 class EnvironmentTag < ApplicationRecord
+  validates_uniqueness_of :name
+
   belongs_to :setting, optional: true
 
   has_many :tests

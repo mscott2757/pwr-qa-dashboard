@@ -125,6 +125,10 @@ class Test < ApplicationRecord
     self.environment_tag
   end
 
+  def build_url
+    self.parameterized ? "#{job_url}/buildWithParameters?token=QaJobToken" : "#{job_url}/build?token=QaJobToken"
+  end
+
   def last_build_pst_hr
     self.last_build_time.in_time_zone("Pacific Time (US & Canada)").hour
   end
