@@ -3,22 +3,16 @@ class ApplicationTagsController < ApplicationController
 	skip_before_action :disable_rotate, only: [:index]
 
   def set_columns
-    if !session.include?(:app_col)
-      session[:app_col] = 2
-    end
-
+    session[:app_col] = 2 if !session.include?(:app_col)
     @app_col = session[:app_col].to_i
 
-    if !session.include?(:test_col)
-      session[:test_col] = 4
-    end
-
+    session[:test_col] = 4 if !session.include?(:test_col)
     @test_col = session[:test_col].to_i
   end
 
 	def index
-		session[:rotate] = true
 		@method = "primary_tests"
+		session[:rotate] = true
 		@applications = ApplicationTag.relevant_apps(@method, @env_tag)
 	end
 

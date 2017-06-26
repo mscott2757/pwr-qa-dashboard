@@ -1,4 +1,5 @@
 class TestsController < ApplicationController
+
   def index
     @tests = Test.edit_all_as_json
     @applications = ApplicationTag.all_as_json
@@ -28,9 +29,7 @@ class TestsController < ApplicationController
       indirect_apps = params[:test][:application_tags] ? params[:test][:application_tags].map { |app_id| ApplicationTag.find(app_id) } : []
     end
 
-    indirect_apps.each do |app|
-      @test.application_tags << app
-    end
+    @test.application_tags.push(*indirect_apps)
 
     @test.application_tags.reverse.each do |app|
       if !indirect_apps.include?(app)

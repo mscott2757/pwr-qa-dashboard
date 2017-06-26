@@ -49,7 +49,12 @@ class Test < ApplicationRecord
         parameterized = false
         last_build_json["actions"].each do |action|
           if action["parameters"]
-            env_name = action["parameters"][0]["value"]
+            if action["parameters"][0]["value"] == "scheduler"
+              env_name = test.last_build_pst_hr < 4 ? "qa" : "dev"
+            else
+              env_name = action["parameters"][0]["value"]
+            end
+
             env_tag = EnvironmentTag.find_by_name(env_name)
             env_tag.tests << test
 
@@ -118,6 +123,10 @@ class Test < ApplicationRecord
 
   def env_tag
     self.environment_tag
+  end
+
+  def last_build_pst_hr
+    self.last_build_time.in_time_zone("Pacific Time (US & Canada)").hour
   end
 
   def last_build_url
