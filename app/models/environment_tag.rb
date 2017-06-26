@@ -18,11 +18,7 @@ class EnvironmentTag < ApplicationRecord
   end
 
   def self.get_next_env(env_tag)
-    if env_tag.id == self.count
-      return self.first
-    end
-
-    return self.find(env_tag.id + 1)
+    env_tag.name == "qa" ? self.find_by_name("dev") : self.find_by_name("qa")
   end
 
   def self.select_options

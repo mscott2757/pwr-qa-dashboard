@@ -1,5 +1,6 @@
 class ApplicationTagsController < ApplicationController
 	before_action :set_columns
+	skip_before_action :disable_rotate, only: [:index]
 
   def set_columns
     if !session.include?(:app_col)
@@ -16,13 +17,17 @@ class ApplicationTagsController < ApplicationController
   end
 
 	def index
-		if params[:method]
-			@method = params[:method]
-		else
-			@method = "primary_tests"
-		end
-
+		@method = "primary_tests"
 		@applications = ApplicationTag.relevant_apps(@method, @env_tag)
+	end
+
+	def indirect
+		@method = "tests"
+		@applications = ApplicationTag.relevant_apps(@method, @env_tag)
+
+		respond_to do |format|
+			format.html { render template: "application_tags/index" }
+		end
 	end
 
   def create

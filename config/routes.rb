@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   end
   resources :application_tags do
     collection do
+      get 'indirect'
       get 'edit'
       get 'edit_app_col'
       get 'edit_test_col'

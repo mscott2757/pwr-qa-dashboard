@@ -9,36 +9,7 @@
   <% @applications.each_slice(@app_col) do |app_row| %>
     <div class="row">
       <% app_row.each do |app| %>
-        <div class="col-sm-<%= 12 / @app_col %>" id="app-summary-col">
-          <div class="app-summary-container">
-            <div class="app-summary-header">
-              <div class="app-summary-title">
-                <%= link_to application_tag_path(id: app.id, method: @method), class: "link-title" do %>
-                  <h3><%= app.name %></h3>
-                <% end %>
-                <%= render partial: "app_jira_tickets", locals: { app: app, tickets: app.jira_tickets(@method, @env_tag) } %>
-              </div>
-              <div class="app-summary-recent">
-                <p><b>Recent Failed tests</b></p>
-                <ul class="recent-failed-list">
-                  <% app.recent_failing_tests(@method, @env_tag).each do |test| %>
-                    <li><%= test.name %></li>
-                  <% end %>
-                </ul>
-              </div>
-            </div>
-            <div class="app-summary-progress">
-              <div class="progress-summary">
-                <p class="total-passing"><%= app.total_passing_format(@method, @env_tag) %></p>
-                <p class="total-failing" align="right"><%= app.total_failing_format(@method, @env_tag) %></p>
-              </div>
-              <div id="progressbar-<%= app.id %>"></div>
-            </div>
-            <script>
-              <%= render partial: "progress_bar.js", locals: { app: app, method: @method, tooltip: true, env_tag: @env_tag } %>
-            </script>
-          </div>
-        </div>
+        <%= render partial: "app_summary", locals: { app: app, env_tag: @env_tag, app_col: @app_col, method: @method } %>
       <% end %>
     </div>
   <% end %>

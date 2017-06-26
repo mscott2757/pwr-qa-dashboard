@@ -51,7 +51,7 @@
       React.DOM.td null,
         React.DOM.input
           className: 'form-control'
-          type: 'type'
+          type: 'number'
           defaultValue: @props.app.threshold
           ref: 'threshold'
       React.DOM.td null,

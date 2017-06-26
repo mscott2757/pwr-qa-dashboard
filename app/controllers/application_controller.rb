@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
 	before_action :set_cache_headers
   before_action :set_environment
   before_action :set_session
+  before_action :disable_rotate
 
 	after_action :flash_to_headers
 
@@ -25,6 +26,10 @@ class ApplicationController < ActionController::Base
       session[:rotate] = false
     end
   end
+
+	def disable_rotate
+		session[:rotate] = false
+	end
 
 	def flash_to_headers
 		return unless request.xhr?

@@ -1,5 +1,11 @@
 class EnvironmentTagsController < ApplicationController
+	skip_before_action :disable_rotate
+
   def select_environment
+		if params[:stop_rotate]
+			session[:rotate] = false
+		end
+
     session[:env_id] = params[:id]
     respond_to do |format|
       format.html { redirect_back(fallback_location: root_path) }
