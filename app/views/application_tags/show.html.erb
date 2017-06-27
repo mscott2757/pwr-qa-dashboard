@@ -43,12 +43,10 @@
                     <%= render partial: "jira_tickets", locals: { test: test } %>
                     <%= render partial: "add_ticket_form", locals: {test: test} %>
                   </div>
-                  <a class="test-type-tag" id="trigger-build-<%= test.id %>">Build</a>
 
                   <%= link_to 'edit', edit_test_path(test), remote: true, class: 'edit-test-link', id: "edit-test-#{ test.id }"  %>
   <script>
     <%= render partial: "bind_edit_link.js.erb", locals: { test: test } %>
-    <%= render partial: "bind_trigger.js.erb", locals: { test: test } %>
   </script>
                 </div>
                 <p align="right" class="test-link-title"><%= link_to test.last_build_display, test.last_build_url, class: 'test-link' %> </p>
