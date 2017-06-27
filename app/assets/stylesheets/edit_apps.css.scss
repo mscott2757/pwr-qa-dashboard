@@ -113,3 +113,52 @@
   width: 100%;
   padding: 0;
 }
+
+.threshold-form {
+  display: none;
+}
+
+.threshold-container {
+  margin-left: 8px;
+  width: 57%;
+  display: inline-block;
+}
+
+.app-threshold-container {
+  padding-top: 7px;
+  width: 100%;
+}
+
+#app-form-group {
+  width: 55%;
+}
+
+.threshold-label {
+  width: 20%;
+  display: inline-block;
+}
+
+.threshold-display {
+  margin-left: 12px;
+  width: 5%;
+  display: inline-block;
+}
+
+#threshold-slider {
+  margin-left: 16px;
+  display: inline-block;
+  width: 50%;
+}
+
+.app-threshold-display {
+  margin-left: 12px;
+  margin-bottom: 0px;
+  width: 20%;
+  display: inline-block;
+}
+
+.app-threshold-slider {
+  display: inline-block;
+  width: 70%;
+}
+

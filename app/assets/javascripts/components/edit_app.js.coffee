@@ -1,16 +1,25 @@
 @EditApp = React.createClass
   getInitialState: ->
     edit: false
+    threshold: @props.app.threshold
 
   handleToggle: (e) ->
     e.preventDefault()
     @setState edit: !@state.edit
 
+  componentDidUpdate: (prevProps, prevState) ->
+    if @state.edit
+      $("#threshold-slider-#{ @props.app.id }").slider({
+        value: @state.threshold
+        slide: (e, ui) =>
+          @setState threshold: ui.value
+      })
+
   handleEdit: (e) ->
     e.preventDefault()
     data =
       name: ReactDOM.findDOMNode(@refs.name).value
-      threshold: ReactDOM.findDOMNode(@refs.threshold).value
+      threshold: @state.threshold
     $.ajax
       method: 'PUT'
       url: "/application_tags/#{ @props.app.id }"
@@ -49,11 +58,14 @@
           defaultValue: @props.app.name
           ref: 'name'
       React.DOM.td null,
-        React.DOM.input
-          className: 'form-control'
-          type: 'number'
-          defaultValue: @props.app.threshold
-          ref: 'threshold'
+        React.DOM.div
+          className: "app-threshold-container"
+          React.DOM.div
+            id: "threshold-slider-#{ @props.app.id }"
+            className: "app-threshold-slider"
+          React.DOM.p
+            className: "app-threshold-display"
+            "#{@state.threshold}%"
       React.DOM.td null,
         React.DOM.a
           className: 'btn btn-default btn-sm edit-test-update'
