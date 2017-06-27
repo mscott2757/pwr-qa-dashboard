@@ -10,8 +10,10 @@ class TestsController < ApplicationController
   def update
     @test = Test.find(params[:id])
 
-    primary_app = ApplicationTag.find(params[:test][:primary_app])
-    primary_app.primary_tests << @test
+    if (params[:test][:primary_app] != "")
+      primary_app = ApplicationTag.find(params[:test][:primary_app])
+      primary_app.primary_tests << @test
+    end
 
     environment = EnvironmentTag.find(params[:test][:environment_tag])
     environment.tests << @test
