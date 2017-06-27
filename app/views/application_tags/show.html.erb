@@ -44,6 +44,7 @@
                     <%= render partial: "add_ticket_form", locals: {test: test} %>
                   </div>
 
+                  <%= link_to 'Build', build_test_path(test), remote: true, class: 'test-type-tag', id: "build-link-#{ test.id }"  %>
                   <%= link_to 'edit', edit_test_path(test), remote: true, class: 'edit-test-link', id: "edit-test-#{ test.id }"  %>
   <script>
     <%= render partial: "bind_edit_link.js.erb", locals: { test: test } %>

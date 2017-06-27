@@ -1,0 +1,7 @@
+$('#build-link-<%= @test.id %>').click(function () {
+  return false;
+});
+
+setTimeout(function () {
+  $('#build-link-<%= @test.id %>').unbind('click');
+}, 60000);

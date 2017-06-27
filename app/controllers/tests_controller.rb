@@ -56,4 +56,15 @@ class TestsController < ApplicationController
       format.js
     end
   end
+
+  def build
+    @test = Test.find(params[:id])
+    @test.start_build
+
+    flash[:info] = "Build for #{ @test.name } started"
+    respond_to do |format|
+      format.js
+    end
+  end
+
 end

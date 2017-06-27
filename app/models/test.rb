@@ -1,6 +1,8 @@
 require 'action_view'
 require 'httparty'
 require 'open-uri'
+require 'uri'
+require 'net/http'
 
 include ActionView::Helpers::DateHelper
 
@@ -127,6 +129,11 @@ class Test < ApplicationRecord
 
   def build_url
     self.parameterized ? "#{job_url}/buildWithParameters?token=QaJobToken" : "#{job_url}/build?token=QaJobToken"
+  end
+
+  def start_build
+    uri = URI(self.build_url)
+    self.parameterized ? Net::HTTP.post_form(uri, { parameters: [{ name: "env", value: self.env_tag.name }] }) : Net::HTTP.post_form(uri, {})
   end
 
   def last_build_pst_hr
