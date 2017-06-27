@@ -1,3 +1,5 @@
+<%= render partial: "layouts/flash_message", locals: { type: "info", msg: flash[:info] } %>
+
 $("#sub-<%= @test.id %> li#ticket-<%= @ticket.id %>").remove();
 $("#jira-badge-<%= @test.id %>").remove();
 <% if @test.active_jira_tickets.count > 0 %>

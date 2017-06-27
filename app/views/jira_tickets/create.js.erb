@@ -1,3 +1,5 @@
+<%= render partial: "layouts/flash_message", locals: { type: "info", msg: flash[:info] } %>
+
 $("#sub-<%= @test.id %>").replaceWith("<%= j render(partial: '/application_tags/jira_tickets', locals: { test: @test }) %>");
 
 $("#add-ticket-toggle-<%= @test.id %>").click(function() {

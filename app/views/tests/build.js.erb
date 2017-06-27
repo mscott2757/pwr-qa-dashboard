@@ -1,3 +1,5 @@
+<%= render partial: "layouts/flash_message", locals: { type: "info", msg: flash[:info] } %>
+
 $('#build-link-<%= @test.id %>').click(function () {
   return false;
 });
