@@ -7,22 +7,27 @@ $( function() {
       max: <%= total_passing + total_failing %>,
       classes: {
         "ui-progressbar-value": "ui-corner-left app-progress-success",
-        "ui-progressbar": "ui-corner-all app-progress-fail"
+        "ui-progressbar": "ui-corner-all app-progress-bar"
       }
     });
 
-    <% if tooltip %>
-      if (<%= total_failing %> > 0) {
-        $div = $("<div style='display: inline-block; height: 100%; width: <%= 100 * total_failing / (total_passing + total_failing) %>%'></div>");
-        $("#progressbar-<%= app.id %>").append($div);
+    $("#progressbar-<%= app.id %>").append($('<p class="total-passing"><%= total_passing %> passing</p>'))
 
+
+    <% if total_failing > 0 %>
+      $div = $("<div style='display: inline-block; height: 100%; position: relative; width: <%= 100 * total_failing / (total_passing + total_failing) %>%'></div>");
+      $("#progressbar-<%= app.id %>").append($div);
+      $("#progressbar-<%= app.id %>").append($('<p class="total-failing" align="right"><%= total_failing %> failing</p>'));
+
+
+      <% if tooltip %>
         $div.tooltip({
           items: "div",
           content: "<%= j render partial: "failing_tests", locals: { failing_tests: app.failing_tests(method, env_tag) } %>"
         });
-      }
-
+      <% end %>
     <% end %>
+
   <% else %>
     $("#progressbar-<%= app.id %>").progressbar({
       value: 0,

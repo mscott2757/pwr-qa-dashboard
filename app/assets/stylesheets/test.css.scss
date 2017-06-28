@@ -13,6 +13,8 @@
   margin-bottom: 5px;
   background-color: #ffffff;
   border: 1px solid #ddd;
+  position: relative;
+  height: 155px;
 }
 
 #app-show-header > h2 {
@@ -25,8 +27,11 @@
 }
 
 .app-progress-header {
-  width: 50%;
-  padding: 0 20px 8px 20px;
+  width: 100%;
+  padding: 0;
+  height: 46px;
+  position: absolute;
+  bottom: 0;
 }
 
 #test-summary-col {
@@ -37,15 +42,31 @@
   width: 100%;
   background-color: #fff;
   border: 1px solid #ddd;
-  height: 125px;
+  height: 140px;
 }
 
 .test-body {
   width: 100%;
-  height: 25%;
+  height: 34%;
   vertical-align: top;
   display: inline-block;
 }
+
+.test-header {
+  width: 100%;
+  height: 66%;
+  border-bottom: 1px solid #ddd;
+  position: relative;
+}
+
+.test-header > div {
+  position: absolute;
+  bottom: 0;
+  vertical-align: bottom;
+  display: inline-block;
+  width: 100%;
+}
+
 
 .test-status {
   height: 100%;
@@ -70,21 +91,6 @@
   padding-right: 7px;
   padding-top: 7px;
   margin-bottom: 0;
-}
-
-.test-header {
-  width: 100%;
-  height: 75%;
-  border-bottom: 1px solid #ddd;
-  position: relative;
-}
-
-.test-header > div {
-  position: absolute;
-  bottom: 0;
-  vertical-align: bottom;
-  display: inline-block;
-  width: 100%;
 }
 
 .last-successful {
@@ -113,15 +119,24 @@
   margin-bottom: 3px;
   position: absolute;
   bottom: 0;
-  font-size: 85%;
+  font-size: 90%;
+}
+
+.test-last-build {
+  color: #fff;
+  margin-bottom: 3px;
+  padding-right: 5px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-size: 90%;
 }
 
 .test-link-title {
   display: inline-block;
   padding-right: 5px;
-  margin-bottom: 3px;;
+  margin-bottom: 5px;;
   width: 39%;
-  font-size: 90%;
 	vertical-align: bottom;
 }
 
@@ -133,11 +148,11 @@
 	text-decoration: none;
 }
 
-.last-successful-link {
+.last-build-link {
   color: #fff;
 }
 
-.last-successful-link:hover {
+.last-build-link:hover {
   text-decoration: none;
   color: #a8a8a8;
 }
@@ -159,7 +174,7 @@
 }
 
 
-.test-header > a > h5 {
+.test-header > a > h4 {
   margin: 0;
   padding-top: 10px;
   padding-left: 10px;

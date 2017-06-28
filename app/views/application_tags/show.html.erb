@@ -2,14 +2,10 @@
 	<div class="page-title">
     <h2 class="app-page-title"><%= @app.name %> <em>- <%= @env_tag.name %></em></h2>
     <h4><%= ApplicationTag.test_type_display(@method) %></h4>
+    <p class="col-links">Tests per row: <%= render partial: 'test_col_link', locals: { col_num: 3 } %> <%= render partial: 'test_col_link', locals: { col_num: 4 } %> <%= render partial: 'test_col_link', locals: { col_num: 6 } %></p>
 	</div>
   <div class="app-progress-header">
-    <div class="progress-summary">
-      <p class="total-passing"><%= @app.total_passing_format(@method, @env_tag) %></p>
-      <p class="total-failing" align="right"><%= @app.total_failing_format(@method, @env_tag) %></p>
-    </div>
     <div id="progressbar-<%= @app.id %>"></div>
-    <p class="col-links">Tests per row: <%= render partial: 'test_col_link', locals: { col_num: 3 } %> <%= render partial: 'test_col_link', locals: { col_num: 4 } %> <%= render partial: 'test_col_link', locals: { col_num: 6 } %></p>
   </div>
   <script>
     <%= render partial: "progress_bar.js", locals: { app: @app, method: @method, tooltip: false, env_tag: @env_tag } %>
@@ -26,7 +22,7 @@
 
             <div class="test-header">
               <%= link_to test.job_url, class: 'link-title' do %>
-                <h5><%= test.name %></h5>
+                <h4><%= test.name %></h4>
               <% end %>
               <div>
                 <div class="test-type-title">
@@ -45,22 +41,22 @@
                   </div>
 
                   <%= link_to 'Build', build_test_path(test), remote: true, class: 'test-type-tag', id: "build-link-#{ test.id }"  %>
-                  <%= link_to 'edit', edit_test_path(test), remote: true, class: 'edit-test-link', id: "edit-test-#{ test.id }"  %>
-  <script>
-    <%= render partial: "bind_edit_link.js.erb", locals: { test: test } %>
-  </script>
                 </div>
-                <p align="right" class="test-link-title"><%= link_to test.last_build_display, test.last_build_url, class: 'test-link' %> </p>
+                <p align="right" class="test-link-title"><%= link_to 'edit', edit_test_path(test), remote: true, class: 'edit-test-link', id: "edit-test-#{ test.id }"  %> </p>
+                <script>
+                  <%= render partial: "bind_edit_link.js.erb", locals: { test: test } %>
+                </script>
               </div>
             </div>
 
             <div class="test-body">
               <div class="test-status test-status-<%= test.status_css %>">
                 <% if test.failing? and test.last_successful_build %>
-                  <p class="test-status-title"><%= link_to "last successful #{test.last_successful_build_display}", test.last_successful_build_url, class: 'last-successful-link' %></p>
+                  <p class="test-status-title"><%= link_to "last successful #{test.last_successful_build_display}", test.last_successful_build_url, class: 'last-build-link' %></p>
                 <% elsif !test.passing? %>
                   <p class="test-status-title"><%= test.status_display %></p>
                 <% end %>
+                <p align="right" class="test-last-build"><%= link_to test.last_build_display, test.last_build_url, class: 'last-build-link' %></p>
               </div>
             </div>
 

@@ -5,7 +5,8 @@
   width: 100%;
   background-color: #fff;
   border: 1px solid #ddd;
-  height: 180px;
+  height: 185px;
+  position: relative;
 }
 
 .app-summary-header {
@@ -19,7 +20,7 @@
 
 .app-summary-title {
 	height: 100%;
-  width: 35%;
+  width: 50%;
   float: left;
   display: inline;
   padding-left: 20px;
@@ -35,7 +36,7 @@
 }
 
 .app-summary-recent {
-  width: 65%;
+  width: 50%;
   float: left;
   display: inline;
 }
@@ -46,7 +47,9 @@
 
 .app-summary-progress {
   width: 100%;
-  padding: 5px 20px 0 20px;
+  height: 44%;
+  position: absolute;
+  bottom: 0;
 }
 
 .app-progress-success {
@@ -54,7 +57,9 @@
   border: none;
   margin-bottom: 0 !important;
   padding-bottom: 0;
+  position: relative;
   display: inline-block;
+  height: 100%;
 }
 
 .col-links {
@@ -62,8 +67,9 @@
   margin-top: 10px;
 }
 
-.app-progress-fail {
+.app-progress-bar {
   background-color: #C62828;
+  height: 100%;
 }
 
 .app-progress-disabled {
@@ -81,6 +87,25 @@
 
 .link-title:hover {
 	text-decoration: none;
+}
+
+.total-failing {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  color: #fff;
+  margin-bottom: 5px;
+  margin-right: 5px;
+}
+
+.total-passing {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  color: #fff;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  font-weight: normal;
 }
 
 .progress-summary > p {
