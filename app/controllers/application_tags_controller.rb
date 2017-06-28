@@ -13,6 +13,7 @@ class ApplicationTagsController < ApplicationController
 	def index
 		@method = "primary_tests"
 		session[:rotate] = true
+    flash[:danger] = ApplicationTag.possible_culprits(@env_tag)
 		@applications = ApplicationTag.relevant_apps(@method, @env_tag)
 	end
 
