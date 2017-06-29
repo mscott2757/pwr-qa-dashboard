@@ -52,6 +52,9 @@ class Test < ApplicationRecord
               env_name = "dev"
               internal_name += "-dev"
             end
+            if exists?(internal_name: name)
+              Test.where(internal_name: name).first.destroy
+            end
           else
             env_name = action["parameters"][0]["value"]
           end
