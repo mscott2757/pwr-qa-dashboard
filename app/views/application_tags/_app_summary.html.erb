@@ -6,7 +6,9 @@
           <h2><%= app.name %></h2>
         <% end %>
         <div class="app-badges">
-          <%= react_component 'JiraTickets', { tickets: app.jira_tickets(method, env_tag) }, { class: "app-notes" } %>
+          <% if app.jira_tickets(method, env_tag).count > 0 %>
+            <%= react_component 'JiraTickets', { tickets: app.jira_tickets(method, env_tag) }, { class: "app-notes" } %>
+          <% end %>
         </div>
       </div>
       <div class="app-summary-recent">

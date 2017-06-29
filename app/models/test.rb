@@ -7,7 +7,8 @@ require 'net/http'
 include ActionView::Helpers::DateHelper
 
 class Test < ApplicationRecord
-  validates_uniqueness_of :name
+  validates_uniqueness_of :internal_name
+  validates :internal_name, presence: true, allow_blank: false
   validates :name, presence: true, allow_blank: false
 
   has_many :test_application_tags, dependent: :destroy
@@ -29,62 +30,60 @@ class Test < ApplicationRecord
     jobs_json = jobs_json.parsed_response
 
     jobs_json["jobs"].each do |job|
+      job_url = job["url"]
       name = job["name"]
-      if exists?(name: name)
-        test = where(name: name).first
-      else
-        test = new(name: name, job_url: job["url"])
-      end
+      internal_name = job["name"]
+      test_json = Test.json_tree(job_url , "color,lastBuild[number],lastSuccessfulBuild[number],lastFailedBuild[number]")
 
-      test_json = test.json_tree("color,lastBuild[number],lastSuccessfulBuild[number],lastFailedBuild[number]")
+      next if !test_json["lastBuild"]
+      last_build = test_json["lastBuild"]["number"]
+      last_build_json = Test.json_build_tree(job_url, last_build, "actions[causes[userName],parameters[value]],timestamp")
+      last_build_time = Time.at(last_build_json["timestamp"]/1000).to_datetime
 
-      # last build information
-      if test_json["lastBuild"]
-        # jump to next test if no new build and status hasn't changed
-        if test.last_build and test.last_build == test_json["lastBuild"]["number"] and test.status == test_json["color"]
-          next
-        end
-
-        test.last_build = test_json["lastBuild"]["number"]
-        last_build_json = test.json_build_tree(test.last_build, "actions[causes[userName],parameters[value]],timestamp")
-        test.last_build_time = Time.at(last_build_json["timestamp"]/1000).to_datetime
-
-        parameterized = false
-        last_build_json["actions"].each do |action|
-          if action["parameters"]
-            if action["parameters"][0]["value"] == "scheduler"
-              env_name = test.last_build_pst_hr < 4 ? "qa" : "dev"
+      env_name = ""
+      parameterized = false
+      last_build_json["actions"].each do |action|
+        if action["parameters"]
+          if action["parameters"][0]["value"] == "scheduler"
+            if last_build_time.in_time_zone("Pacific Time (US & Canada)").hour < 4
+              env_name = "qa"
+              internal_name += "-qa"
             else
-              env_name = action["parameters"][0]["value"]
+              env_name = "dev"
+              internal_name += "-dev"
             end
-
-            env_tag = EnvironmentTag.find_by_name(env_name)
-            env_tag.tests << test
-
-            parameterized = true
+          else
+            env_name = action["parameters"][0]["value"]
           end
-
-          # if action["causes"]
-          #   test.author = action["causes"][0]["userName"]
-          # end
+          parameterized = true
         end
-
-        if !parameterized
-          if test.name.downcase.include?("dev")
-            env_tag = EnvironmentTag.find_by_name("dev")
-            env_tag.tests << test
-          elsif test.name.downcase.include?("qa")
-            env_tag = EnvironmentTag.find_by_name("qa")
-            env_tag.tests << test
-          elsif test.name.downcase.include?("prod")
-            env_tag = EnvironmentTag.find_by_name("prod")
-            env_tag.tests << test
-          end
-        end
-        test.parameterized = parameterized
       end
 
-      # get status of test
+      if !parameterized
+        if name.downcase.include?("dev")
+          env_name = "dev"
+        elsif name.downcase.include?("qa")
+          env_name = "qa"
+        elsif name.downcase.include?("prod")
+          env_name = "prod"
+        end
+      end
+
+      if exists?(internal_name: internal_name)
+        test = where(internal_name: internal_name).first
+      else
+        test = Test.new(name: name, internal_name: internal_name, job_url: job_url)
+      end
+
+      test.parameterized = parameterized
+      test.last_build = last_build
+      test.last_build_time = last_build_time
+
+      if env_name != ""
+        env_tag = EnvironmentTag.find_by_name(env_name)
+        env_tag.tests << test
+      end
+
       test.status = test_json["color"]
 
       # last successful build
@@ -98,13 +97,35 @@ class Test < ApplicationRecord
     end
   end
 
+  def self.set_internal_names
+    Test.all.each do |test|
+      if test.parameterized
+        test.destroy
+      else
+        test.internal_name = test.name
+        test.save
+      end
+    end
+  end
+
   def self.edit_all_as_json
     Test.all.includes(:primary_app, :environment_tag, :test_type, :application_tags).as_json(only: [:name, :id, :parameterized], include: { primary_app: { only: [:name, :id] }, test_type: {only: [:name, :id] }, application_tags: { only: [:name, :id] }, environment_tag: { only: [:name, :id] } }).sort_by { |test| test["name"].downcase }
+  end
+
+  def self.json_tree(j_url, tree_attr)
+    response = HTTParty.get("#{j_url}/api/json?tree=#{tree_attr}")
+    response.parsed_response
+  end
+
+  def self.json_build_tree(j_url, build_number, tree_attr)
+    response = HTTParty.get("#{j_url}/#{build_number}/api/json?tree=#{tree_attr}")
+    response.parsed_response
   end
 
   def edit_as_json
     self.as_json(only: [:name, :id, :parameterized], include: { primary_app: { only: [:name, :id] }, test_type: { only: [:name, :id] }, application_tags: { only: [:name, :id] }, environment_tag: { only: [:name, :id] } })
   end
+
 
   def active_jira_tickets
     self.jira_tickets.select{ |ticket| !ticket.resolved }
