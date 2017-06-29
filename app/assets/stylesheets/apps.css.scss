@@ -1,6 +1,7 @@
 .app-body {
   padding: 0 15px;
 }
+
 .app-summary-container {
   width: 100%;
   background-color: #fff;
@@ -31,13 +32,18 @@
   margin: 0;
 }
 
-.app-jira {
+.app-badges {
+  margin-left: 5px;
 	position: absolute;
 	left: 0;
 	bottom: 0;
-  margin-left: 5px;
 	width: 100%;
 }
+
+.app-notes {
+  display: inline-block;
+}
+
 
 .app-summary-recent {
   width: 50%;

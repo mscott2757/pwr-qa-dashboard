@@ -5,13 +5,9 @@ class JiraTicketsController < ApplicationController
 
   def create
     @ticket = JiraTicket.create(jira_params)
-    @test = Test.find(params[:jira_ticket][:test_id])
-
 		flash[:info] = "Successfully added JIRA ticket #{ @ticket.number }"
-    respond_to do |format|
-      format.js
-      format.html { redirect_back(fallback_location: root_path) }
-    end
+
+    render json: @ticket
   end
 
 	def update
@@ -37,13 +33,9 @@ class JiraTicketsController < ApplicationController
   def resolve
     @ticket = JiraTicket.find(params[:id])
     @ticket.update(resolved: true)
-    @test = @ticket.test
 
 		flash[:info] = "Successfully resolved JIRA ticket #{ @ticket.number }"
-    respond_to do |format|
-      format.js
-      format.html { redirect_back(fallback_location: root_path) }
-    end
+    head :no_content
   end
 
   def jira_params

@@ -31,13 +31,7 @@
                   <% end %>
 
                   <div class="jira-section">
-                    <a class="test-type-tag" id="jira-toggle-<%= test.id %>">JIRA
-                      <% if test.active_jira_tickets.count > 0 %>
-                        <span class="badge" id="jira-badge-<%= test.id %>"><%= test.active_jira_tickets.count %></span>
-                      <%end %>
-                    </a>
-                    <%= render partial: "jira_tickets", locals: { test: test } %>
-                    <%= render partial: "add_ticket_form", locals: {test: test} %>
+                    <%= react_component 'TestJira', { tickets: test.active_jira_tickets, test: test }, { class: "app-notes" } %>
                   </div>
 
                   <%= link_to 'Build', build_test_path(test), remote: true, class: 'test-type-tag', id: "build-link-#{ test.id }"  %>

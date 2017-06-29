@@ -1,6 +1,0 @@
-<ul class="sub" id="sub-<%= test.id %>">
-  <% test.active_jira_tickets.each do |ticket| %>
-    <li id="ticket-<%= ticket.id %>"><a href="<%= ticket.jira_url %>"><%= ticket.number %></a> <%= link_to "resolve", resolve_jira_ticket_path(ticket), remote: true, method: "post" , class: "resolve-link" %></li>
-  <% end %>
-  <li class="add-link"><a id="add-ticket-toggle-<%= test.id %>">add new ticket</a></li>
-</ul>

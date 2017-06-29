@@ -5,7 +5,9 @@
         <%= link_to application_tag_path(id: app.id, method: method), class: "link-title" do %>
           <h2><%= app.name %></h2>
         <% end %>
-        <%= render partial: "app_jira_tickets", locals: { app: app, tickets: app.jira_tickets(method, env_tag) } %>
+        <div class="app-badges">
+          <%= react_component 'JiraTickets', { tickets: app.jira_tickets(method, env_tag) }, { class: "app-notes" } %>
+        </div>
       </div>
       <div class="app-summary-recent">
         <% if app.total_failing(method, env_tag) > 0 %>

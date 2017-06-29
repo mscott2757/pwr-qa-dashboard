@@ -263,8 +263,8 @@ ul.sub {
 	position: absolute;
   z-index: 200;
   width: 45%;
-  display: none;
 	background: #fff;
+  display: block;
   list-style-type: none;
 	padding: 0;
   border: 1px solid #ddd;
@@ -308,5 +308,5 @@ a.test-type-tag:hover {
   width: 75%;
 	background: #fff;
   border: 1px solid #ddd;
-	display: none;
+	padding: 8px;
 }
