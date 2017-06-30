@@ -80,6 +80,7 @@
       environment_tag: env_tag
       application_tags: @mapAppNames(ReactDOM.findDOMNode(@refs.application_tags).value)
       test_type: ReactDOM.findDOMNode(@refs.test_type).value
+      group: ReactDOM.findDOMNode(@refs.group).value
     $.ajax
       method: 'PUT'
       url: "/tests/#{ @props.test.id }"
@@ -122,6 +123,8 @@
         React.DOM.td null, @props.test.test_type.name
       else
         React.DOM.td null, ""
+
+      React.DOM.td null, @props.test.group
 
       if "primary_app" of @props.test
         React.DOM.td null, @props.test.primary_app.name
@@ -171,6 +174,13 @@
             React.DOM.option
               value: 0
               "None"
+
+        React.DOM.td null,
+          React.DOM.input
+            className: 'form-control'
+            type: "number"
+            ref: 'group'
+            defaultValue: @props.test.group
 
         React.DOM.td null,
           React.DOM.select

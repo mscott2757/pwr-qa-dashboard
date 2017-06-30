@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170629185741) do
+ActiveRecord::Schema.define(version: 20170630194058) do
 
   create_table "application_tags", force: :cascade do |t|
     t.string "name"
@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(version: 20170629185741) do
     t.boolean "parameterized", default: false
     t.integer "test_type_id"
     t.string "internal_name"
+    t.integer "group", default: 10
   end
 
 end

@@ -39,6 +39,8 @@ class TestsController < ApplicationController
       end
     end
 
+    @test.update(group: params[:test][:group])
+
 		flash[:info] = "Successfully updated #{ @test.name }"
     if params[:test][:modal]
       redirect_back(fallback_location: root_path)

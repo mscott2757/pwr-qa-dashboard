@@ -112,7 +112,7 @@ class Test < ApplicationRecord
   end
 
   def self.edit_all_as_json
-    Test.all.includes(:primary_app, :environment_tag, :test_type, :application_tags).as_json(only: [:name, :id, :parameterized], include: { primary_app: { only: [:name, :id] }, test_type: {only: [:name, :id] }, application_tags: { only: [:name, :id] }, environment_tag: { only: [:name, :id] } }).sort_by { |test| test["name"].downcase }
+    Test.all.includes(:primary_app, :environment_tag, :test_type, :application_tags).as_json(only: [:name, :id, :parameterized, :group], include: { primary_app: { only: [:name, :id] }, test_type: {only: [:name, :id] }, application_tags: { only: [:name, :id] }, environment_tag: { only: [:name, :id] } }).sort_by { |test| test["name"].downcase }
   end
 
   def self.json_tree(j_url, tree_attr)
@@ -126,7 +126,7 @@ class Test < ApplicationRecord
   end
 
   def edit_as_json
-    self.as_json(only: [:name, :id, :parameterized], include: { primary_app: { only: [:name, :id] }, test_type: { only: [:name, :id] }, application_tags: { only: [:name, :id] }, environment_tag: { only: [:name, :id] } })
+    self.as_json(only: [:name, :id, :parameterized, :group], include: { primary_app: { only: [:name, :id] }, test_type: { only: [:name, :id] }, application_tags: { only: [:name, :id] }, environment_tag: { only: [:name, :id] } })
   end
 
 

@@ -24,6 +24,7 @@
           React.DOM.tr null,
             React.DOM.th null, 'Test'
             React.DOM.th null, 'Type'
+            React.DOM.th null, 'Group'
             React.DOM.th null, 'Application'
             React.DOM.th null, 'Environment'
             React.DOM.th null, 'Indirect Applications'
