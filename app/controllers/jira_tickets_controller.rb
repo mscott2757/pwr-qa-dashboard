@@ -12,10 +12,7 @@ class JiraTicketsController < ApplicationController
 
 	def update
 		@ticket = JiraTicket.find(params[:id])
-		@ticket.number = params[:jira_ticket][:number]
-		@ticket.resolved = params[:jira_ticket][:resolved] == "yes"
-
-    if @ticket.save
+    if @ticket.update(number: params[:jira_ticket][:number], resolved: params[:jira_ticket][:resolved] == "yes")
 			flash[:info] = "Ticket #{ @ticket.number } successfully updated"
       render json: @ticket.edit_as_json
     else

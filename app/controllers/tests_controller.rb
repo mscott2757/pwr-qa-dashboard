@@ -9,18 +9,10 @@ class TestsController < ApplicationController
 
   def update
     @test = Test.find(params[:id])
-
-    if (params[:test][:primary_app] != "")
-      primary_app = ApplicationTag.find(params[:test][:primary_app])
-      primary_app.primary_tests << @test
-    end
-
-    environment = EnvironmentTag.find(params[:test][:environment_tag])
-    environment.tests << @test
+    @test.primary_app_id = params[:test][:primary_app] if (params[:test][:primary_app] != "")
 
 		if params[:test][:test_type] != "0"
-			test_type = TestType.find(params[:test][:test_type])
-			test_type.tests << @test
+      @test.test_type_id = params[:test][:test_type]
 		elsif @test.test_type
 			@test.test_type.tests.delete(@test)
 		end
@@ -30,16 +22,13 @@ class TestsController < ApplicationController
     else
       indirect_apps = params[:test][:application_tags] ? params[:test][:application_tags].map { |app_id| ApplicationTag.find(app_id) } : []
     end
-
     @test.application_tags.push(*indirect_apps)
 
     @test.application_tags.reverse.each do |app|
-      if !indirect_apps.include?(app)
-        @test.application_tags.delete(app)
-      end
+      @test.application_tags.delete(app) if !indirect_apps.include?(app)
     end
 
-    @test.update(group: params[:test][:group])
+    @test.update(group: params[:test][:group], environment_tag_id: params[:test][:environment_tag])
 
 		flash[:info] = "Successfully updated #{ @test.name }"
     if params[:test][:modal]
