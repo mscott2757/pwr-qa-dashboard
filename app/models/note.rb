@@ -1,4 +1,4 @@
 class Note < ApplicationRecord
-  belongs_to :test
-  belongs_to :application_tag
+  belongs_to :test, optional: true
+  belongs_to :application_tag, optional: true
 end

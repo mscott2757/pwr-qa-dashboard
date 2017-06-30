@@ -10,6 +10,7 @@
           <p class="test-type-tag"><%= test.test_type.name %></p>
         <% end %>
 
+        <%= react_component 'Notes', { notes: test.notes, test: test }, { class: "app-notes" } %>
         <%= react_component 'TestJira', { tickets: tickets, test: test }, { class: "jira-section" } %>
 
         <%= link_to 'Build', build_test_path(test), remote: true, class: 'test-type-tag', id: "build-link-#{ test.id }"  %>

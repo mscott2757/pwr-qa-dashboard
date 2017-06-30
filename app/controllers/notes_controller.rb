@@ -1,14 +1,12 @@
 class NotesController < ApplicationController
   def create
-    @note = Note.new
-    @note.author = params[:note][:author]
-    @note.body = params[:note][:body]
+    @note = Note.create(note_params)
 
-    if @note.save
-      render json: @note
-    else
-      render json: @note.errors, status: :unprocessable_entity
-    end
+    render json: @note
+  end
+
+  def note_params
+    params.require(:note).permit(:author, :body, :application_tag_id, :test_id)
   end
 
   def destroy

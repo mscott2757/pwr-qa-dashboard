@@ -1,0 +1,49 @@
+.add-note-form {
+	position: absolute;
+  z-index: 200;
+  width: 80%;
+	background: #fff;
+  border: 1px solid #ddd;
+	padding: 8px;
+}
+
+.add-note-input {
+  margin-bottom: 10px;
+}
+
+ul.notes-sub {
+	position: absolute;
+  z-index: 200;
+  width: 80%;
+	background: #fff;
+  display: block;
+  list-style-type: none;
+	padding: 0;
+  border: 1px solid #ddd;
+}
+
+ul.notes-sub > li {
+  float: none;
+  margin: 0;
+  list-style-type: none;
+	padding: 5px;
+}
+
+ul.notes-sub > li > a {
+  border-right: none;
+  color: #000;
+}
+
+ul.notes-sub > li.note-li {
+  border-bottom: 1px solid #ddd;
+}
+
+.note-body {
+  color: #333333;
+}
+
+.note-author {
+  margin: 0;
+  color: #a8a8a8;
+}
+

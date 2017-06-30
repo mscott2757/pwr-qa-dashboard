@@ -28,9 +28,6 @@
         className: "ticket-form"
         React.DOM.div
           className: "form-group"
-          React.DOM.label
-            className: "jira-label"
-            "Ticket number"
           React.DOM.input
             type: 'text'
             className: 'form-control'
