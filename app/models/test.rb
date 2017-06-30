@@ -52,11 +52,13 @@ class Test < ApplicationRecord
               env_name = "dev"
               internal_name += "-dev"
             end
-            if exists?(internal_name: name)
-              Test.where(internal_name: name).first.destroy
-            end
           else
             env_name = action["parameters"][0]["value"]
+            internal_name += "-#{env_name}"
+          end
+
+          if exists?(internal_name: name)
+            Test.where(internal_name: name).first.destroy
           end
           parameterized = true
         end
@@ -178,13 +180,7 @@ class Test < ApplicationRecord
   end
 
   def status_css
-    if passing?
-      return "passing"
-    elsif failing?
-      return "failing"
-    else
-      return "other"
-    end
+    passing? ? "passing" : failing? ? "failing" : "other"
   end
 
   def indirect_apps_display
