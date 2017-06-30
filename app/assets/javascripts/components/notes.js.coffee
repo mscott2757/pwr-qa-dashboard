@@ -5,25 +5,21 @@
     new_note: false
 
   toggleNotes: ->
-    @setState show: !@state.show
-    @setState new_note: false
+    @setState show: !@state.show, new_note: false
 
   toggleForm: ->
-    @setState new_note: !@state.new_note
-    @setState show: false
+    @setState new_note: !@state.new_note, show: false
 
   addNote: (note) ->
     notes = @state.notes.slice()
     notes.push(note)
-    @setState notes: notes
-    @setState new_note: false
-    @setState show: true
+    @setState notes: notes, new_note: false, show: true
 
   removeNote: (note) ->
     notes = @state.notes.slice()
     index = notes.indexOf note
     notes.splice index, 1
-    @replaceState notes: notes
+    @replaceState(notes: notes, show: true)
 
   notesList: ->
     React.DOM.ul
@@ -33,7 +29,6 @@
 
       React.DOM.li
         className: "add-link"
-        key: 0
         React.DOM.a
           className: "jira-url-link"
           onClick: @toggleForm
@@ -46,10 +41,10 @@
         className: "test-type-tag"
         onClick: @toggleNotes
         "Notes "
-        if @state.notes.length > 0
+        if @state.notes.length
           React.DOM.span
             className: "badge"
-            "#{@state.notes.length}"
+            @state.notes.length
 
       if @state.show
         @notesList()
@@ -58,5 +53,5 @@
         if "test" of @props
           React.createElement NoteForm, test: @props.test, handleNewNote: @addNote, handleClose: @toggleForm
         else
-          React.createElement NoteForm, app: @props.app, handleNewNote: @addNote, handleClose: @toggleForm
+          React.createElement NoteForm, app: @props.app, handleNewNote: @addNote, handleClose: @toggleNotes
 

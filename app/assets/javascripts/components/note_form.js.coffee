@@ -28,7 +28,6 @@
       )
       , 'JSON'
 
-
   render: ->
     React.DOM.div
       className: "add-note-form"

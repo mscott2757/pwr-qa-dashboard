@@ -1,4 +1,4 @@
-@AddJiraForm = React.createClass
+@JiraForm = React.createClass
   getInitialState: ->
     number: ''
 

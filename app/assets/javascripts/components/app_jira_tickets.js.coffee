@@ -1,4 +1,4 @@
-@JiraTickets = React.createClass
+@AppJiraTickets = React.createClass
   getInitialState: ->
     show: false
 
@@ -15,7 +15,7 @@
           React.DOM.a
             className: "jira-url-link"
             href: ticketURL(ticket)
-            "#{ticket.number}"
+            ticket.number
 
   render: ->
     React.DOM.div
@@ -24,10 +24,10 @@
         className: "test-type-tag"
         onClick: @toggleShow
         "JIRA "
-        if @props.tickets.length > 0
+        if @props.tickets.length
           React.DOM.span
             className: "badge"
-            "#{@props.tickets.length}"
+            @props.tickets.length
 
       if @state.show
         @ticketList()

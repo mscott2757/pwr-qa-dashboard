@@ -1,28 +1,25 @@
-@TestJira = React.createClass
+@TestJiraTickets = React.createClass
   getInitialState: ->
     show_tickets: false
     show_form: false
     tickets: @props.tickets
 
   toggleTickets: ->
-    @setState show_tickets: !@state.show_tickets
+    @setState show_tickets: !@state.show_tickets, show_form: false
 
   toggleForm: ->
-    @setState show_form: !@state.show_form
-    @setState show_tickets: false
+    @setState show_form: !@state.show_form, show_tickets: false
 
   addTicket: (ticket) ->
     tickets = @state.tickets.slice()
     tickets.push(ticket)
-    @setState tickets: tickets
-    @setState show_form: false
-    @setState show_tickets: true
+    @setState tickets: tickets, show_form: false, show_tickets: true
 
   resolveTicket: (ticket) ->
     tickets = @state.tickets.slice()
     index = tickets.indexOf ticket
     tickets.splice index, 1
-    @replaceState tickets: tickets
+    @replaceState tickets: tickets, show_tickets: true
 
   ticketList: ->
     React.DOM.ul
@@ -32,7 +29,6 @@
 
       React.DOM.li
         className: "add-link"
-        key: 0
         React.DOM.a
           className: "jira-url-link"
           onClick: @toggleForm
@@ -45,13 +41,13 @@
         className: "test-type-tag"
         onClick: @toggleTickets
         "JIRA "
-        if @state.tickets.length > 0
+        if @state.tickets.length
           React.DOM.span
             className: "badge"
-            "#{@state.tickets.length}"
+            @state.tickets.length
 
       if @state.show_tickets
         @ticketList()
 
       if @state.show_form
-        React.createElement AddJiraForm, test: @props.test, handleClose: @toggleForm, handleNewTicket: @addTicket
+        React.createElement JiraForm, test: @props.test, handleClose: @toggleForm, handleNewTicket: @addTicket

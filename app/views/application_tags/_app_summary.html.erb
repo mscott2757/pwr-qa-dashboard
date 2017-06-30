@@ -8,7 +8,7 @@
         <div class="app-badges">
           <%= react_component 'Notes', { notes: app.notes, app: app }, { class: "app-notes" } %>
           <% if app.jira_tickets(method, env_tag).count > 0 %>
-            <%= react_component 'JiraTickets', { tickets: app.jira_tickets(method, env_tag) }, { class: "app-notes" } %>
+            <%= react_component 'AppJiraTickets', { tickets: app.jira_tickets(method, env_tag) }, { class: "app-notes" } %>
           <% end %>
         </div>
       </div>

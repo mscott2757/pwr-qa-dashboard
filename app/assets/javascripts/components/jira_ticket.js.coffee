@@ -14,7 +14,7 @@
       React.DOM.a
         className: "jira-url-link"
         href: ticketURL(@props.ticket)
-        "#{@props.ticket.number}"
+        @props.ticket.number
       React.DOM.a
         className: "resolve-link"
         onClick: @handleResolve
