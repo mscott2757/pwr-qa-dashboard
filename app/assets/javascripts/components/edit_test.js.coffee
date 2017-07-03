@@ -53,20 +53,10 @@
   componentDidUpdate: (prevProps, prevState) ->
     if @state.edit
       @bindAutocomplete()
-      if @props.test.parameterized
-        @bindTooltip()
-
-  componentDidMount: ->
-    if @props.test.parameterized
-      @bindTooltip()
 
   handleToggle: (e) ->
     e.preventDefault()
     @setState edit: !@state.edit
-
-  bindTooltip: ->
-    test_id = @props.test.id
-    $("#parameterized-#{test_id}").tooltip(25)
 
   handleEdit: (e) ->
     e.preventDefault()
@@ -94,9 +84,7 @@
   parameterizedEnvLabel: ->
     React.DOM.a
       className: 'parameterized-env-label'
-      title: "This test is parameterized"
-      id: "parameterized-#{@props.test.id}"
-      @props.test.environment_tag.name
+      "parameterized"
 
   envDisplay: ->
     if @props.test.parameterized
