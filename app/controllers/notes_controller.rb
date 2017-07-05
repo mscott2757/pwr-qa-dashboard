@@ -1,6 +1,7 @@
 class NotesController < ApplicationController
   def create
     @note = Note.create(note_params)
+    flash[:info] = "Note successfully added"
 
     render json: @note
   end
@@ -13,6 +14,7 @@ class NotesController < ApplicationController
     @note = Note.find(params[:id])
     @note.destroy
 
+    flash[:info] = "Note successfully removed"
     head :no_content
   end
 end

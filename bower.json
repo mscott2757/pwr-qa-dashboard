@@ -1,0 +1,13 @@
+{
+  "lib": {
+    "name": "bower-rails generated lib assets",
+    "dependencies": {
+      "remarkable-bootstrap-notify": "https://github.com/mouse0270/bootstrap-notify.git"
+    }
+  },
+  "vendor": {
+    "name": "bower-rails generated vendor assets",
+    "dependencies": {
+    }
+  }
+}

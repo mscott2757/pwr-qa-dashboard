@@ -17,6 +17,15 @@
 
 						<div class="row" id="test-modal-row">
 							<div class="col-sm-5" id="test-modal-label">
+								<%= f.label "Group" %>
+							</div>
+							<div class="col-sm-7">
+								<%= f.number_field :group, value: test.group, class: 'form-control' %>
+							</div>
+						</div>
+
+						<div class="row" id="test-modal-row">
+							<div class="col-sm-5" id="test-modal-label">
 								<%= f.label "Primary App" %>
 							</div>
 							<div class="col-sm-7">

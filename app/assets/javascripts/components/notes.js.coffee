@@ -21,9 +21,13 @@
     notes.splice index, 1
     @replaceState(notes: notes, show: true)
 
+  stopParent: (e) ->
+    e.stopPropagation
+
   notesList: ->
     React.DOM.ul
       className: "notes-sub"
+      onClick: @stopParent
       for note in @state.notes
         React.createElement Note, key: note.id, note: note, handleDeleteNote: @removeNote
 

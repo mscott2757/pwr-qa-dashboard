@@ -14,13 +14,13 @@
 //= require jquery
 //= require tether
 //= require bootstrap
+//= require remarkable-bootstrap-notify
 //= require jquery-ui/widgets/autocomplete
 //= require jquery-ui/widgets/progressbar
 //= require jquery-ui/widgets/tooltip
 //= require jquery-ui/widgets/tabs
 //= require jquery-ui/widgets/slider
 //= require jquery_ujs
-//= require turbolinks
 //= require react
 //= require react_ujs
 //= require components
@@ -30,6 +30,10 @@ $(document).ajaxComplete(function(event, request) {
 	var msg = request.getResponseHeader('X-Message');
 	var type = request.getResponseHeader('X-Message-Type');
 	if (msg) {
-		$("nav").after('<div class="alert alert-'+type+'" id="qa-alert"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'+msg+'</div>');
+    $.notify({
+      message: msg
+    },{
+      type: type
+    });
 	}
 });
