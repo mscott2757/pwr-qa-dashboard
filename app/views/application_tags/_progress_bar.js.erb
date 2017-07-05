@@ -1,6 +1,5 @@
 $( function() {
-  <%= total_passing = app.total_passing(method, env_tag) %>;
-  <%= total_failing = app.total_failing(method, env_tag) %>;
+  <%= total_failing = failing_tests.count %>;
   <% if total_failing + total_passing > 0 %>
     $("#progressbar-<%= app.id %>").progressbar({
       value: <%= total_passing %>,
@@ -11,21 +10,15 @@ $( function() {
       }
     });
 
-    <% if total_passing > 0 %>
-      $("#progressbar-<%= app.id %>").append($('<div class="progress-label"><p class="total-passing"><%= total_passing %> of <%= total_passing + total_failing %> passing</p><div>'))
-    <% end %>
+    $("#progressbar-<%= app.id %>").append($('<div class="progress-label"><p class="total-passing"><%= total_passing %> of <%= total_passing + total_failing %> passing</p><div>'));
 
-
-    <% if total_failing > 0 %>
+    <% if total_failing > 0 and tooltip %>
       $div = $("<div class='app-progress-failing' style='width: <%= 100 * total_failing / (total_passing + total_failing) %>%'></div>");
       $("#progressbar-<%= app.id %>").append($div);
-
-      <% if tooltip %>
-        $div.tooltip({
-          items: "div",
-          content: "<%= j render partial: "failing_tests", locals: { failing_tests: app.failing_tests(method, env_tag) } %>"
-        });
-      <% end %>
+      $div.tooltip({
+        items: "div",
+        content: "<%= j render partial: "failing_tests", locals: { failing_tests: failing_tests } %>"
+      });
     <% end %>
 
   <% else %>

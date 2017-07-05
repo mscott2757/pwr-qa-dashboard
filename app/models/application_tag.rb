@@ -75,7 +75,7 @@ class ApplicationTag < ApplicationRecord
   end
 
   def failing_tests(method, env_tag)
-    self.send(method).where(last_build_time: 7.days.ago..Time.now).select { |test| test.failing? and test.env_tag == env_tag }
+    self.send(method).where(last_build_time: 7.days.ago..Time.now).select { |test| test.failing? and test.env_tag == env_tag }.sort { |a,b| b.last_build_time <=> a.last_build_time }
   end
 
   def failing_tests_format(method, env_tag)
@@ -95,11 +95,6 @@ class ApplicationTag < ApplicationRecord
     failing = self.total_failing("tests", env_tag)
     total = failing + self.total_passing("tests", env_tag)
     (total > 0) ? failing.to_f / total : 0.0
-  end
-
-  # returns 3 most recent failing tests
-  def recent_failing_tests(method, env_tag)
-    failing_tests(method, env_tag).sort { |a,b| b.last_build_time <=> a.last_build_time }.first(3)
   end
 
   # obtain which field to query jira tickets, based on method

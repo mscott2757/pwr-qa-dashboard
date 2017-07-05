@@ -8,7 +8,7 @@
     <div id="progressbar-<%= @app.id %>"></div>
   </div>
   <script>
-    <%= render partial: "progress_bar.js", locals: { app: @app, method: @method, tooltip: false, env_tag: @env_tag } %>
+    <%= render partial: "progress_bar.js", locals: { app: @app, tooltip: false, failing_tests: @app.failing_tests(@method, @env_tag), total_passing: @app.total_passing(@method, @env_tag) } %>
   </script>
 </div>
 
