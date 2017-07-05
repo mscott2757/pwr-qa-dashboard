@@ -12,15 +12,13 @@ $( function() {
     });
 
     <% if total_passing > 0 %>
-      $("#progressbar-<%= app.id %>").append($('<p class="total-passing"><%= total_passing %> passing</p>'))
+      $("#progressbar-<%= app.id %>").append($('<div class="progress-label"><p class="total-passing"><%= total_passing %> of <%= total_passing + total_failing %> passing</p><div>'))
     <% end %>
 
 
     <% if total_failing > 0 %>
       $div = $("<div class='app-progress-failing' style='width: <%= 100 * total_failing / (total_passing + total_failing) %>%'></div>");
       $("#progressbar-<%= app.id %>").append($div);
-      $("#progressbar-<%= app.id %>").append($('<p class="total-failing" align="right"><%= total_failing %> failing</p>'));
-
 
       <% if tooltip %>
         $div.tooltip({
