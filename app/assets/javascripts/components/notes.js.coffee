@@ -3,6 +3,7 @@
     notes: @props.notes
     show: false
     new_note: false
+    mouseDownOnNotes: false
 
   toggleNotes: ->
     @setState show: !@state.show, new_note: false
@@ -21,13 +22,22 @@
     notes.splice index, 1
     @replaceState(notes: notes, show: true)
 
-  stopParent: (e) ->
-    e.stopPropagation
+  pageClick: ->
+    return if @state.mouseDownOnNotes
+    @setState show: false, new_note: false
+
+  handleMouseDown: ->
+    @setState mouseDownOnNotes: true
+
+  handleMouseUp: ->
+    @setState mouseDownOnNotes: false
+
+  componentDidMount: ->
+    window.addEventListener('mousedown', @pageClick, false)
 
   notesList: ->
     React.DOM.ul
       className: "notes-sub"
-      onClick: @stopParent
       for note in @state.notes
         React.createElement Note, key: note.id, note: note, handleDeleteNote: @removeNote
 
@@ -41,6 +51,8 @@
   render: ->
     React.DOM.div
       className: "app-notes-container"
+      onMouseDown: @handleMouseDown
+      onMouseUp: @handleMouseUp
       React.DOM.a
         className: "test-type-tag"
         onClick: @toggleNotes

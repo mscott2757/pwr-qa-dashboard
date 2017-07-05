@@ -3,6 +3,7 @@
     show_tickets: false
     show_form: false
     tickets: @props.tickets
+    mouseDownOnTickets: false
 
   toggleTickets: ->
     @setState show_tickets: !@state.show_tickets, show_form: false
@@ -21,6 +22,19 @@
     tickets.splice index, 1
     @replaceState tickets: tickets, show_tickets: true
 
+  pageClick: ->
+    return if @state.mouseDownOnTickets
+    @setState show_tickets: false, show_form: false
+
+  handleMouseDown: ->
+    @setState mouseDownOnTickets: true
+
+  handleMouseUp: ->
+    @setState mouseDownOnTickets: false
+
+  componentDidMount: ->
+    window.addEventListener('mousedown', @pageClick, false)
+
   ticketList: ->
     React.DOM.ul
       className: "sub"
@@ -37,6 +51,8 @@
   render: ->
     React.DOM.div
       className: "app-jira-tickets"
+      onMouseDown: @handleMouseDown
+      onMouseUp: @handleMouseUp
       React.DOM.a
         className: "test-type-tag"
         onClick: @toggleTickets

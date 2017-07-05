@@ -17,7 +17,7 @@
           <p><b>Recent Failed tests</b></p>
           <ul class="recent-failed-list">
             <% app.recent_failing_tests(method, env_tag).each do |test| %>
-              <li><%= test.name %></li>
+              <li><%= link_to test.name, test.job_url, class: 'link-title' %></li>
             <% end %>
           </ul>
         <% end %>

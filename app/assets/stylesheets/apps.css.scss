@@ -15,8 +15,12 @@
   width: 100%;
 }
 
-.recent-failed-list {
-  padding-left: 17px;
+ul.recent-failed-list {
+  padding-left: 0;
+}
+
+ul.recent-failed-list > li {
+  list-style-type: none;
 }
 
 .app-summary-title {
@@ -47,9 +51,11 @@
 
 .app-summary-recent {
   width: 50%;
+  height: 100%;
   float: left;
   display: inline;
   padding: 8px;
+  border-left: 1px solid #ddd;
 }
 
 .app-summary-recent > p {
