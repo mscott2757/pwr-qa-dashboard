@@ -33,7 +33,8 @@ $(document).ajaxComplete(function(event, request) {
     $.notify({
       message: msg
     },{
-      type: type
+      type: type,
+      delay: 1000
     });
 	}
 });
