@@ -49,7 +49,7 @@ class ApplicationTag < ApplicationRecord
   end
 
   def culprit_format(env_tag)
-    "Warning #{ total_failing("tests", env_tag) } of #{ total_recent_tests("tests", env_tag) } tests for #{ name } are failing"
+    "Warning #{ total_failing("tests", env_tag) } of #{ total_recent_tests("tests", env_tag) } indirect tests for #{ name } are failing in #{ env_tag.name }"
   end
 
   def total_recent_tests(method, env_tag)

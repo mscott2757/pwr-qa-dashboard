@@ -1,6 +1,7 @@
 <% culprits.each do |app| %>
   $.notify({
-    message: "<%= app.culprit_format(@env_tag) %>"
+    message: "<%= app.culprit_format(@env_tag) %>",
+    url: "<%= application_tag_path(id: app.id, method: "tests") %>"
   },{
     type: 'danger',
     delay: 0
