@@ -13,8 +13,8 @@ class Test < ApplicationRecord
 
   has_many :test_application_tags, dependent: :destroy
   has_many :application_tags, -> { distinct }, through: :test_application_tags
-  has_many :jira_tickets
-  has_many :notes
+  has_many :jira_tickets, dependent: :destroy
+  has_many :notes, dependent: :destroy
 
   belongs_to :primary_app, class_name: "ApplicationTag", foreign_key: "primary_app_id", optional: true
   belongs_to :environment_tag, optional: true
@@ -133,11 +133,11 @@ class Test < ApplicationRecord
 
 
   def active_jira_tickets
-    self.jira_tickets.select{ |ticket| !ticket.resolved }
+    jira_tickets.select{ |ticket| !ticket.resolved }
   end
 
   def default_test_type_id
-    self.test_type ? self.test_type.id : 0
+    test_type ? self.test_type.id : 0
   end
 
   def json_tree(tree_attr)
@@ -151,20 +151,20 @@ class Test < ApplicationRecord
   end
 
   def env_tag
-    self.environment_tag
+    environment_tag
   end
 
   def build_url
-    self.parameterized ? "#{job_url}/buildWithParameters?token=QaJobToken" : "#{job_url}/build?token=QaJobToken"
+    parameterized ? "#{job_url}/buildWithParameters?token=QaJobToken" : "#{job_url}/build?token=QaJobToken"
   end
 
   def start_build
-    uri = URI(self.build_url)
-    self.parameterized ? Net::HTTP.post_form(uri, { parameters: [{ name: "env", value: self.env_tag.name }] }) : Net::HTTP.post_form(uri, {})
+    uri = URI(build_url)
+    parameterized ? Net::HTTP.post_form(uri, { parameters: [{ name: "env", value: env_tag.name }] }) : Net::HTTP.post_form(uri, {})
   end
 
   def last_build_pst_hr
-    self.last_build_time.in_time_zone("Pacific Time (US & Canada)").hour
+    last_build_time.in_time_zone("Pacific Time (US & Canada)").hour
   end
 
   def last_build_url
@@ -196,21 +196,7 @@ class Test < ApplicationRecord
   end
 
   def status_display
-    if passing?
-      return "passing"
-    elsif failing?
-      return "failing"
-    elsif in_progress?
-      return "in progress"
-    elsif not_built?
-      return "not built"
-    elsif aborted?
-      return "aborted"
-    elsif disabled?
-      return "disabled"
-    else
-      return "N/A"
-    end
+    in_progress? ? "in progress" : not_built? ? "not built" : aborted? ? "aborted" : disabled? ? "disabled" : "N/A"
   end
 
   def in_progress?
