@@ -1,5 +1,7 @@
 class ApplicationTagsController < ApplicationController
 	before_action :set_columns
+  before_action :set_method, only: [:show, :edit_app_col, :edit_test_col]
+  before_action :set_tests, only: [:show, :edit_test_col]
 	skip_before_action :disable_rotate, only: [:index]
 
   def set_columns
@@ -8,6 +10,15 @@ class ApplicationTagsController < ApplicationController
 
     session[:test_col] = 4 if !session.include?(:test_col)
     @test_col = session[:test_col].to_i
+  end
+
+  def set_method
+    @method = params[:method]
+  end
+
+  def set_tests
+    @app = ApplicationTag.find(params[:id])
+    @tests = @app.tests_by_env(@method, @env_tag)
   end
 
 	def index
@@ -37,10 +48,6 @@ class ApplicationTagsController < ApplicationController
   end
 
   def show
-    @app = ApplicationTag.find(params[:id])
-    @method = params[:method]
-    @jira_ticket = JiraTicket.new
-    @tests = @app.tests_by_env(@method, @env_tag)
   end
 
   def update
@@ -71,7 +78,6 @@ class ApplicationTagsController < ApplicationController
   def edit_app_col
     session[:app_col] = params[:app_col]
     @app_col = params[:app_col].to_i
-    @method = params[:method]
 		@applications = ApplicationTag.relevant_apps(@method, @env_tag)
 
     respond_to do |format|
@@ -83,9 +89,6 @@ class ApplicationTagsController < ApplicationController
   def edit_test_col
     session[:test_col] = params[:test_col]
     @test_col = params[:test_col].to_i
-    @method = params[:method]
-    @app = ApplicationTag.find(params[:id])
-    @tests = @app.tests_by_env(@method, @env_tag)
 
     respond_to do |format|
       format.js

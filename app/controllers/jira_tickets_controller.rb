@@ -1,4 +1,10 @@
 class JiraTicketsController < ApplicationController
+  before_action :set_ticket, only: [:update, :destroy, :resolve]
+
+  def set_ticket
+    @ticket = JiraTicket.find(params[:id])
+  end
+
 	def index
 		@tickets = JiraTicket.edit_all_as_json
 	end
@@ -11,7 +17,6 @@ class JiraTicketsController < ApplicationController
   end
 
 	def update
-		@ticket = JiraTicket.find(params[:id])
     if @ticket.update(number: params[:jira_ticket][:number], resolved: params[:jira_ticket][:resolved] == "yes")
 			flash[:info] = "Ticket #{ @ticket.number } successfully updated"
       render json: @ticket.edit_as_json
@@ -21,14 +26,12 @@ class JiraTicketsController < ApplicationController
 	end
 
   def destroy
-    @ticket = JiraTicket.find(params[:id])
     @ticket.destroy
 		flash[:info] = "Ticket #{ @ticket.number } successfully deleted"
     head :no_content
   end
 
   def resolve
-    @ticket = JiraTicket.find(params[:id])
     @ticket.update(resolved: true)
 
 		flash[:info] = "Successfully resolved JIRA ticket #{ @ticket.number }"

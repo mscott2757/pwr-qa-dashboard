@@ -1,4 +1,9 @@
 class TestsController < ApplicationController
+  before_action :set_test, only: [:update, :edit, :build]
+
+  def set_test
+    @test = Test.find(params[:id])
+  end
 
   def index
     @tests = Test.edit_all_as_json
@@ -8,7 +13,6 @@ class TestsController < ApplicationController
   end
 
   def update
-    @test = Test.find(params[:id])
     tests = @test.parameterized ? Test.where(name: @test.name) : [ @test ]
 
     if params[:test][:modal]
@@ -48,7 +52,6 @@ class TestsController < ApplicationController
   end
 
   def edit
-    @test = Test.find(params[:id])
     @applications = ApplicationTag.select_options
     @environments = EnvironmentTag.select_options
     @types = TestType.all.select_options
@@ -59,7 +62,6 @@ class TestsController < ApplicationController
   end
 
   def build
-    @test = Test.find(params[:id])
     @test.start_build
 
     flash[:info] = "Build for #{ @test.name } started"
