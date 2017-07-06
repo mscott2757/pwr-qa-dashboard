@@ -1,0 +1,8 @@
+<% culprits.each do |app| %>
+  $.notify({
+    message: "<%= app.culprit_format(@env_tag) %>"
+  },{
+    type: 'danger',
+    delay: 0
+  });
+<% end %>

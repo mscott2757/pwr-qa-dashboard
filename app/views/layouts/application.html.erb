@@ -55,25 +55,22 @@
     </nav>
 
     <% flash.each do |key, value| %>
-      <% if key == "danger" %>
-        <% value.each do |culprit| %>
-          <div class="alert alert-<%= key %>" id="qa-alert"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><%= culprit %></div>
-        <% end %>
-      <% else %>
-        <div class="alert alert-<%= key %>" id="qa-alert"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><%= value %></div>
-      <% end %>
+      <div class="alert alert-<%= key %>" id="qa-alert"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><%= value %></div>
     <% end %>
-    <% flash.discard %>
 
     <div class="container" id="qa-container">
       <%= yield %>
     </div>
 
-    <% if session[:rotate] %>
-      <script>
+    <script>
+      <% if @culprits %>
+        <%= render partial: "/application_tags/show_culprits.js.erb", locals: { culprits: @culprits } %>
+      <% end %>
+
+      <% if session[:rotate] %>
         <%= render partial: '/layouts/rotate_env.js', locals: { next_env: EnvironmentTag.get_next_env(@env_tag) } %>
-      </script>
-    <% end %>
+      <% end %>
+    </script>
 
   </body>
 </html>

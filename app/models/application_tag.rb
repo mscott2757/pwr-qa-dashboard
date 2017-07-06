@@ -28,7 +28,7 @@ class ApplicationTag < ApplicationRecord
 
   # returns apps with any passing or failing tests in the last 7 days
   def self.relevant_apps(method, env_tag)
-    self.all.select { |app| app.total_passing(method, env_tag) + app.total_failing(method, env_tag) > 0 }
+    self.all.select { |app| app.total_recent_tests(method, env_tag) > 0 }
   end
 
   # returns page title for page header
@@ -41,7 +41,19 @@ class ApplicationTag < ApplicationRecord
   end
 
   def self.possible_culprits(env_tag)
-    self.relevant_apps("tests", env_tag).map { |app| [app, app.percent_failing(env_tag)] }.select{ |app| app[1] > app[0].threshold / 100.0 }.map { |app| "Warning #{ (app[1] * 100).to_i }% of tests for #{ app[0].name } are failing" }
+    self.relevant_apps("tests", env_tag).select{ |app| app.culprit?(env_tag) }
+  end
+
+  def culprit?(env_tag)
+    percent_failing(env_tag) >= threshold / 100.0
+  end
+
+  def culprit_format(env_tag)
+    "Warning #{ total_failing("tests", env_tag) } of #{ total_recent_tests("tests", env_tag) } tests for #{ name } are failing"
+  end
+
+  def total_recent_tests(method, env_tag)
+    total_passing(method, env_tag) + total_failing(method, env_tag)
   end
 
   def edit_as_json
