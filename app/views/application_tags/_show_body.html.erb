@@ -1,0 +1,11 @@
+<div class="app-body">
+  <% tests.each_slice(@test_col) do |test_row| %>
+    <div class="row">
+      <% test_row.each do |test| %>
+        <div class="col-sm-<%= 12 / @test_col %>" id="test-summary-col">
+          <%= render partial: "show_test", locals: { test: test, tickets: test.active_jira_tickets } %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

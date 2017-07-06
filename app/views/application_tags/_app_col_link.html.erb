@@ -1,5 +1,5 @@
 <% if @app_col != col_num %>
-  <%= link_to col_num.to_s , edit_app_col_application_tags_path(app_col: col_num)%>
+  <%= link_to col_num.to_s , edit_app_col_application_tags_path(app_col: col_num, method: @method), remote: true %>
 <% else %>
   <%= col_num.to_s %>
 <% end %>

@@ -1,0 +1,9 @@
+<div class="app-body">
+  <% applications.each_slice(@app_col) do |app_row| %>
+    <div class="row">
+      <% app_row.each do |app| %>
+        <%= render partial: "app_summary", locals: { app: app, tickets: app.jira_tickets(@method, @env_tag), failing_tests: app.failing_tests(@method, @env_tag), total_passing: app.total_passing(@method, @env_tag) } %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

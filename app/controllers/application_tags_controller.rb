@@ -70,11 +70,26 @@ class ApplicationTagsController < ApplicationController
 
   def edit_app_col
     session[:app_col] = params[:app_col]
-    redirect_back(fallback_location: root_path)
+    @app_col = params[:app_col].to_i
+    @method = params[:method]
+		@applications = ApplicationTag.relevant_apps(@method, @env_tag)
+
+    respond_to do |format|
+      format.js
+      format.html { redirect_back(fallback_location: root_path) }
+    end
   end
 
   def edit_test_col
     session[:test_col] = params[:test_col]
-    redirect_back(fallback_location: root_path)
+    @test_col = params[:test_col].to_i
+    @method = params[:method]
+    @app = ApplicationTag.find(params[:id])
+    @tests = @app.tests_by_env(@method, @env_tag)
+
+    respond_to do |format|
+      format.js
+      format.html { redirect_back(fallback_location: root_path) }
+    end
   end
 end
