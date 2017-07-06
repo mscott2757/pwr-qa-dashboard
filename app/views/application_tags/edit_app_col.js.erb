@@ -1,2 +1,3 @@
 $('.app-body').replaceWith("<%= j render(partial: "app_body", locals: { applications: @applications }) %>");
 $('.col-links').replaceWith("<%= j render partial: "app_col_links" %>");
+ReactRailsUJS.mountComponents()
