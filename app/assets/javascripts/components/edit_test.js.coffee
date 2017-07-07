@@ -199,7 +199,7 @@
         React.DOM.td null,
           React.DOM.div
             className: 'ui-widget'
-            React.DOM.input
+            React.DOM.textarea
               className: 'form-control'
               ref: 'application_tags'
               defaultValue: @applicationTagsFormat()
