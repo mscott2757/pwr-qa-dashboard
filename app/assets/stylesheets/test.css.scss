@@ -42,7 +42,7 @@
   width: 100%;
   background-color: #fff;
   border: 1px solid #ddd;
-  height: 140px;
+  height: 17.5vh;
 }
 
 .test-body {
@@ -169,6 +169,10 @@
   cursor: pointer;
 }
 
+.test-header > a > h3 {
+  margin: 0;
+  padding: 5px;
+}
 
 .test-header > a > h4 {
   margin: 0;
