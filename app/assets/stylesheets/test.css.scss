@@ -118,6 +118,7 @@
   margin-bottom: 3px;
   position: absolute;
   bottom: 0;
+  font-size: 1.74vh;
 }
 
 .test-last-build {
@@ -127,6 +128,7 @@
   position: absolute;
   bottom: 0;
   right: 0;
+  font-size: 1.74vh;
 }
 
 .test-link-title {
@@ -167,16 +169,13 @@
   text-decoration: none;
   -webkit-transition: color 0.2s;
   cursor: pointer;
-}
-
-.test-header > a > h3 {
-  margin: 0;
-  padding: 5px;
+  font-size: 1.74vh;
 }
 
 .test-header > a > h4 {
   margin: 0;
   padding: 5px;
+  font-size: 2.24vh;
 }
 
 .edit-test-link {

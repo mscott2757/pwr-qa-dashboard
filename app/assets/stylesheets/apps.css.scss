@@ -34,6 +34,7 @@ ul.recent-failed-list > li {
 
 .app-summary-title > a > h2 {
   margin: 0;
+  font-size: 3.7vh;
 }
 
 .app-badges {
@@ -60,6 +61,7 @@ ul.recent-failed-list > li {
 
 .app-summary-recent > p {
   margin: 0;
+  font-size: 1.7vh;
 }
 
 .app-summary-progress {
@@ -106,7 +108,8 @@ ul.recent-failed-list > li {
 }
 
 .link-title {
-	color: #333333
+	color: #333333;
+  font-size: 1.5vh;
 }
 
 .link-title:hover {
