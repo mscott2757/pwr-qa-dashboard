@@ -34,8 +34,8 @@ class Test < ApplicationRecord
       name = job["name"]
       internal_name = job["name"]
       test_json = Test.json_tree(job_url , "color,lastBuild[number],lastSuccessfulBuild[number],lastFailedBuild[number]")
-
       next if !test_json["lastBuild"]
+
       last_build = test_json["lastBuild"]["number"]
       last_build_json = Test.json_build_tree(job_url, last_build, "actions[causes[userName],parameters[value]],timestamp")
       last_build_time = Time.at(last_build_json["timestamp"]/1000).to_datetime
@@ -57,9 +57,7 @@ class Test < ApplicationRecord
             internal_name += "-#{env_name}"
           end
 
-          if exists?(internal_name: name)
-            Test.where(internal_name: name).first.destroy
-          end
+          Test.where(internal_name: name).first.destroy if exists?(internal_name: name)
           parameterized = true
         end
       end

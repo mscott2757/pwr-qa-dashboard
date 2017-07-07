@@ -57,10 +57,10 @@
           React.DOM.div
             className: "add-ticket-buttons"
             React.DOM.button
-              className: 'btn btn-primary btn-sm'
+              className: 'btn btn-primary btn-sm add-note-btn'
               disabled: !@valid()
               "Create"
             React.DOM.a
-              className: "btn btn-default btn-sm"
+              className: "btn btn-default btn-sm add-note-btn"
               onClick: @props.handleClose
               "Cancel"
