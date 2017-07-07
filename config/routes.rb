@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       get 'edit'
       get 'edit_app_col'
       get 'edit_test_col'
+      get 'refresh'
     end
   end
 

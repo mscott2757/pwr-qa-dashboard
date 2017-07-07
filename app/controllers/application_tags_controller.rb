@@ -1,6 +1,6 @@
 class ApplicationTagsController < ApplicationController
 	before_action :set_columns
-  before_action :set_method, only: [:show, :edit_app_col, :edit_test_col]
+  before_action :set_method, only: [:show, :edit_app_col, :edit_test_col, :refresh]
   before_action :set_tests, only: [:show, :edit_test_col]
 	skip_before_action :disable_rotate, only: [:index]
 
@@ -73,6 +73,15 @@ class ApplicationTagsController < ApplicationController
 
   def edit
     @applications = ApplicationTag.edit_all_as_json
+  end
+
+  def refresh
+		@applications = ApplicationTag.relevant_apps(@method, @env_tag)
+
+    respond_to do |format|
+      format.js
+      format.html { redirect_back(fallback_location: root_path) }
+    end
   end
 
   def edit_app_col

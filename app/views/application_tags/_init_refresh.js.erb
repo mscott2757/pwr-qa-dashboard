@@ -1,0 +1,6 @@
+window.setInterval(function () {
+  $.ajax({
+    type: 'GET',
+    url: '/application_tags/refresh?env_tag=<%= env_tag.id %>&method=<%= method %>',
+  });
+}, 60000);

@@ -6,3 +6,8 @@
 </div>
 
 <%= render partial: "app_body", locals: { applications: @applications } %>
+
+<script>
+  <%= render partial: "/application_tags/init_refresh.js.erb", locals: { method: @method, env_tag: @env_tag } %>
+</script>
+
