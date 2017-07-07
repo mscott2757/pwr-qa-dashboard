@@ -61,7 +61,7 @@ class ApplicationTag < ApplicationRecord
 
   # returns the portion of an app's tests in and env sorted by name
   def tests_by_env(method, env_tag)
-    send(method).select { |test| test.env_tag == env_tag }.sort_by{ |test| test.group || 10 }
+    send(method).select { |test| test.env_tag == env_tag }.sort_by{ |test| test.name.downcase }.sort_by{ |test| test.group || 10 }
   end
 
   def tests_by_env_json(method, env_tag)
