@@ -85,9 +85,13 @@ ul.recent-failed-list > li {
   height: 100%;
 }
 
-.col-links {
+.col-dropdown {
   margin-bottom: 0;
-  margin-top: 10px;
+  margin-top: 5px;
+}
+
+#col-dropdown {
+  display: inline-block;
 }
 
 .app-progress-bar {
