@@ -21,6 +21,7 @@ ul.recent-failed-list {
 
 ul.recent-failed-list > li {
   list-style-type: none;
+  line-height: 1.8vh;
 }
 
 .app-summary-title {
@@ -109,8 +110,9 @@ ul.recent-failed-list > li {
 
 .link-title {
 	color: #333333;
-  font-size: 1.4vh;
+  font-size: 1.5vh;
 }
+
 
 .link-title:hover {
 	text-decoration: none;
