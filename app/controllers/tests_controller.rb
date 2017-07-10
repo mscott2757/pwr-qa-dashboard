@@ -62,9 +62,7 @@ class TestsController < ApplicationController
   end
 
   def build
-    @test.start_build
-
-    flash[:info] = "Build for #{ @test.name } started"
+    @response_msg = @test.start_build ? "Build for #{ @test.name } successfully started" : "Error starting job for #{ @test.name }. Token is likely not set."
     respond_to do |format|
       format.js
     end

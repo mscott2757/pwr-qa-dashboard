@@ -1,4 +1,9 @@
-<%= render partial: "layouts/flash_message", locals: { type: "info", msg: flash[:info] } %>
+$.notify({
+  message: "<%= @response_msg %>"
+},{
+  type: "info",
+  delay: 1000
+});
 
 $('#build-link-<%= @test.id %>').click(function () {
   return false;

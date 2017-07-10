@@ -158,7 +158,8 @@ class Test < ApplicationRecord
 
   def start_build
     uri = URI(build_url)
-    parameterized ? Net::HTTP.post_form(uri, { parameters: [{ name: "env", value: env_tag.name }] }) : Net::HTTP.post_form(uri, {})
+    res = parameterized ? Net::HTTP.post_form(uri, { parameters: [{ name: "env", value: env_tag.name }] }) : Net::HTTP.post_form(uri, {})
+    res.code == "201"
   end
 
   def last_build_pst_hr
