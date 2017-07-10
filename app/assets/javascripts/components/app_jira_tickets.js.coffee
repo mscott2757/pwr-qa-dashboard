@@ -42,6 +42,7 @@
         "JIRA "
         if @props.tickets.length
           React.DOM.span
+            id: "qa-badge"
             className: "badge"
             @props.tickets.length
 

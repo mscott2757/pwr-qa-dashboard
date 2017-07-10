@@ -59,6 +59,7 @@
         "Notes "
         if @state.notes.length
           React.DOM.span
+            id: "qa-badge"
             className: "badge"
             @state.notes.length
 

@@ -24,6 +24,11 @@ ul.recent-failed-list > li {
   line-height: 1.8vh;
 }
 
+#qa-badge {
+  font-size: 1.5vh;
+  font-weight: normal;
+}
+
 .app-summary-title {
 	height: 100%;
   width: 50%;
@@ -35,7 +40,7 @@ ul.recent-failed-list > li {
 
 .app-summary-title > a > h2 {
   margin: 0;
-  font-size: 3.7vh;
+  font-size: 3vh;
 }
 
 .app-badges {
