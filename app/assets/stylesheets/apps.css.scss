@@ -57,6 +57,7 @@ ul.recent-failed-list > li {
 
 
 .app-summary-recent {
+  overflow-y: auto;
   width: 45%;
   height: 100%;
   float: left;
