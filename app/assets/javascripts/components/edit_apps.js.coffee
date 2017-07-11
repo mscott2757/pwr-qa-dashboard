@@ -30,12 +30,9 @@
     @replaceState applications: apps
 
   render: ->
-    React.DOM.div
-      className: 'edit-applications'
+    React.DOM.div { className: 'edit-applications' },
       React.createElement AppForm, handleNewApp: @addApp
-      React.DOM.table
-        className: 'table table-bordered'
-        id: 'edit-apps-table'
+      React.DOM.table { className: 'table table-bordered', id: 'edit-apps-table' },
         React.DOM.thead null,
           React.DOM.tr null,
             React.DOM.th null, 'Application'

@@ -36,32 +36,19 @@
     window.addEventListener('mousedown', @pageClick, false)
 
   notesList: ->
-    React.DOM.ul
-      className: "notes-sub"
+    React.DOM.ul { className: "notes-sub" },
       for note in @state.notes
         React.createElement Note, key: note.id, note: note, handleDeleteNote: @removeNote
 
-      React.DOM.li
-        className: "add-link"
-        React.DOM.a
-          className: "jira-url-link"
-          onClick: @toggleForm
-          "add new note"
+      React.DOM.li { className: "add-link"},
+        React.DOM.a { className: "jira-url-link", onClick: @toggleForm }, "add new note"
 
   render: ->
-    React.DOM.div
-      className: "app-notes-container"
-      onMouseDown: @handleMouseDown
-      onMouseUp: @handleMouseUp
-      React.DOM.a
-        className: "test-type-tag"
-        onClick: @toggleNotes
+    React.DOM.div { className: "app-notes-container", onMouseDown: @handleMouseDown, onMouseUp: @handleMouseUp },
+      React.DOM.a { className: "test-type-tag", onClick: @toggleNotes },
         "Notes "
         if @state.notes.length
-          React.DOM.span
-            id: "qa-badge"
-            className: "badge"
-            @state.notes.length
+          React.DOM.span { id: "qa-badge", className: "badge" }, @state.notes.length
 
       if @state.show
         @notesList()

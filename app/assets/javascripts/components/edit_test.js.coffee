@@ -94,15 +94,9 @@
   testRow: ->
     React.DOM.tr null,
       React.DOM.td null,
-        React.DOM.div
-          className: "edit-test-name"
-          @props.test.name
-        React.DOM.div
-          className: "edit-test-toggle"
-          React.DOM.a
-            className: 'btn btn-default btn-sm'
-            onClick: @handleToggle
-            'Edit'
+        React.DOM.div { className: "edit-test-name" }, @props.test.name
+        React.DOM.div { className: "edit-test-toggle" },
+          React.DOM.a { className: 'btn btn-default btn-sm', onClick: @handleToggle }, 'Edit'
 
       if "test_type" of @props.test
         React.DOM.td null, @props.test.test_type.name
@@ -129,40 +123,19 @@
     else
       React.DOM.tr null,
         React.DOM.td null,
-          React.DOM.div
-            className: "edit-test-name"
-            @props.test.name
-          React.DOM.div
-            className: "edit-test-toggle"
-            React.DOM.a
-              className: 'btn btn-default btn-sm edit-test-update'
-              onClick: @handleEdit
-              'update'
-            React.DOM.a
-              className: 'btn btn-danger btn-sm'
-              onClick: @handleToggle
-              'cancel'
+          React.DOM.div { className: "edit-test-name" }, @props.test.name
+          React.DOM.div { className: "edit-test-toggle" },
+            React.DOM.a { className: 'btn btn-default btn-sm edit-test-update', onClick: @handleEdit }, 'update'
+            React.DOM.a { className: 'btn btn-danger btn-sm', onClick: @handleToggle}, 'cancel'
 
         React.DOM.td null,
-          React.DOM.select
-            className: 'form-control'
-            defaultValue: @defaultTestType()
-            ref: 'test_type'
+          React.DOM.select { className: 'form-control', defaultValue: @defaultTestType(), ref: 'test_type' },
             for test_type in @props.types
-              React.DOM.option
-                key: test_type.id
-                value: test_type.id
-                test_type.name
-            React.DOM.option
-              value: 0
-              "None"
+              React.DOM.option { key: test_type.id, value: test_type.id }, test_type.name
+            React.DOM.option { value: 0 }, "None"
 
         React.DOM.td null,
-          React.DOM.input
-            className: 'form-control'
-            type: "number"
-            ref: 'group'
-            defaultValue: @props.test.group
+          React.DOM.input { className: 'form-control', type: "number", ref: 'group', defaultValue: @props.test.group }
 
         React.DOM.td null,
           React.DOM.select
@@ -170,10 +143,7 @@
             defaultValue: @props.test.primary_app.id if "primary_app" of @props.test
             ref: 'primary_app'
             for app_tag in @props.applications
-              React.DOM.option
-                key: app_tag.id
-                value: app_tag.id
-                app_tag.name
+              React.DOM.option { key: app_tag.id, value: app_tag.id }, app_tag.name
 
         React.DOM.td null,
           if @props.test.parameterized
@@ -185,14 +155,10 @@
               defaultValue: @props.test.environment_tag.id if "environment_tag" of @props.test
               ref: 'environment_tag'
               for env_tag in @props.environments
-                React.DOM.option
-                  key: env_tag.id
-                  value: env_tag.id
-                  env_tag.name
+                React.DOM.option { key: env_tag.id, value: env_tag.id }, env_tag.name
 
         React.DOM.td null,
-          React.DOM.div
-            className: 'ui-widget'
+          React.DOM.div { className: 'ui-widget' },
             React.DOM.textarea
               className: 'form-control'
               ref: 'application_tags'

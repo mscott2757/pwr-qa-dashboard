@@ -16,10 +16,8 @@
   addApp: (app_tag) ->
 
   render: ->
-    React.DOM.div
-      className: 'tests'
-      React.DOM.table
-        className: 'table table-bordered edit-test-table'
+    React.DOM.div { className: 'tests' },
+      React.DOM.table { className: 'table table-bordered edit-test-table' },
         React.DOM.thead null,
           React.DOM.tr null,
             React.DOM.th null, 'Test'

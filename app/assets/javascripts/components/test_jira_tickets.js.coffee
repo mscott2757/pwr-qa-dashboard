@@ -36,32 +36,19 @@
     window.addEventListener('mousedown', @pageClick, false)
 
   ticketList: ->
-    React.DOM.ul
-      className: "sub"
+    React.DOM.ul { className: "sub" },
       for ticket in @state.tickets
         React.createElement JiraTicket, key: ticket.id, ticket: ticket, handleResolveTicket: @resolveTicket
 
-      React.DOM.li
-        className: "add-link"
-        React.DOM.a
-          className: "jira-url-link"
-          onClick: @toggleForm
-          "add new ticket"
+      React.DOM.li { className: "add-link" },
+        React.DOM.a { className: "jira-url-link", onClick: @toggleForm }, "add new ticket"
 
   render: ->
-    React.DOM.div
-      className: "app-jira-tickets"
-      onMouseDown: @handleMouseDown
-      onMouseUp: @handleMouseUp
-      React.DOM.a
-        className: "test-type-tag"
-        onClick: @toggleTickets
+    React.DOM.div { className: "app-jira-tickets", onMouseDown: @handleMouseDown, onMouseUp: @handleMouseUp },
+      React.DOM.a { className: "test-type-tag", onClick: @toggleTickets },
         "JIRA "
         if @state.tickets.length
-          React.DOM.span
-            id: "qa-badge"
-            className: "badge"
-            @state.tickets.length
+          React.DOM.span { id: "qa-badge", className: "badge" }, @state.tickets.length
 
       if @state.show_tickets
         @ticketList()

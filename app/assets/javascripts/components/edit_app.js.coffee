@@ -52,43 +52,24 @@
   editAppForm: ->
     React.DOM.tr null,
       React.DOM.td null,
-        React.DOM.input
-          className: 'form-control'
-          type: 'text'
-          defaultValue: @props.app.name
-          ref: 'name'
+        React.DOM.input { className: 'form-control', type: 'text', defaultValue: @props.app.name, ref: 'name' }
+
       React.DOM.td null,
-        React.DOM.div
-          className: "app-threshold-container"
-          React.DOM.div
-            id: "threshold-slider-#{ @props.app.id }"
-            className: "app-threshold-slider"
-          React.DOM.p
-            className: "app-threshold-display"
-            "#{@state.threshold}%"
+        React.DOM.div { className: "app-threshold-container" },
+          React.DOM.div { id: "threshold-slider-#{ @props.app.id }", className: "app-threshold-slider" }
+          React.DOM.p { className: "app-threshold-display" }, "#{@state.threshold}%"
+
       React.DOM.td null,
-        React.DOM.a
-          className: 'btn btn-default btn-sm edit-test-update'
-          onClick: @handleEdit
-          'Update'
-        React.DOM.a
-          className: 'btn btn-danger btn-sm'
-          onClick: @handleToggle
-          'Cancel'
+        React.DOM.a { className: 'btn btn-default btn-sm edit-test-update', onClick: @handleEdit }, 'Update'
+        React.DOM.a { className: 'btn btn-danger btn-sm', onClick: @handleToggle }, 'Cancel'
 
   editAppRow: ->
     React.DOM.tr null,
       React.DOM.td null, @props.app.name
       React.DOM.td null, @thresholdFormat()
       React.DOM.td null,
-        React.DOM.a
-          className: 'btn btn-default btn-sm edit-test-update'
-          onClick: @handleToggle
-          'Edit'
-        React.DOM.a
-          className: 'btn btn-danger btn-sm'
-          onClick: @showModal
-          "Delete"
+        React.DOM.a { className: 'btn btn-default btn-sm edit-test-update', onClick: @handleToggle }, 'Edit'
+        React.DOM.a { className: 'btn btn-danger btn-sm', onClick: @showModal }, "Delete"
 
   render: ->
     if @state.edit

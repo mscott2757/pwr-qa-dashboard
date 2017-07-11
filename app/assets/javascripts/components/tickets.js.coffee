@@ -14,11 +14,8 @@
     @replaceState tickets: tickets
 
   render: ->
-    React.DOM.div
-      className: "edit-tickets"
-      React.DOM.table
-        className: 'table table-bordered'
-        id: 'edit-apps-table'
+    React.DOM.div { className: "edit-tickets" },
+      React.DOM.table { className: 'table table-bordered', id: 'edit-apps-table' },
         React.DOM.thead null,
           React.DOM.tr null,
             React.DOM.th null, 'Ticket'

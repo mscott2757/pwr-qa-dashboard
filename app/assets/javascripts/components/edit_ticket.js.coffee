@@ -40,46 +40,23 @@
       React.DOM.td null, @formatResolved()
       React.DOM.td null, @props.ticket.test.name
       React.DOM.td null,
-        React.DOM.a
-          className: 'btn btn-default btn-sm edit-test-update'
-          onClick: @handleToggle
-          'Edit'
-        React.DOM.a
-          className: 'btn btn-danger btn-sm edit-test-update'
-          onClick: @handleDelete
-          'Delete'
+        React.DOM.a { className: 'btn btn-default btn-sm edit-test-update', onClick: @handleToggle}, 'Edit'
+        React.DOM.a { className: 'btn btn-danger btn-sm edit-test-update', onClick: @handleDelete }, 'Delete'
 
   editTicketForm: ->
     React.DOM.tr null,
       React.DOM.td null,
-        React.DOM.input
-          className: 'form-control'
-          type: 'text'
-          defaultValue: @props.ticket.number
-          ref: 'number'
+        React.DOM.input { className: 'form-control', type: 'text', defaultValue: @props.ticket.number, ref: 'number' }
 
       React.DOM.td null,
-        React.DOM.select
-          className: 'form-control'
-          defaultValue: @formatResolved()
-          ref: 'resolved'
-          React.DOM.option
-            value: "yes"
-            "yes"
-          React.DOM.option
-            value: "no"
-            "no"
+        React.DOM.select { className: 'form-control', defaultValue: @formatResolved(), ref: 'resolved' },
+          React.DOM.option { value: "yes" }, "yes"
+          React.DOM.option { value: "no" }, "no"
       React.DOM.td null, @props.ticket.test.name
 
       React.DOM.td null,
-        React.DOM.a
-          className: 'btn btn-default btn-sm edit-test-update'
-          onClick: @handleEdit
-          'Update'
-        React.DOM.a
-          className: 'btn btn-danger btn-sm'
-          onClick: @handleToggle
-          'Cancel'
+        React.DOM.a { className: 'btn btn-default btn-sm edit-test-update', onClick: @handleEdit }, 'Update'
+        React.DOM.a { className: 'btn btn-danger btn-sm', onClick: @handleToggle }, 'Cancel'
 
   render: ->
     if !@state.edit

@@ -29,13 +29,9 @@
       , 'JSON'
 
   render: ->
-    React.DOM.div
-      className: "add-note-form"
-      React.DOM.form
-        onSubmit: @handleSumbit
-        className: "note-form"
-        React.DOM.div
-          className: "form-group"
+    React.DOM.div { className: "add-note-form" },
+      React.DOM.form { onSubmit: @handleSumbit, className: "note-form" },
+        React.DOM.div { className: "form-group" },
 
           React.DOM.input
             type: 'text'
@@ -54,13 +50,6 @@
             onChange: @handleChange
 
 
-          React.DOM.div
-            className: "add-ticket-buttons"
-            React.DOM.button
-              className: 'btn btn-primary btn-sm add-note-btn'
-              disabled: !@valid()
-              "Create"
-            React.DOM.a
-              className: "btn btn-default btn-sm add-note-btn"
-              onClick: @props.handleClose
-              "Cancel"
+          React.DOM.div { className: "add-ticket-buttons" },
+            React.DOM.button { className: 'btn btn-primary btn-sm add-note-btn', disabled: !@valid() }, "Create"
+            React.DOM.a { className: "btn btn-default btn-sm add-note-btn", onClick: @props.handleClose }, "Cancel"

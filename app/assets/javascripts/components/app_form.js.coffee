@@ -29,31 +29,13 @@
     @state.name and @state.threshold and @state.threshold >= 0 and @state.threshold <= 100
 
   render: ->
-    React.DOM.form
-      onSubmit: @handleSubmit
-      className: 'form-inline add-app-form'
-      React.DOM.div
-        className: 'form-group'
-        id: 'app-form-group'
-        React.DOM.input
-          type: 'text'
-          className: 'form-control'
-          placeholder: 'Name'
-          name: 'name'
-          ref: "name"
-          onChange: @handleChange
-        React.DOM.div
-          className: "threshold-container"
-          React.DOM.p
-            className: "threshold-label"
-            "Threshold"
-          React.DOM.div
-            id: "threshold-slider"
-          React.DOM.p
-            className: "threshold-display"
-            "#{@state.threshold}%"
-      React.DOM.button
-        type: 'submit'
-        className: 'btn btn-primary add-app'
-        disabled: !@valid()
-        'Add App'
+    React.DOM.form { onSubmit: @handleSubmit, className: 'form-inline add-app-form' },
+      React.DOM.div { className: 'form-group', id: 'app-form-group' },
+        React.DOM.input { type: 'text', className: 'form-control', placeholder: 'Name', name: 'name', ref: "name", onChange: @handleChange }
+        React.DOM.div { className: "threshold-container" },
+          React.DOM.p { className: "threshold-label" }, "Threshold"
+          React.DOM.div { id: "threshold-slider" }
+          React.DOM.p { className: "threshold-display" }, "#{@state.threshold}%"
+      React.DOM.button { type: 'submit', className: 'btn btn-primary add-app', disabled: !@valid() }, 'Add App'
+
+
