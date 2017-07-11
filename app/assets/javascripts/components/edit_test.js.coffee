@@ -60,10 +60,7 @@
 
   handleEdit: (e) ->
     e.preventDefault()
-    if @props.test.parameterized
-      env_tag = @props.test.environment_tag.id
-    else
-      env_tag = ReactDOM.findDOMNode(@refs.environment_tag).value
+    env_tag = if @props.test.parameterized then @props.test.environment_tag.id else ReactDOM.findDOMNode(@refs.environment_tag).value
 
     data =
       primary_app: ReactDOM.findDOMNode(@refs.primary_app).value
@@ -124,10 +121,7 @@
       React.DOM.td null, @applicationTagsFormat()
 
   defaultTestType: ->
-    if "test_type" of @props.test
-      return @props.test.test_type.id
-    else
-      return 0
+    if "test_type" of @props.test then @props.test.test_type.id else 0
 
   render: ->
     if !@state.edit

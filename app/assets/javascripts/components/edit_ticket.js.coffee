@@ -32,10 +32,7 @@
 
 
   formatResolved: ->
-    if @props.ticket.resolved
-      return "yes"
-    else
-      return "no"
+    if @props.ticket.resolved then "yes" else "no"
 
   editTicketRow: ->
     React.DOM.tr null,

@@ -4,7 +4,7 @@ class ApplicationTag < ApplicationRecord
   has_many :test_application_tags, dependent: :destroy
   has_many :tests, -> { distinct }, through: :test_application_tags
   has_many :indirect_jira_tickets, through: :tests, source: :jira_tickets
-  has_many :notes
+  has_many :notes, dependent: :destroy
 
   has_many :primary_tests, class_name: "Test", foreign_key: "primary_app_id"
   has_many :primary_jira_tickets, through: :primary_tests, source: :jira_tickets

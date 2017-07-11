@@ -3,7 +3,6 @@ require 'httparty'
 require 'open-uri'
 require 'uri'
 require 'net/http'
-
 include ActionView::Helpers::DateHelper
 
 class Test < ApplicationRecord
