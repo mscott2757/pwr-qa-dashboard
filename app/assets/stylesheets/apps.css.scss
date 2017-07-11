@@ -6,12 +6,12 @@
   width: 100%;
   background-color: #fff;
   border: 1px solid #ddd;
-  height: 20vh;
+  height: 17vh;
   position: relative;
 }
 
 .app-summary-header {
-  height: 56%;
+  height: 58%;
   width: 100%;
 }
 
@@ -31,7 +31,7 @@ ul.recent-failed-list > li {
 
 .app-summary-title {
 	height: 100%;
-  width: 50%;
+  width: 55%;
   float: left;
   display: inline;
   padding: 8px;
@@ -40,7 +40,7 @@ ul.recent-failed-list > li {
 
 .app-summary-title > a > h2 {
   margin: 0;
-  font-size: 3vh;
+  font-size: 2.8vh;
 }
 
 .app-badges {
@@ -57,7 +57,7 @@ ul.recent-failed-list > li {
 
 
 .app-summary-recent {
-  width: 50%;
+  width: 45%;
   height: 100%;
   float: left;
   display: inline;
@@ -72,7 +72,7 @@ ul.recent-failed-list > li {
 
 .app-summary-progress {
   width: 100%;
-  height: 44%;
+  height: 42%;
   position: absolute;
   bottom: 0;
 }
