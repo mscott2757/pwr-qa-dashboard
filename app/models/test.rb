@@ -3,6 +3,7 @@ require 'httparty'
 require 'open-uri'
 require 'uri'
 require 'net/http'
+require 'set'
 include ActionView::Helpers::DateHelper
 
 class Test < ApplicationRecord
@@ -27,6 +28,7 @@ class Test < ApplicationRecord
   def self.save_data_from_jenkins_api
     jobs_json = HTTParty.get("#{base_url}/api/json?tree=jobs[name,url]")
     jobs_json = jobs_json.parsed_response
+    curr_tests = Set.new
 
     jobs_json["jobs"].each do |job|
       job_url = job["url"]
@@ -71,6 +73,7 @@ class Test < ApplicationRecord
         end
       end
 
+      curr_tests << internal_name
       if exists?(internal_name: internal_name)
         test = where(internal_name: internal_name).first
       else
@@ -96,6 +99,11 @@ class Test < ApplicationRecord
       end
 
       test.save
+    end
+
+    # remove old versions of test
+    all.each do |test|
+      test.destroy if !curr_tests.include?(test.internal_name)
     end
   end
 

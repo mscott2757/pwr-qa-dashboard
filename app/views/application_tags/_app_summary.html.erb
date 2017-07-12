@@ -1,6 +1,7 @@
 <div class="col-sm-<%= 12 / @app_col %>" id="app-summary-col">
   <div class="app-summary-container">
     <div class="app-summary-header">
+
       <div class="app-summary-title">
         <%= link_to application_tag_path(id: app.id, method: @method), class: "link-title" do %>
           <h2><%= app.name %></h2>
@@ -12,22 +13,22 @@
           <% end %>
         </div>
       </div>
+
       <% if failing_tests.count > 0 %>
         <div class="app-summary-recent">
           <p><b>Recent Failed tests</b></p>
           <ul class="recent-failed-list">
-            <% failing_tests.first(3).each do |test| %>
+            <% failing_tests.each do |test| %>
               <li><%= link_to test.name, test.job_url, class: 'link-title' %></li>
             <% end %>
           </ul>
         </div>
       <% end %>
+
     </div>
     <div class="app-summary-progress">
       <div id="progressbar-<%= app.id %>"></div>
     </div>
-    <script>
-      <%= render partial: "progress_bar.js", locals: { app: app, tooltip: true, failing_tests: failing_tests, total_passing: total_passing } %>
-    </script>
+    <%= render partial: "progress_bar.js", locals: { app: app, tooltip: true, failing_tests: failing_tests, total_passing: total_passing } %>
   </div>
 </div>
