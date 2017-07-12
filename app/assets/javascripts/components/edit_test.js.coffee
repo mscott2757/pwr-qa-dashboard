@@ -140,10 +140,11 @@
         React.DOM.td null,
           React.DOM.select
             className: 'form-control'
-            defaultValue: @props.test.primary_app.id if "primary_app" of @props.test
+            defaultValue: if "primary_app" of @props.test then @props.test.primary_app.id else 0
             ref: 'primary_app'
             for app_tag in @props.applications
               React.DOM.option { key: app_tag.id, value: app_tag.id }, app_tag.name
+            React.DOM.option { value: 0 }, "None"
 
         React.DOM.td null,
           if @props.test.parameterized

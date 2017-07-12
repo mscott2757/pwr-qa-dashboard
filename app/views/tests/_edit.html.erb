@@ -29,7 +29,7 @@
 								<%= f.label "Primary App" %>
 							</div>
 							<div class="col-sm-7">
-								<%= f.select :primary_app, options_for_select(applications, test.primary_app.id), {}, { class: 'form-control' } %>
+								<%= f.select :primary_app, options_for_select(applications, test.default_primary_app_id), {}, { class: 'form-control' } %>
 							</div>
 						</div>
 

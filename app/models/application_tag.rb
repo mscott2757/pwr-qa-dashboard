@@ -22,7 +22,7 @@ class ApplicationTag < ApplicationRecord
   end
 
   def self.select_options
-    all.map{ |app_tag| [app_tag.name, app_tag.id] }
+    all.map{ |app_tag| [app_tag.name, app_tag.id] } << ["None", 0]
   end
 
   # returns apps with any passing or failing tests in the last 7 days

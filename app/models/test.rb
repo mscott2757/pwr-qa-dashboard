@@ -145,6 +145,10 @@ class Test < ApplicationRecord
     test_type ? self.test_type.id : 0
   end
 
+  def default_primary_app_id
+    primary_app ? self.primary_app.id : 0
+  end
+
   def json_tree(tree_attr)
     response = HTTParty.get("#{job_url}/api/json?tree=#{tree_attr}")
     response.parsed_response

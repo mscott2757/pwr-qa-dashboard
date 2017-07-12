@@ -22,7 +22,11 @@ class TestsController < ApplicationController
     end
 
     tests.each do |test|
-      test.primary_app_id = params[:test][:primary_app] if (params[:test][:primary_app] != "")
+      if params[:test][:primary_app] != "0"
+        test.primary_app_id = params[:test][:primary_app]
+      else
+        test.primary_app.primary_tests.delete(test) if test.primary_app
+      end
 
       if params[:test][:test_type] != "0"
         test.test_type_id = params[:test][:test_type]
