@@ -27,7 +27,7 @@ class ApplicationTag < ApplicationRecord
 
   # returns apps with any passing or failing tests in the last 7 days
   def self.relevant_apps(method, env_tag)
-    all.select { |app| app.total_recent_tests(method, env_tag) > 0 }
+    all.select { |app| app.total_recent_tests(method, env_tag) > 0 }.sort_by { |app| app.name.downcase }
   end
 
   # returns page title for page header
