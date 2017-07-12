@@ -94,7 +94,8 @@
   testRow: ->
     React.DOM.tr null,
       React.DOM.td null,
-        React.DOM.div { className: "edit-test-name" }, @props.test.name
+        React.DOM.div { className: "edit-test-name" },
+          React.DOM.a { href: @props.test.job_url, className: 'settings-test-link' }, @props.test.name
         React.DOM.div { className: "edit-test-toggle" },
           React.DOM.a { className: 'btn btn-default btn-sm', onClick: @handleToggle }, 'Edit'
 
