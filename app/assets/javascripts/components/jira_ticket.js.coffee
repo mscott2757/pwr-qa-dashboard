@@ -10,5 +10,5 @@
 
   render: ->
     React.DOM.li { className: "sub-li" },
-      React.DOM.a { className: "jira-url-link", href: ticketURL(@props.ticket) }, @props.ticket.number
+      React.DOM.a { className: "jira-url-link", href: ticketURL(@props.ticket), target: "_blank" }, @props.ticket.number
       React.DOM.a { className: "resolve-link", onClick: @handleResolve }, "resolve"
