@@ -1,7 +1,12 @@
 <div class="page-header" id="app-show-header">
 	<div class="page-title">
     <h2 class="app-page-title"><%= ApplicationTag.test_type_display(@method) %> - <%= @app.name %> <em>- <%= @env_tag.name %></em></h2>
-    <%= render partial: "test_col_select" %>
+    <div class="app-col-select">
+      <%= render partial: "test_col_select" %>
+    </div>
+    <div class="app-summary-passing">
+      <h2><em><%= @app.total_passing(@method, @env_tag) %></em>/<%= @app.total_passing(@method, @env_tag) +  @app.total_failing(@method, @env_tag) %></h2>
+    </div>
 	</div>
   <div class="app-progress-header">
     <div id="progressbar-<%= @app.id %>"></div>
