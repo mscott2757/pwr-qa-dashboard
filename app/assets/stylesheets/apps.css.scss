@@ -71,6 +71,16 @@ ul.recent-failed-list > li {
 
 .app-notes {
   display: inline-block;
+  margin-left: 5px;
+  float: right;
+}
+
+.app-jira-tickets > ul.sub {
+  left: 46%;
+}
+
+.app-notes-container > ul.notes-sub, .app-notes-container > .add-note-form {
+  left: 50%;
 }
 
 .test-notes {
