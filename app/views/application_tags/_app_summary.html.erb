@@ -6,29 +6,48 @@
         <%= link_to application_tag_path(id: app.id, method: @method), class: "link-title" do %>
           <h2><%= app.name %></h2>
         <% end %>
-        <div class="app-badges">
-          <%= react_component 'Notes', { notes: app.notes, app: app }, { class: "app-notes" } %>
-          <% if tickets.count > 0 %>
-            <%= react_component 'AppJiraTickets', { tickets: tickets }, { class: "app-notes" } %>
-          <% end %>
-        </div>
       </div>
 
-      <% if failing_tests.count > 0 %>
-        <div class="app-summary-recent">
+      <div class="app-summary-passing">
+        <h2><em><%= total_passing %></em>/<%= total_passing + failing_tests.count %></h2>
+      </div>
+    </div>
+
+    <div class="app-summary-progress">
+      <div id="progressbar-<%= app.id %>"></div>
+    </div>
+    <%= render partial: "progress_bar.js", locals: { app: app, tooltip: true, failing_tests: failing_tests, total_passing: total_passing } %>
+
+    <div class="app-summary-info">
+
+      <div class="app-summary-recent" id="app-recent-<%= app.id %>">
+        <% if failing_tests.count > 0 %>
           <p><b>Recent Failed tests</b></p>
           <ul class="recent-failed-list">
             <% failing_tests.each do |test| %>
               <li><%= link_to test.name, test.job_url, class: 'link-title' %></li>
             <% end %>
           </ul>
-        </div>
-      <% end %>
+          <% if failing_tests.count > 3 %>
+            <script>
+            $("#app-recent-<%= app.id %>").hover(function () {
+                $(this).css("border", "1px solid #ddd");
+            }, function () {
+                $(this).css("border", "none");
+            });
+            </script>
+          <% end %>
+        <% end %>
+      </div>
+
+      <div class="app-badges">
+        <%= react_component 'Notes', { notes: app.notes, app: app }, { class: "app-notes" } %>
+        <% if tickets.count > 0 %>
+          <%= react_component 'AppJiraTickets', { tickets: tickets }, { class: "app-notes" } %>
+        <% end %>
+      </div>
 
     </div>
-    <div class="app-summary-progress">
-      <div id="progressbar-<%= app.id %>"></div>
-    </div>
-    <%= render partial: "progress_bar.js", locals: { app: app, tooltip: true, failing_tests: failing_tests, total_passing: total_passing } %>
+
   </div>
 </div>
