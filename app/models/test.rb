@@ -103,7 +103,7 @@ class Test < ApplicationRecord
 
     # remove old versions of test
     all.each do |test|
-      # test.destroy if !curr_tests.include?(test.internal_name)
+      test.destroy if !test.parameterized and !curr_tests.include?(test.internal_name)
     end
   end
 
