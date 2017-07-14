@@ -67,7 +67,6 @@
   width: 100%;
 }
 
-
 .test-status {
   height: 100%;
   width: 100%;
@@ -265,51 +264,47 @@
   }
 }
 
-ul.sub {
-	position: absolute;
-  z-index: 200;
-  width: 42%;
-	background: #fff;
-  display: block;
-  list-style-type: none;
-	padding: 0;
-  border: 1px solid #ddd;
-}
-
-ul.sub > li {
-  float: none;
-  margin: 0;
-  list-style-type: none;
-	padding: 5px;
-}
-
-ul.sub > li > a {
-  border-right: none;
-  color: #000;
-}
-
-ul.sub > li.add-link {
-  border-top: 1px solid #ddd;
-}
-
-.jira-section {
-	display: inline-block;
-}
-
-.resolve-link {
-	float: right;
-}
-
 a.test-type-tag:hover {
 	text-decoration: none;
 	color: #999;
 }
 
-.add-ticket-form {
-	position: absolute;
-  z-index: 200;
-  width: 75%;
-	background: #fff;
+.test-modal-body {
+  padding: 15px 30px 30px 30px;
+}
+
+.test-modal-header {
+  padding: 30px 30px 8px 30px;
+}
+
+.test-modal-header > h4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+#test-modal-label {
+  text-align: right;
+}
+
+#test-modal-row {
+  padding: 5px;
+}
+
+.test-modal {
   border: 1px solid #ddd;
-	padding: 8px;
+  background-color: #fff;
+  max-width: 500px;
+  min-height: 300px;
+  margin: 150px auto;
+	position: relative;
+}
+
+.test-modal-buttons {
+  width: 100%;
+  margin-top: 15px;
+  text-align: right;
+}
+
+.test-modal-button {
+  margin-left: 8px;
 }

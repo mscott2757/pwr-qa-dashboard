@@ -27,10 +27,6 @@ ul.recent-failed-list > li {
   line-height: 1.8vh;
 }
 
-#qa-badge {
-  font-size: 1.5vh;
-  font-weight: normal;
-}
 
 .app-summary-title {
 	height: 100%;
@@ -41,12 +37,7 @@ ul.recent-failed-list > li {
 	position: relative;
 }
 
-.app-summary-title > a > h2 {
-  margin: 0;
-  font-size: 2.8vh;
-}
-
-.app-summary-passing > h2 {
+.app-summary-title > a > h2, .app-summary-passing > h2 {
   margin: 0;
   font-size: 2.8vh;
 }
@@ -74,24 +65,10 @@ ul.recent-failed-list > li {
   display: inline-block;
 }
 
-.app-notes {
-  display: inline-block;
-  margin-left: 5px;
-  float: right;
+#qa-badge {
+  font-size: 1.5vh;
+  font-weight: normal;
 }
-
-.app-jira-tickets > ul.sub {
-  left: 46%;
-}
-
-.app-notes-container > ul.notes-sub, .app-notes-container > .add-note-form {
-  left: 50%;
-}
-
-.test-notes {
-  display: inline-block;
-}
-
 
 .app-summary-recent {
   vertical-align: top;
@@ -167,15 +144,6 @@ ul.recent-failed-list > li {
 	text-decoration: none;
 }
 
-.total-failing {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  color: #fff;
-  margin-bottom: 5px;
-  margin-right: 5px;
-}
-
 .total-passing {
   color: #fff;
   margin-bottom: 5px;
@@ -202,49 +170,10 @@ ul.recent-failed-list > li {
   padding: 5px;
 }
 
-.test-modal-body {
-  padding: 15px 30px 30px 30px;
-}
-
-.test-modal-header {
-  padding: 30px 30px 8px 30px;
-}
-
-.test-modal-header > h4 {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-#test-modal-row {
-  padding: 5px;
-}
-
-#test-modal-label {
-  text-align: right;
-}
 
 .app-page-title > em {
   color: #a8a8a8;
   font-style: normal;
-}
-
-.test-modal {
-  border: 1px solid #ddd;
-  background-color: #fff;
-  max-width: 500px;
-  min-height: 300px;
-  margin: 150px auto;
-	position: relative;
-}
-
-.test-modal-buttons {
-  width: 100%;
-  margin-top: 15px;
-  text-align: right;
-}
-
-.test-modal-button {
-  margin-left: 8px;
 }
 
 .app-col-select {

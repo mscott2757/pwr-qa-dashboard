@@ -52,3 +52,17 @@ ul.notes-sub > li.note-li {
   color: #a8a8a8;
 }
 
+.app-notes ul.notes-sub, .app-notes .add-note-form {
+  left: 50%;
+}
+
+.app-notes {
+  display: inline-block;
+  margin-left: 5px;
+  float: right;
+}
+
+.test-notes {
+  display: inline-block;
+}
+

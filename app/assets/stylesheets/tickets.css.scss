@@ -1,0 +1,48 @@
+.app-notes ul.sub {
+  left: 41%;
+}
+
+.jira-section {
+	display: inline-block;
+}
+
+ul.sub {
+	position: absolute;
+  z-index: 200;
+  width: 42%;
+	background: #fff;
+  display: block;
+  list-style-type: none;
+	padding: 0;
+  border: 1px solid #ddd;
+}
+
+ul.sub > li {
+  float: none;
+  margin: 0;
+  list-style-type: none;
+	padding: 5px;
+}
+
+ul.sub > li > a {
+  border-right: none;
+  color: #000;
+}
+
+ul.sub > li.add-link {
+  border-top: 1px solid #ddd;
+}
+
+
+.resolve-link {
+	float: right;
+}
+
+.add-ticket-form {
+	position: absolute;
+  z-index: 200;
+  width: 75%;
+	background: #fff;
+  border: 1px solid #ddd;
+	padding: 8px;
+}
