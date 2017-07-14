@@ -5,7 +5,7 @@
       <%= render partial: "test_col_select" %>
     </div>
     <div class="app-summary-passing">
-      <h2><em><%= @app.total_passing(@method, @env_tag) %></em>/<%= @app.total_passing(@method, @env_tag) +  @app.total_failing(@method, @env_tag) %></h2>
+      <h3><em><%= @app.total_passing(@method, @env_tag) %></em>/<%= @app.total_passing(@method, @env_tag) +  @app.total_failing(@method, @env_tag) %></h3>
     </div>
 	</div>
   <div class="app-progress-header">

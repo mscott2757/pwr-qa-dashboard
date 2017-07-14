@@ -24,7 +24,7 @@
         <% if failing_tests.count > 0 %>
           <p><b>Recent Failed tests</b></p>
           <ul class="recent-failed-list">
-            <% failing_tests.first(3).each do |test| %>
+            <% failing_tests.each do |test| %>
               <li><%= link_to test.name, test.job_url, class: 'link-title', target: "_blank" %></li>
             <% end %>
           </ul>
