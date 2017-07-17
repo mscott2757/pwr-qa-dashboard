@@ -32,7 +32,7 @@
       </div>
 
       <div class="app-badges">
-        <%= react_component 'Notes', { notes: app.notes, app: app }, { class: "app-notes" } %>
+        <%= react_component 'Notes', { notes: app.all_notes(@method), app: app }, { class: "app-notes" } %>
         <% if tickets.count > 0 %>
           <%= react_component 'AppJiraTickets', { tickets: tickets }, { class: "app-notes" } %>
         <% end %>
