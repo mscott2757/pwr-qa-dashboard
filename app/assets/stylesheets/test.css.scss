@@ -75,15 +75,15 @@
 }
 
 .test-status-passing {
-  background-color: #2E7D32;
+  background-color: #8DC63F;
 }
 
 .test-status-failing {
-  background-color: #C62828;
+  background-color: #F15C22;
 }
 
 .test-status-other {
-  background-color: #888;
+  background-color: rgba(168, 168, 168, 0.78);
 }
 
 .last-build > a > p {

@@ -47,7 +47,7 @@ ul.recent-failed-list > li {
 }
 
 .app-summary-passing > h2 > em, .app-summary-passing > h3 > em {
-  color: #8DC63F;
+  color: #2E7D32;
   font-style: normal;
 }
 
@@ -107,11 +107,11 @@ ul.recent-failed-list > li {
 }
 
 .app-prog-success {
-  background-color: #8DC63F;
+  background-color: #2E7D32;
 }
 
 .app-prog-failing {
-  background-color: #F15C22;
+  background-color: #C62828;
 }
 
 .app-prog-other {
@@ -132,7 +132,7 @@ ul.recent-failed-list > li {
 }
 
 .app-progress-success {
-  background-color: #8DC63F;
+  background-color: #2E7D32;
   border: none;
   margin-bottom: 0 !important;
   padding-bottom: 0;
@@ -147,7 +147,7 @@ ul.recent-failed-list > li {
 }
 
 .app-progress-bar {
-  background-color: #F15C22;
+  background-color: #C62828;
   height: 100%;
 }
 
