@@ -1,13 +1,10 @@
-<div class='col-dropdown'>
-  <div class="dropdown">
-    <span>Tests per row: </span>
-    <button class="btn btn-default btn-sm" data-toggle="dropdown" type="button"><%= @test_col.to_s %> <span class="caret"></span></button>
-    <ul class="dropdown-menu">
-      <% ([2,3,4,6] - [@test_col]).each do |col_num| %>
-        <li>
-          <%= link_to col_num.to_s , edit_test_col_application_tags_path(test_col: col_num, method: @method, id: @app.id), remote: true %>
-        </li>
-      <% end %>
-    </ul>
-  </div>
-</div>
+<li class="dropdown" id="col-dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tests per row: <b><%= @test_col.to_s %></b> <span class="caret"></span></a>
+  <ul class="dropdown-menu">
+    <% ([2,3,4,6] - [@test_col]).each do |col_num| %>
+      <li>
+        <%= link_to col_num.to_s , edit_test_col_application_tags_path(test_col: col_num, method: @method, id: @app.id), remote: true %>
+      </li>
+    <% end %>
+  </ul>
+</li>

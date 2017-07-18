@@ -42,11 +42,11 @@ ul.recent-failed-list > li {
   font-size: 2.8vh;
 }
 
-.app-summary-passing > h3 {
+.app-show-passing > h2 {
   margin: 0;
 }
 
-.app-summary-passing > h2 > em, .app-summary-passing > h3 > em {
+.app-summary-passing > h2 > em, .app-show-passing > h2 > em {
   color: #8DC63F;
   font-style: normal;
 }
@@ -203,10 +203,25 @@ ul.recent-failed-list > li {
   font-style: normal;
 }
 
-.app-col-select {
+.app-page-title {
+  margin-top: 10px;
+}
+
+.app-show-title {
   display: inline-block;
-  vertical-align: top;
+  vertical-align: bottom;
   width: 74%;
+}
+
+.app-show-title > h2 {
+  margin-bottom: 0;
+}
+
+.app-show-passing {
+  display: inline-block;
+  vertical-align: bottom;
+  width: 25%;
+  text-align: right;
 }
 
 .page-title > .app-summary-passing {

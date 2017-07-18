@@ -45,6 +45,12 @@
                 </ul>
               </li>
             <% end %>
+            <% if @app_col %>
+              <%= render partial: "app_col_select" %>
+            <% end %>
+            <% if @test_col %>
+              <%= render partial: "test_col_select" %>
+            <% end %>
 					</ul>
 					<ul class="nav navbar-nav navbar-right" id="qa-navbar-nav">
             <li><%= link_to "Settings", tests_path %></li>

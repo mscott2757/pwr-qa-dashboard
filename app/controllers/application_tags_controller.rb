@@ -1,13 +1,16 @@
 class ApplicationTagsController < ApplicationController
-	before_action :set_columns
+	before_action :set_app_columns, only: [:index, :indirect, :refresh]
+  before_action :set_test_columns, only: [:show]
   before_action :set_method, only: [:show, :edit_app_col, :edit_test_col, :refresh]
   before_action :set_tests, only: [:show, :edit_test_col]
 	skip_before_action :disable_rotate, only: [:index]
 
-  def set_columns
+  def set_app_columns
     session[:app_col] = 2 if !session.include?(:app_col)
     @app_col = session[:app_col].to_i
+  end
 
+  def set_test_columns
     session[:test_col] = 4 if !session.include?(:test_col)
     @test_col = session[:test_col].to_i
   end
