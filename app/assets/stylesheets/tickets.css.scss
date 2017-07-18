@@ -1,5 +1,5 @@
 .app-notes ul.sub {
-  left: 41%;
+  left: 13vw;
 }
 
 .jira-section {
@@ -9,7 +9,7 @@
 ul.sub {
 	position: absolute;
   z-index: 200;
-  width: 42%;
+  width: 15vw;
 	background: #fff;
   display: block;
   list-style-type: none;
@@ -41,7 +41,7 @@ ul.sub > li.add-link {
 .add-ticket-form {
 	position: absolute;
   z-index: 200;
-  width: 75%;
+  width: 15vw;
 	background: #fff;
   border: 1px solid #ddd;
 	padding: 8px;
