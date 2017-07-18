@@ -30,7 +30,11 @@ class ApplicationTag < ApplicationRecord
 
   # returns apps with any passing or failing tests in the last 7 days
   def self.relevant_apps(method, env_tag)
-    all.select { |app| app.total_recent_tests(method, env_tag) > 0 }.sort_by { |app| app.name.downcase }
+    all.select { |app| app.total_tests(method, env_tag) > 0 }.sort_by { |app| app.name.downcase }
+  end
+
+  def edit_as_json
+    as_json(only: [:name, :id, :threshold], include: { primary_tests: { only: [:name, :id] }, tests: { only: [:name, :id] } })
   end
 
   # returns page title for page header
@@ -47,22 +51,18 @@ class ApplicationTag < ApplicationRecord
   end
 
   def culprit?(env_tag)
-    percent_failing(env_tag) >= threshold / 100.0
+    percent_failing_f(env_tag) >= threshold / 100.0
   end
 
   def culprit_format(env_tag)
-    "Warning #{ total_failing("tests", env_tag) } of #{ total_recent_tests("tests", env_tag) } indirect tests for #{ name } are failing in #{ env_tag.name }"
+    "Warning #{ total_failing("tests", env_tag) } of #{ total_tests("tests", env_tag) } indirect tests for #{ name } are failing in #{ env_tag.name }"
   end
 
-  def total_recent_tests(method, env_tag)
-    total_passing(method, env_tag) + total_failing(method, env_tag)
+  def total_tests(method, env_tag)
+    total_passing(method, env_tag) + total_failing(method, env_tag) + total_other(method, env_tag)
   end
 
-  def edit_as_json
-    as_json(only: [:name, :id, :threshold], include: { primary_tests: { only: [:name, :id] }, tests: { only: [:name, :id] } })
-  end
-
-  # returns the portion of an app's tests in and env sorted by name
+  # returns the portion of an app's tests in an env sorted by name
   def tests_by_env(method, env_tag)
     send(method).select { |test| test.env_tag == env_tag }.sort_by{ |test| test.name.downcase }.sort_by{ |test| test.group || 10 }
   end
@@ -72,33 +72,47 @@ class ApplicationTag < ApplicationRecord
   end
 
   def passing_tests(method, env_tag)
-    send(method).where(last_build_time: 7.days.ago..Time.now).select { |test| test.env_tag == env_tag and test.passing? }
-  end
-
-  def passing_tests_format(method, env_tag)
-    passing_tests(method, env_tag).map { |test| test.name }.join(", ")
+    send(method).select { |test| test.env_tag == env_tag and test.passing? }
   end
 
   def total_passing(method, env_tag)
     passing_tests(method, env_tag).count
   end
 
-  def failing_tests(method, env_tag)
-    send(method).where(last_build_time: 7.days.ago..Time.now).select { |test| test.env_tag == env_tag and test.failing? }.sort { |a,b| b.last_build_time <=> a.last_build_time }
+  def percent_passing(method, env_tag)
+    total = total_tests(method, env_tag)
+    (total > 0) ? total_passing(method, env_tag).to_f / total * 100 : 0.0
   end
 
-  def failing_tests_format(method, env_tag)
-    failing_tests(method, env_tag).map { |test| test.name }.join(", ")
+  def failing_tests(method, env_tag)
+    send(method).select { |test| test.env_tag == env_tag and test.failing? }.sort { |a,b| b.last_build_time <=> a.last_build_time }
   end
 
   def total_failing(method, env_tag)
     failing_tests(method, env_tag).count
   end
 
-  def percent_failing(env_tag)
-    failing = total_failing("tests", env_tag)
-    total = failing + total_passing("tests", env_tag)
-    (total > 0) ? failing.to_f / total : 0.0
+  def percent_failing(method, env_tag)
+    total = total_tests(method, env_tag)
+    (total > 0) ? total_failing(method, env_tag).to_f / total * 100 : 0.0
+  end
+
+  def other_tests(method, env_tag)
+    send(method).select { |test| test.env_tag == env_tag and !test.failing? and !test.passing? }
+  end
+
+  def total_other(method, env_tag)
+    other_tests(method, env_tag).count
+  end
+
+  def percent_other(method, env_tag)
+    total = total_tests(method, env_tag)
+    (total > 0) ? total_other(method, env_tag).to_f / total * 100 : 0.0
+  end
+
+  def percent_failing_f(env_tag)
+    total = total_tests("tests", env_tag)
+    (total > 0) ? total_failing("tests", env_tag).to_f / total : 0.0
   end
 
   # obtain which field to query jira tickets, based on method

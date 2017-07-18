@@ -9,14 +9,15 @@
       </div>
 
       <div class="app-summary-passing">
-        <h2><em><%= total_passing %></em>/<%= total_passing + failing_tests.count %></h2>
+        <h2><em><%= app.total_passing(@method, @env_tag) %></em>/<%= app.total_tests(@method, @env_tag) %></h2>
       </div>
     </div>
 
     <div class="app-summary-progress">
-      <div id="progressbar-<%= app.id %>"></div>
+      <%= render partial: "prog_slice", locals: { percent: app.percent_passing(@method, @env_tag), type: "success" } %>
+      <%= render partial: "prog_slice", locals: { percent: app.percent_other(@method, @env_tag), type: "other" } %>
+      <%= render partial: "prog_slice", locals: { percent: app.percent_failing(@method, @env_tag), type: "failing" } %>
     </div>
-    <%= render partial: "progress_bar.js", locals: { app: app, tooltip: true, failing_tests: failing_tests, total_passing: total_passing } %>
 
     <div class="app-summary-info">
 

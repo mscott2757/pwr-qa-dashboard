@@ -89,6 +89,33 @@ ul.recent-failed-list > li {
   width: 100%;
   height: 26%;
   padding: 0 8px;
+  vertical-align: top;
+  font-size: 0;
+}
+
+.app-prog-slice {
+  height: 100%;
+  display: inline-block;
+  vertical-align: top;
+  padding: 0 0.15vw;
+}
+
+.app-prog-slice div {
+  height: 100%;
+  width: 100%;
+  border-radius: 2px;
+}
+
+.app-prog-success {
+  background-color: #2E7D32;
+}
+
+.app-prog-failing {
+  background-color: #C62828;
+}
+
+.app-prog-other {
+  background-color: #a8a8a8;
 }
 
 .app-summary-info {
@@ -185,3 +212,8 @@ ul.recent-failed-list > li {
 .page-title > .app-summary-passing {
   padding-top: 8px;
 }
+
+
+
+
+
