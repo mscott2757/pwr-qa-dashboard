@@ -30,7 +30,11 @@ class ApplicationTag < ApplicationRecord
 
   # returns apps with any passing or failing tests in the last 7 days
   def self.relevant_apps(method, env_tag)
-    all.select { |app| app.total_tests(method, env_tag) > 0 }.sort_by { |app| app.name.downcase }
+    all.select { |app| app.relevant?(method, env_tag) }.sort_by { |app| app.name.downcase }
+  end
+
+  def relevant?(method, env_tag)
+    send(method).any? { |test| test.env_tag == env_tag }
   end
 
   def edit_as_json
@@ -105,7 +109,7 @@ class ApplicationTag < ApplicationRecord
   end
 
   def total_tests(method, env_tag)
-    total_passing(method, env_tag) + total_failing(method, env_tag) + total_other(method, env_tag)
+    send(method).select { |test| test.env_tag == env_tag }.count
   end
 
   # obtain which field to query jira tickets, based on method
