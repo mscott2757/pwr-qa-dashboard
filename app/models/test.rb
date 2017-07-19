@@ -32,57 +32,58 @@ class Test < ApplicationRecord
 
     jobs_json["jobs"].each do |job|
       job_url = job["url"]
-      name = job["name"]
-      internal_name = job["name"]
+      name = internal_name = job["name"]
       test_json = Test.json_tree(job_url , "color,lastBuild[number],lastSuccessfulBuild[number],lastFailedBuild[number]")
-      next if !test_json["lastBuild"]
-
-      last_build = test_json["lastBuild"]["number"]
-      last_build_json = Test.json_build_tree(job_url, last_build, "actions[causes[userName],parameters[value]],timestamp")
-      last_build_time = Time.at(last_build_json["timestamp"]/1000).to_datetime
 
       env_name = ""
-      parameterized = false
-      last_build_json["actions"].each do |action|
-        if action["parameters"]
-          if action["parameters"][0]["value"] == "scheduler"
-            if last_build_time.in_time_zone("Pacific Time (US & Canada)").hour < 4
-              env_name = "qa"
-              internal_name += "-qa"
+      if test_json["lastBuild"]
+        last_build = test_json["lastBuild"]["number"]
+        last_build_json = Test.json_build_tree(job_url, last_build, "actions[causes[userName],parameters[value]],timestamp")
+        last_build_time = Time.at(last_build_json["timestamp"]/1000).to_datetime
+
+        parameterized = false
+        # look for parameterized environment
+        last_build_json["actions"].each do |action|
+          if action["parameters"]
+            if action["parameters"][0]["value"] == "scheduler"
+              env_name = (last_build_time.in_time_zone("Pacific Time (US & Canada)").hour < 4) ? "qa" : "dev"
             else
-              env_name = "dev"
-              internal_name += "-dev"
+              env_name = action["parameters"][0]["value"]
             end
-          else
-            env_name = action["parameters"][0]["value"]
+
             internal_name += "-#{env_name}"
+            parameterized = true
+
+            # remove old non parameterized test with same name if it exists
+            Test.where(internal_name: name).first.destroy if exists?(internal_name: name)
           end
-
-          Test.where(internal_name: name).first.destroy if exists?(internal_name: name)
-          parameterized = true
-        end
-      end
-
-      if !parameterized
-        if name.downcase.include?("dev")
-          env_name = "dev"
-        elsif name.downcase.include?("qa")
-          env_name = "qa"
-        elsif name.downcase.include?("prod")
-          env_name = "prod"
         end
       end
 
       curr_tests << internal_name
+
       if exists?(internal_name: internal_name)
         test = where(internal_name: internal_name).first
       else
-        test = Test.new(name: name, internal_name: internal_name, job_url: job_url)
+        test = new(name: name, internal_name: internal_name, job_url: job_url)
+
+        # sync test with already existing test of the same name
+        if parameterized and exists?(name: name)
+          older = where(name: name).first
+
+          test.test_type = older.test_type
+          test.primary_app = older.primary_app
+          test.group = older.group
+          test.application_tags.push(*older.application_tags)
+        end
       end
 
       test.parameterized = parameterized
-      test.last_build = last_build
-      test.last_build_time = last_build_time
+
+      if test_json["lastBuild"]
+        test.last_build = last_build
+        test.last_build_time = last_build_time
+      end
 
       if env_name != ""
         env_tag = EnvironmentTag.find_by_name(env_name)
@@ -94,8 +95,8 @@ class Test < ApplicationRecord
       # last successful build
       if test_json["lastSuccessfulBuild"]
         test.last_successful_build = test_json["lastSuccessfulBuild"]["number"]
-        last_successful_build_json = test.json_build_tree(test.last_successful_build, "timestamp")
-        test.last_successful_build_time = Time.at(last_successful_build_json["timestamp"]/1000).to_datetime
+        last_successful_json = test.json_build_tree(test.last_successful_build, "timestamp")
+        test.last_successful_build_time = Time.at(last_successful_json["timestamp"]/1000).to_datetime
       end
 
       test.save

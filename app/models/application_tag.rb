@@ -51,24 +51,18 @@ class ApplicationTag < ApplicationRecord
   end
 
   def culprit?(env_tag)
-    percent_failing_f(env_tag) >= threshold / 100.0
+    total = total_tests("tests", env_tag)
+    percent_failing_f = (total > 0) ? total_failing("tests", env_tag).to_f / total : 0.0
+    percent_failing_f >= threshold / 100.0
   end
 
   def culprit_format(env_tag)
-    "Warning #{ total_failing("tests", env_tag) } of #{ total_tests("tests", env_tag) } indirect tests for #{ name } are failing in #{ env_tag.name }"
-  end
-
-  def total_tests(method, env_tag)
-    total_passing(method, env_tag) + total_failing(method, env_tag) + total_other(method, env_tag)
+    "Warning #{ total_failing("tests", env_tag) } of #{ total_tests("tests", env_tag) } indirect tests for #{ name } are failing"
   end
 
   # returns the portion of an app's tests in an env sorted by name
   def tests_by_env(method, env_tag)
     send(method).select { |test| test.env_tag == env_tag }.sort_by{ |test| test.name.downcase }.sort_by{ |test| test.group || 10 }
-  end
-
-  def tests_by_env_json(method, env_tag)
-    tests_by_env(method, env_tag).includes(:primary_app, :environment_tag, :test_type, :application_tags).as_json(include: { primary_app: { only: [:name, :id] }, test_type: {only: [:name, :id] }, application_tags: { only: [:name, :id] }, environment_tag: { only: [:name, :id] } })
   end
 
   def passing_tests(method, env_tag)
@@ -110,9 +104,8 @@ class ApplicationTag < ApplicationRecord
     (total > 0) ? total_other(method, env_tag).to_f / total * 100 : 0.0
   end
 
-  def percent_failing_f(env_tag)
-    total = total_tests("tests", env_tag)
-    (total > 0) ? total_failing("tests", env_tag).to_f / total : 0.0
+  def total_tests(method, env_tag)
+    total_passing(method, env_tag) + total_failing(method, env_tag) + total_other(method, env_tag)
   end
 
   # obtain which field to query jira tickets, based on method
@@ -129,6 +122,7 @@ class ApplicationTag < ApplicationRecord
     method == "primary_tests" ? "primary_notes" : "indirect_notes"
   end
 
+  # get all notes for an app and its tests
   def all_notes(method)
     notes + send(notes_method(method))
   end
