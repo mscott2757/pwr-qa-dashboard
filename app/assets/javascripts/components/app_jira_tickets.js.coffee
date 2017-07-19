@@ -27,7 +27,7 @@
 
   render: ->
     React.DOM.div { className: "app-jira-tickets", onMouseDown: @handleMouseDown, onMouseUp: @handleMouseUp },
-      React.DOM.a { className: "test-type-tag", onClick: @toggleShow },
+      React.DOM.a { className: "test-type-tag", id: "active-tickets" if @props.tickets.length, onClick: @toggleShow },
         "JIRA "
         if @props.tickets.length
           React.DOM.span { id: "qa-badge", className: "badge" }, @props.tickets.length
