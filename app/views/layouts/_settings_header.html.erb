@@ -2,11 +2,9 @@
 	<div class="page-title">
     <h2>Settings</h2>
     <% if settings_config == 0 %>
-      <p class="settings-toggle-header">Edit Tests | <%= link_to "Edit Applications", edit_application_tags_path, class: "settings-toggle" %> | <%= link_to "JIRA Tickets", jira_tickets_path, class: "settings-toggle" %></p>
-    <% elsif settings_config == 1 %>
-      <p class="settings-toggle-header"><%= link_to "Edit Tests", tests_path, class: "settings-toggle" %> | Edit Applications | <%= link_to "JIRA Tickets", jira_tickets_path, class: "settings-toggle" %></p>
+      <p class="settings-toggle-header">Edit Tests | <%= link_to "Edit Applications", edit_application_tags_path, class: "settings-toggle" %></p>
     <% else %>
-      <p class="settings-toggle-header"><%= link_to "Edit Tests", tests_path, class: "settings-toggle" %> | <%= link_to "Edit Applications", edit_application_tags_path, class: "settings-toggle" %> | JIRA Tickets</p>
+      <p class="settings-toggle-header"><%= link_to "Edit Tests", tests_path, class: "settings-toggle" %> | Edit Applications</p>
     <% end %>
 	</div>
 </div>
