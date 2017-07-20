@@ -26,7 +26,7 @@
 .edit-applications {
 	margin: 0 auto;
   padding-top: 5px;
-	width: 60%;
+	width: 85%;
 }
 
 .add-app {
@@ -118,9 +118,13 @@
   display: none;
 }
 
+.app-group-input {
+  margin-left: 8px;
+}
+
 .threshold-container {
   margin-left: 8px;
-  width: 57%;
+  width: 23%;
   display: inline-block;
 }
 
@@ -130,24 +134,22 @@
 }
 
 #app-form-group {
-  width: 55%;
+  width: 100%;
 }
 
 .threshold-label {
-  width: 20%;
   display: inline-block;
 }
 
 .threshold-display {
   margin-left: 12px;
-  width: 5%;
   display: inline-block;
 }
 
 #threshold-slider {
-  margin-left: 16px;
+  margin-left: 8px;
   display: inline-block;
-  width: 50%;
+  width: 140px;
 }
 
 .app-threshold-display {

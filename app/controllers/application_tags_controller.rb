@@ -71,7 +71,7 @@ class ApplicationTagsController < ApplicationController
   end
 
   def app_params
-    params.require(:application_tag).permit(:name, :threshold)
+    params.require(:application_tag).permit(:name, :threshold, :group)
   end
 
   def edit
