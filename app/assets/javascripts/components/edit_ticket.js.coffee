@@ -10,7 +10,6 @@
     e.preventDefault()
     data =
       number: ReactDOM.findDOMNode(@refs.number).value
-      resolved: ReactDOM.findDOMNode(@refs.resolved).value
     $.ajax
       method: 'PUT'
       url: "/jira_tickets/#{ @props.ticket.id }"
@@ -30,14 +29,9 @@
       success: () =>
         @props.handleDeleteTicket @props.ticket
 
-
-  formatResolved: ->
-    if @props.ticket.resolved then "yes" else "no"
-
   editTicketRow: ->
     React.DOM.tr null,
       React.DOM.td null, @props.ticket.number
-      React.DOM.td null, @formatResolved()
       React.DOM.td null, @props.ticket.test.name
       React.DOM.td null,
         React.DOM.a { className: 'btn btn-default btn-sm edit-test-update', onClick: @handleToggle}, 'Edit'
@@ -48,10 +42,6 @@
       React.DOM.td null,
         React.DOM.input { className: 'form-control', type: 'text', defaultValue: @props.ticket.number, ref: 'number' }
 
-      React.DOM.td null,
-        React.DOM.select { className: 'form-control', defaultValue: @formatResolved(), ref: 'resolved' },
-          React.DOM.option { value: "yes" }, "yes"
-          React.DOM.option { value: "no" }, "no"
       React.DOM.td null, @props.ticket.test.name
 
       React.DOM.td null,

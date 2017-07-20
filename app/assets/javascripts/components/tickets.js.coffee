@@ -19,7 +19,6 @@
         React.DOM.thead null,
           React.DOM.tr null,
             React.DOM.th null, 'Ticket'
-            React.DOM.th null, 'Resolved'
             React.DOM.th null, 'Test'
             React.DOM.th null, 'Actions'
         React.DOM.tbody null,

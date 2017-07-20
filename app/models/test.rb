@@ -136,11 +136,6 @@ class Test < ApplicationRecord
     self.as_json(only: [:name, :id, :parameterized, :group, :job_url], include: { primary_app: { only: [:name, :id] }, test_type: { only: [:name, :id] }, application_tags: { only: [:name, :id] }, environment_tag: { only: [:name, :id] } })
   end
 
-
-  def active_jira_tickets
-    jira_tickets.select{ |ticket| !ticket.resolved }
-  end
-
   def default_test_type_id
     test_type ? self.test_type.id : 0
   end

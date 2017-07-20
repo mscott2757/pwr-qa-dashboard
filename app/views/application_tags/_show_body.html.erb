@@ -3,7 +3,7 @@
     <div class="row">
       <% test_row.each do |test| %>
         <div class="col-sm-<%= 12 / @test_col %>" id="test-summary-col">
-          <%= render partial: "show_test", locals: { test: test, tickets: test.active_jira_tickets } %>
+          <%= render partial: "show_test", locals: { test: test, tickets: test.jira_tickets } %>
         </div>
       <% end %>
     </div>

@@ -34,8 +34,8 @@
 
       <div class="app-badges">
         <%= react_component 'Notes', { notes: app.all_notes(@method), app: app }, { class: "app-notes" } %>
-        <% if tests.any?{ |test| test.jira_tickets.any?{ |ticket| !ticket.resolved } } %>
-          <%= react_component 'AppJiraTickets', { tickets: tests.map{ |test| test.jira_tickets }.flatten.select{ |ticket| !ticket.resolved } }, { class: "app-notes" } %>
+        <% if tests.any?{ |test| !test.jira_tickets.empty? } %>
+          <%= react_component 'AppJiraTickets', { tickets: tests.map{ |test| test.jira_tickets }.flatten }, { class: "app-notes" } %>
         <% end %>
       </div>
 

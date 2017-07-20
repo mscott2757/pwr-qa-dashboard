@@ -17,7 +17,7 @@ class JiraTicketsController < ApplicationController
   end
 
 	def update
-    if @ticket.update(number: params[:jira_ticket][:number], resolved: params[:jira_ticket][:resolved] == "yes")
+    if @ticket.update(number: params[:jira_ticket][:number])
 			flash[:info] = "Ticket #{ @ticket.number } successfully updated"
       render json: @ticket.edit_as_json
     else
@@ -27,14 +27,7 @@ class JiraTicketsController < ApplicationController
 
   def destroy
     @ticket.destroy
-		flash[:info] = "Ticket #{ @ticket.number } successfully deleted"
-    head :no_content
-  end
-
-  def resolve
-    @ticket.update(resolved: true)
-
-		flash[:info] = "Successfully resolved JIRA ticket #{ @ticket.number }"
+		flash[:info] = "Ticket #{ @ticket.number } successfully removed"
     head :no_content
   end
 

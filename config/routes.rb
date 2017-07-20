@@ -16,10 +16,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :jira_tickets do
-    post 'resolve', on: :member
-  end
-
+  resources :jira_tickets
   resources :notes
 
   get '/environment_tags/select_env/:id', to: 'environment_tags#select_environment', as: 'change_env'

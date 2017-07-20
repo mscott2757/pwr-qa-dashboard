@@ -117,9 +117,9 @@ class ApplicationTag < ApplicationRecord
     method == "primary_tests" ? "primary_jira_tickets" : "indirect_jira_tickets"
   end
 
-  # obtain unresolved tickets that match environment and method
+  # obtain tickets that match environment and method
   def jira_tickets(method, env_tag)
-    send(jira_method(method)).select { |ticket| ticket.test.env_tag == env_tag and !ticket.resolved }
+    send(jira_method(method)).select { |ticket| ticket.test.env_tag == env_tag }
   end
 
   def notes_method(method)
