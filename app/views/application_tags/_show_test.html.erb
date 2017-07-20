@@ -11,14 +11,12 @@
         <% end %>
 
         <%= react_component 'Notes', { notes: test.notes, test: test }, { class: "test-notes" } %>
-        <%= react_component 'TestJiraTickets', { tickets: tickets, test: test }, { class: "jira-section" } %>
+        <%= react_component 'TestJiraTickets', { tickets: test.jira_tickets, test: test }, { class: "jira-section" } %>
 
         <%= link_to 'Build', build_test_path(test), remote: true, class: 'test-type-tag', id: "build-link-#{ test.id }"  %>
       </div>
       <p align="right" class="test-link-title"><%= link_to 'edit', edit_test_path(test), remote: true, class: 'edit-test-link', id: "edit-test-#{ test.id }"  %> </p>
-      <script>
-        <%= render partial: "bind_edit_link.js.erb", locals: { test: test } %>
-      </script>
+      <%= render partial: "bind_edit_link.js.erb", locals: { test: test } %>
     </div>
   </div>
 

@@ -1,5 +1,5 @@
 class JiraTicketsController < ApplicationController
-  before_action :set_ticket, only: [:update, :destroy, :resolve]
+  before_action :set_ticket, only: [:update, :destroy]
 
   def set_ticket
     @ticket = JiraTicket.find(params[:id])
