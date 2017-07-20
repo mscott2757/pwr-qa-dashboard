@@ -30,7 +30,7 @@ class ApplicationTag < ApplicationRecord
 
   # returns apps with any passing or failing tests in the last 7 days
   def self.relevant_apps(method, env_tag)
-    all.select { |app| app.relevant?(method, env_tag) }.sort_by { |app| app.name.downcase }
+    all.select { |app| app.relevant?(method, env_tag) }.sort_by { |app| [ app.name.downcase, app.group || 10 ] }
   end
 
   def relevant?(method, env_tag)
@@ -66,7 +66,7 @@ class ApplicationTag < ApplicationRecord
 
   # returns the portion of an app's tests in an env sorted by name
   def tests_by_env(method, env_tag)
-    send(method).select { |test| test.env_tag == env_tag }.sort_by{ |test| test.name.downcase }.sort_by{ |test| test.group || 10 }
+    send(method).select { |test| test.env_tag == env_tag }.sort_by{ |test| [ test.name.downcase, test.group || 10 ] }
   end
 
   def passing_tests(method, env_tag)
