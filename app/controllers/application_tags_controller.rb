@@ -21,7 +21,7 @@ class ApplicationTagsController < ApplicationController
 
   def set_tests
     @app = ApplicationTag.find(params[:id])
-    @tests = @app.tests_by_env(@method, @env_tag)
+    @tests = @app.show_tests_by_env(@method, @env_tag)
   end
 
 	def index

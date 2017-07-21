@@ -68,7 +68,11 @@ class ApplicationTag < ApplicationRecord
 
   # returns the portion of an app's tests in an env sorted by name
   def tests_by_env(method, env_tag)
-    send(method).includes(:environment_tag, :jira_tickets).select { |test| test.env_tag == env_tag }.sort_by{ |test| [ test.name.downcase, test.group || 10 ] }
+    send(method).includes(:environment_tag, :jira_tickets, :notes).select { |test| test.env_tag == env_tag }
+  end
+
+  def show_tests_by_env(method, env_tag)
+    send(method).includes(:environment_tag, :jira_tickets, :test_type, :notes).select { |test| test.env_tag == env_tag }.sort_by{ |test| [ test.name.downcase, test.group || 10 ] }
   end
 
   def passing_tests(method, env_tag)
