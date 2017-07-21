@@ -1,0 +1,11 @@
+<% if passing_percent > 0.0 %>
+  <div class="app-prog-slice" style="width: <%= passing_percent %>%;"><div class="app-prog-success"></div></div>
+<% end %>
+
+<% if other_percent > 0.0 %>
+  <div class="app-prog-slice" style="width: <%= other_percent %>%;"><div class="app-prog-other"></div></div>
+<% end %>
+
+<% if failing_percent > 0.0 %>
+  <div class="app-prog-slice" style="width: <%= failing_percent %>%;"><div class="app-prog-failing"></div></div>
+<% end %>

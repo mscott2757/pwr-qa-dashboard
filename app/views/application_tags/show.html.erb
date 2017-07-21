@@ -8,9 +8,7 @@
     </div>
 	</div>
   <div class="app-progress-header">
-    <%= render partial: "prog_slice", locals: { percent: @tests.count{ |test| test.passing? }/@tests.count.to_f*100.0, type: "success" } %>
-    <%= render partial: "prog_slice", locals: { percent: @tests.count{ |test| !test.passing? and !test.failing? }/@tests.count.to_f*100, type: "other" } %>
-    <%= render partial: "prog_slice", locals: { percent: @tests.count{ |test| test.failing? }/@tests.count.to_f*100, type: "failing" } %>
+      <%= render partial: "progress_bar", locals: { passing_percent: @tests.count{ |test| test.passing? }/@tests.count.to_f*100.0, other_percent: @tests.count{ |test| !test.passing? and !test.failing? }/@tests.count.to_f*100, failing_percent: @tests.count{ |test| test.failing? }/@tests.count.to_f*100 } %>
   </div>
 </div>
 
