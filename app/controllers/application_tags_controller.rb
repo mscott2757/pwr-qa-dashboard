@@ -28,7 +28,7 @@ class ApplicationTagsController < ApplicationController
 		@method = "primary_tests"
 		session[:rotate] = true
     # @culprits = ApplicationTag.possible_culprits(@env_tag)
-		@applications = ApplicationTag.relevant_apps(@method, @env_tag)
+    @applications = ApplicationTag.relevant_apps(@method, @env_tag)
 	end
 
 	def indirect
@@ -90,7 +90,7 @@ class ApplicationTagsController < ApplicationController
   def edit_app_col
     session[:app_col] = params[:app_col]
     @app_col = params[:app_col].to_i
-		@applications = ApplicationTag.relevant_apps(@method, @env_tag)
+    @applications = ApplicationTag.relevant_apps(@method, @env_tag)
 
     respond_to do |format|
       format.js

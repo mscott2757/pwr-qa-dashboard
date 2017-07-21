@@ -30,11 +30,13 @@ class ApplicationTag < ApplicationRecord
 
   # returns apps with any passing or failing tests in the last 7 days
   def self.relevant_apps(method, env_tag)
-    all.select { |app| app.relevant?(method, env_tag) }.sort_by { |app| [ app.name.downcase, app.group || 10 ] }
+    j_method = ApplicationTag.jira_method(method)
+    n_method = ApplicationTag.notes_method(method)
+    all.includes(method, j_method, n_method).select { |app| app.relevant?(method, env_tag) }.sort_by { |app| [ app.name.downcase, app.group || 10 ] }
   end
 
   def relevant?(method, env_tag)
-    send(method).any? { |test| test.env_tag == env_tag }
+    send(method).includes(:environment_tag).any? { |test| test.env_tag == env_tag }
   end
 
   def edit_as_json
@@ -66,7 +68,7 @@ class ApplicationTag < ApplicationRecord
 
   # returns the portion of an app's tests in an env sorted by name
   def tests_by_env(method, env_tag)
-    send(method).select { |test| test.env_tag == env_tag }.sort_by{ |test| [ test.name.downcase, test.group || 10 ] }
+    send(method).includes(:environment_tag, :jira_tickets).select { |test| test.env_tag == env_tag }.sort_by{ |test| [ test.name.downcase, test.group || 10 ] }
   end
 
   def passing_tests(method, env_tag)
@@ -112,22 +114,21 @@ class ApplicationTag < ApplicationRecord
     send(method).select { |test| test.env_tag == env_tag }.count
   end
 
-  # obtain which field to query jira tickets, based on method
-  def jira_method(method)
+  def self.jira_method(method)
     method == "primary_tests" ? "primary_jira_tickets" : "indirect_jira_tickets"
   end
 
   # obtain tickets that match environment and method
   def jira_tickets(method, env_tag)
-    send(jira_method(method)).select { |ticket| ticket.test.env_tag == env_tag }
+    send(ApplicationTag.jira_method(method)).select { |ticket| ticket.test.env_tag == env_tag }
   end
 
-  def notes_method(method)
+  def self.notes_method(method)
     method == "primary_tests" ? "primary_notes" : "indirect_notes"
   end
 
   # get all notes for an app and its tests
   def all_notes(method)
-    notes + send(notes_method(method))
+    notes + send(ApplicationTag.notes_method(method))
   end
 end
