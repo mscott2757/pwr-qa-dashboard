@@ -16,7 +16,6 @@
 //= require bootstrap
 //= require remarkable-bootstrap-notify
 //= require jquery-ui/widgets/autocomplete
-//= require jquery-ui/widgets/progressbar
 //= require jquery-ui/widgets/tooltip
 //= require jquery-ui/widgets/tabs
 //= require jquery-ui/widgets/slider

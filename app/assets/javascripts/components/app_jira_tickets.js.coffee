@@ -23,7 +23,7 @@
     React.DOM.ul { className: "sub" },
       for ticket in @props.tickets
         React.DOM.li { key: ticket.id, className: "sub-li" },
-          React.DOM.a { className: "jira-url-link", href: ticketURL(ticket) }, ticket.number
+          React.DOM.a { className: "jira-url-link", href: ticketURL(ticket), target: "_blank" }, ticket.number
 
   render: ->
     React.DOM.div { className: "app-jira-tickets", onMouseDown: @handleMouseDown, onMouseUp: @handleMouseUp },
