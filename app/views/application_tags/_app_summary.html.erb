@@ -1,5 +1,5 @@
 <div class="col-sm-<%= 12 / @app_col %>" id="app-summary-col">
-  <div class="app-summary-container">
+  <div class="app-summary-container" id="app-container-<%= app.id %>">
     <div class="app-summary-header">
 
       <div class="app-summary-title">
@@ -21,12 +21,19 @@
 
       <div class="app-summary-recent">
         <% if tests.any?{ |test| test.failing? } %>
-          <p><b>Recent Failed tests</b></p>
-          <ul class="recent-failed-list">
+          <p><b>Recent Failed tests</b> <span class="badge" id="qa-badge"><%= tests.count{ |test| test.failing? } %></span></p>
+          <ul class="recent-failed-list" id="recent-failed-<%= app.id %>">
             <% tests.select{ |test| test.failing? }.each do |test| %>
               <li><%= link_to test.name, test.job_url, class: 'link-title', target: "_blank" %></li>
             <% end %>
           </ul>
+<script>
+$("#app-container-<%= app.id %>").hover(function () {
+  $("#recent-failed-<%= app.id %>").show();
+}, function () {
+  $("#recent-failed-<%= app.id %>").hide();
+});
+</script>
         <% end %>
       </div>
 
