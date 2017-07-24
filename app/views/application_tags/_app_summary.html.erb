@@ -21,17 +21,24 @@
 
       <div class="app-summary-recent">
         <% if tests.any?{ |test| test.failing? } %>
-          <p><b>Recent Failed tests</b> <span class="badge" id="qa-badge"><%= tests.count{ |test| test.failing? } %></span></p>
+          <a class="test-type-tag" id="failed-toggle-<%= app.id %>">Recent Failed <span class="badge" id="qa-badge"><%= tests.count{ |test| test.failing? } %></span></a>
           <ul class="recent-failed-list" id="recent-failed-<%= app.id %>">
             <% tests.select{ |test| test.failing? }.each do |test| %>
               <li><%= link_to test.name, test.job_url, class: 'link-title', target: "_blank" %></li>
             <% end %>
           </ul>
 <script>
-$("#app-container-<%= app.id %>").hover(function () {
-  $("#recent-failed-<%= app.id %>").show();
-}, function () {
+$("#recent-failed-<%= app.id %>").click(function (e) {
+  e.stopPropagation();
+});
+
+$("#failed-toggle-<%= app.id %>").click(function (e) {
+  e.stopPropagation();
+  if ($("#recent-failed-<%= app.id %>").is(":visible")) {
   $("#recent-failed-<%= app.id %>").hide();
+  } else {
+  $("#recent-failed-<%= app.id %>").show();
+  }
 });
 </script>
         <% end %>
