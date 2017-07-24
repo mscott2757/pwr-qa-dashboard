@@ -77,10 +77,7 @@ ul.recent-failed-list > li {
 
 .app-summary-recent {
   vertical-align: top;
-  // overflow-y: auto;
-  
   width: 50%;
-  height: 100%;
   display: inline-block;
 }
 
@@ -89,7 +86,6 @@ ul.recent-failed-list > li {
   padding-left: 5px;
   margin: 0;
   font-size: 1.7vh;
-  line-height: 3vh;
 }
 
 .app-summary-progress {
