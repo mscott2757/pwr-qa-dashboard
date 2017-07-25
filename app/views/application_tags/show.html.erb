@@ -1,14 +1,16 @@
 <div class="page-header" id="app-show-header">
 	<div class="page-title">
     <div class="app-show-title">
-      <h2 class="app-page-title"><%= ApplicationTag.test_type_display(@method) %> - <%= @app.name %> <em>- <%= @env_tag.name %></em></h2>
+      <h2 class="app-page-title"><%= ApplicationTag.page_title(@method) %> <em>- <%= @env_tag.name %></em> / <%= @app.name %></h2>
     </div>
     <div class="app-show-passing">
       <h2><em><%= @tests.count{ |test| test.passing? } %></em>/<%= @tests.count %></h2>
     </div>
 	</div>
   <div class="app-progress-header">
-      <%= render partial: "progress_bar", locals: { passing_percent: @tests.count{ |test| test.passing? }/@tests.count.to_f*100.0, other_percent: @tests.count{ |test| !test.passing? and !test.failing? }/@tests.count.to_f*100, failing_percent: @tests.count{ |test| test.failing? }/@tests.count.to_f*100 } %>
+    <%= render partial: "progress_bar", locals: { passing_percent: @tests.count{ |test| test.passing? }/@tests.count.to_f*100.0,
+                                                    other_percent: @tests.count{ |test| !test.passing? and !test.failing? }/@tests.count.to_f*100,
+                                                  failing_percent: @tests.count{ |test| test.failing? }/@tests.count.to_f*100 } %>
   </div>
 </div>
 

@@ -14,7 +14,9 @@
     </div>
 
     <div class="app-summary-progress">
-      <%= render partial: "progress_bar", locals: { passing_percent: tests.count{ |test| test.passing? }/tests.count.to_f*100.0, other_percent: tests.count{ |test| !test.passing? and !test.failing? }/tests.count.to_f*100, failing_percent: tests.count{ |test| test.failing? }/tests.count.to_f*100 } %>
+      <%= render partial: "progress_bar", locals: { passing_percent: tests.count{ |test| test.passing? }/tests.count.to_f*100.0,
+                                                      other_percent: tests.count{ |test| !test.passing? and !test.failing? }/tests.count.to_f*100,
+                                                    failing_percent: tests.count{ |test| test.failing? }/tests.count.to_f*100 } %>
     </div>
 
     <div class="app-summary-info">
@@ -28,18 +30,18 @@
             <% end %>
           </ul>
 <script>
-$("#recent-failed-<%= app.id %>").click(function (e) {
-  e.stopPropagation();
-});
+  $("#recent-failed-<%= app.id %>").click(function (e) {
+    e.stopPropagation();
+  });
 
-$("#failed-toggle-<%= app.id %>").click(function (e) {
-  e.stopPropagation();
-  if ($("#recent-failed-<%= app.id %>").is(":visible")) {
-  $("#recent-failed-<%= app.id %>").hide();
-  } else {
-  $("#recent-failed-<%= app.id %>").show();
-  }
-});
+  $("#failed-toggle-<%= app.id %>").click(function (e) {
+    e.stopPropagation();
+    if ($("#recent-failed-<%= app.id %>").is(":visible")) {
+    $("#recent-failed-<%= app.id %>").hide();
+    } else {
+    $("#recent-failed-<%= app.id %>").show();
+    }
+  });
 </script>
         <% end %>
       </div>
