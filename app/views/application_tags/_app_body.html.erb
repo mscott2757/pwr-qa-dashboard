@@ -1,11 +1,9 @@
 <div class="app-body">
-  <% applications.each_slice(@app_col) do |app_row| %>
-    <div class="row">
-      <% app_row.each do |app| %>
-        <%= render partial: "app_summary", locals: { app: app, tests: app.tests_by_env(@method, @env_tag) } %>
-      <% end %>
-    </div>
-  <% end %>
+  <div class="row">
+    <% applications.each do |app| %>
+      <%= render partial: "app_summary", locals: { app: app, tests: app.tests_by_env(@method, @env_tag) } %>
+    <% end %>
+  </div>
 <script>
 $(document).click(function() {
   $("ul.recent-failed-list").hide();
