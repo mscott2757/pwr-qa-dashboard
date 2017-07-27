@@ -1,7 +1,3 @@
-<div id="qa-header">
-  <h2 class="app-page-title"><%= ApplicationTag.page_title(@method) %> <em>- <%= @env_tag.name %></em></h2>
-</div>
-
 <%= render partial: "app_body", locals: { applications: @applications } %>
 <%= render partial: "init_refresh.js.erb", locals: { method: @method, env_tag: @env_tag } %>
 
