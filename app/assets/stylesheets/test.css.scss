@@ -14,18 +14,20 @@
   background-color: #ffffff;
   border: 1px solid #ddd;
   position: relative;
-  height: 105px;
 }
 
 .edit-test-name {
   float: left;
   width: 65%;
 }
+ #app-title {
+  padding-bottom: 6.5vh;
+ }
 
 .app-progress-header {
   width: 100%;
   padding: 0;
-  height: 46px;
+  height: 5.8vh;
   position: absolute;
   bottom: 0;
   font-size: 0;
