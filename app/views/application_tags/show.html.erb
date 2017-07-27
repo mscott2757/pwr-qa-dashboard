@@ -1,7 +1,7 @@
 <div class="page-header" id="app-show-header">
 	<div class="page-title" id="app-title">
     <div class="app-show-title">
-      <h2 class="app-page-title"><%= @env_tag.name.capitalize %> / <%= ApplicationTag.page_title(@method) %> / <%= @app.name %></h2>
+      <h2 class="app-page-title"><%= @env_tag.name.upcase %> / <%= ApplicationTag.page_title(@method) %> / <%= @app.name %></h2>
     </div>
     <div class="app-show-passing">
       <h2><em><%= @tests.count{ |test| test.passing? } %></em>/<%= @tests.count %></h2>
