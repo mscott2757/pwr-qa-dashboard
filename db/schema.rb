@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170720152106) do
+ActiveRecord::Schema.define(version: 20170728173806) do
 
   create_table "application_tags", force: :cascade do |t|
     t.string "name"
@@ -33,6 +33,13 @@ ActiveRecord::Schema.define(version: 20170720152106) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "resolved", default: false
+    t.datetime "updtated"
+    t.text "summary"
+    t.string "assignee"
+    t.string "reporter"
+    t.string "status"
+    t.datetime "created"
+    t.datetime "updated"
   end
 
   create_table "notes", force: :cascade do |t|
