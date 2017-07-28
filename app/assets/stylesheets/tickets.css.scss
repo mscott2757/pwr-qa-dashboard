@@ -1,5 +1,5 @@
 .app-notes ul.sub {
-  left: 13vw;
+  left: 2vw;
 }
 
 .jira-section {
@@ -14,12 +14,13 @@
 ul.sub {
 	position: absolute;
   z-index: 200;
-  width: 15vw;
+  width: 30vw;
 	background: #fff;
   display: block;
   list-style-type: none;
 	padding: 0;
   border: 1px solid #ddd;
+  color: #a8a8a8;
 }
 
 ul.sub > li {
@@ -27,6 +28,11 @@ ul.sub > li {
   margin: 0;
   list-style-type: none;
 	padding: 5px;
+  border-bottom: 1px solid #ddd;
+}
+
+ul.sub > li:last-child {
+  border-bottom: none;
 }
 
 ul.sub > li > a {
@@ -34,10 +40,28 @@ ul.sub > li > a {
   color: #000;
 }
 
-ul.sub > li.add-link {
-  border-top: 1px solid #ddd;
+
+#ticket-status {
+  margin-left: 8px;
 }
 
+.summary-label {
+  color: #a8a8a8;
+}
+
+.jira-people {
+  display: inline-block;
+  width: 50%;
+}
+
+.jira-summary {
+  margin-top: 10px;
+  color: #333;
+}
+
+.jira-person {
+  color: #333;
+}
 
 .resolve-link {
 	float: right;

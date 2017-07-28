@@ -22,8 +22,20 @@
   ticketList: ->
     React.DOM.ul { className: "sub" },
       for ticket in @props.tickets
-        React.DOM.li { key: ticket.id, className: "sub-li" },
+        React.DOM.li { className: "sub-li", key: ticket.id },
           React.DOM.a { className: "jira-url-link", href: ticketURL(ticket), target: "_blank" }, ticket.number
+          React.DOM.span { className: "test-type-tag", id: "ticket-status" }, ticket.status.toUpperCase() if ticket.status
+
+          React.DOM.div {},
+            React.DOM.div { className: "jira-people"},
+              React.DOM.span {}, "Assignee: "
+              React.DOM.span { className: "jira-person" }, ticket.assignee
+            React.DOM.div { className: "jira-people"},
+              React.DOM.span {}, "Reporter: "
+              React.DOM.span { className: "jira-person" }, ticket.reporter
+
+          React.DOM.p { className: "jira-summary" }, ticket.summary
+          React.DOM.p { className: "jira-created" }, "Created on #{formatDate(ticket.created)}" if ticket.created
 
   render: ->
     React.DOM.div { className: "app-jira-tickets", onMouseDown: @handleMouseDown, onMouseUp: @handleMouseUp },

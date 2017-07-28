@@ -11,6 +11,7 @@ class JiraTicketsController < ApplicationController
 
   def create
     @ticket = JiraTicket.create(jira_params)
+    @ticket.save_data_from_jira
 		flash[:info] = "Successfully added JIRA ticket #{ @ticket.number }"
 
     render json: @ticket

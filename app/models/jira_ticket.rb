@@ -28,6 +28,25 @@ class JiraTicket < ApplicationRecord
     end
   end
 
+  def save_data_from_jira
+    auth = {username: ENV["jira_user"], password: ENV["jira_pass"] }
+    res = HTTParty.get(json_url, basic_auth: auth)
+    return if res.code == 404
+
+    jira_json = res.parsed_response
+
+    fields = jira_json["fields"]
+    self.summary = fields["summary"]
+    self.assignee = fields["assignee"]["displayName"] if fields["assignee"]
+    self.reporter = fields["reporter"]["displayName"] if fields["reporter"]
+    self.status = fields["status"]["name"] if fields["status"]
+
+    self.created = DateTime.parse(fields["created"]) if fields["created"]
+    self.updated = DateTime.parse(fields["updated"]) if fields["updated"]
+
+    self.save
+  end
+
   def parsed?
     summary.present? || assignee.present? || reporter.present? || status.present? || created.present? || updated.present?
   end
