@@ -32,7 +32,8 @@ class ApplicationTag < ApplicationRecord
   def self.relevant_apps(method, env_tag)
     j_method = ApplicationTag.jira_method(method)
     n_method = ApplicationTag.notes_method(method)
-    all.includes(method, j_method, n_method).select { |app| app.relevant?(method, env_tag) }.sort_by { |app| [ app.name.downcase, app.group || 10 ] }
+    all.includes(method, j_method, n_method).select { |app| app.relevant?(method, env_tag) }
+      .sort_by { |app| [ app.group || 10, app.name.downcase ] }
   end
 
   def relevant?(method, env_tag)
@@ -72,7 +73,9 @@ class ApplicationTag < ApplicationRecord
   end
 
   def show_tests_by_env(method, env_tag)
-    send(method).includes(:environment_tag, :jira_tickets, :test_type, :notes).select { |test| test.env_tag == env_tag }.sort_by{ |test| [ test.name.downcase, test.group || 10 ] }
+    send(method).includes(:environment_tag, :jira_tickets, :test_type, :notes)
+      .select { |test| test.env_tag == env_tag }
+      .sort_by{ |test| [ test.group || 10, test.name.downcase ] }
   end
 
   def passing_tests(method, env_tag)
@@ -89,7 +92,8 @@ class ApplicationTag < ApplicationRecord
   end
 
   def failing_tests(method, env_tag)
-    send(method).select { |test| test.env_tag == env_tag and test.failing? }.sort { |a,b| b.last_build_time <=> a.last_build_time }
+    send(method).select { |test| test.env_tag == env_tag and test.failing? }
+      .sort { |a,b| b.last_build_time <=> a.last_build_time }
   end
 
   def total_failing(method, env_tag)
