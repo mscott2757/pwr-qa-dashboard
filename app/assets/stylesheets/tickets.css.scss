@@ -1,9 +1,19 @@
-.app-notes ul.sub {
-  left: 2vw;
+.app-notes {
+  ul.sub {
+    right: 0;
+  }
+
+  > div {
+    position: relative;
+  }
 }
 
 .jira-section {
 	display: inline-block;
+
+  > div {
+    position: relative;
+  }
 }
 
 #active-tickets {

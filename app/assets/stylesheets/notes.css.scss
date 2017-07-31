@@ -58,7 +58,7 @@ ul.notes-sub {
 }
 
 .app-notes ul.notes-sub, .app-notes .add-note-form {
-  left: 6.7vw;
+  right: 0;
 }
 
 .app-notes {
@@ -69,5 +69,9 @@ ul.notes-sub {
 
 .test-notes {
   display: inline-block;
+
+  > div {
+    position: relative;
+  }
 }
 

@@ -38,7 +38,7 @@
           React.DOM.p { className: "jira-created" }, "Created on #{formatDate(ticket.created)}" if ticket.created
 
   render: ->
-    React.DOM.div { className: "app-jira-tickets", onMouseDown: @handleMouseDown, onMouseUp: @handleMouseUp },
+    React.DOM.div { onMouseDown: @handleMouseDown, onMouseUp: @handleMouseUp },
       React.DOM.a { className: "test-type-tag", id: "active-tickets" if @props.tickets.length, onClick: @toggleShow },
         "JIRA "
         if @props.tickets.length

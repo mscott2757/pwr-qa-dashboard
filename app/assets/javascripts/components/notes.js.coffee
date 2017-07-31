@@ -44,7 +44,7 @@
         React.DOM.a { className: "jira-url-link", onClick: @toggleForm }, "add new note"
 
   render: ->
-    React.DOM.div { className: "app-notes-container", onMouseDown: @handleMouseDown, onMouseUp: @handleMouseUp },
+    React.DOM.div { onMouseDown: @handleMouseDown, onMouseUp: @handleMouseUp },
       React.DOM.a { className: "test-type-tag", id: "active-notes" if @state.notes.length, onClick: @toggleNotes },
         "Notes "
         if @state.notes.length

@@ -34,10 +34,8 @@ class TestsController < ApplicationController
         test.test_type.tests.delete(test) if test.test_type
       end
 
+      test.application_tags.delete_all
       test.application_tags.push(*indirect_apps)
-      test.application_tags.reverse.each do |app|
-        test.application_tags.delete(app) if !indirect_apps.include?(app)
-      end
 
       test.group = params[:test][:group]
       test.environment_tag_id = params[:test][:environment_tag] if !test.parameterized

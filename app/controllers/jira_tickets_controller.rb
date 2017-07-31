@@ -5,10 +5,6 @@ class JiraTicketsController < ApplicationController
     @ticket = JiraTicket.find(params[:id])
   end
 
-	def index
-		@tickets = JiraTicket.edit_all_as_json
-	end
-
   def create
     @ticket = JiraTicket.create(jira_params)
     if @ticket.save_data_from_jira

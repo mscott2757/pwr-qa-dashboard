@@ -44,7 +44,7 @@
         React.DOM.a { className: "jira-url-link", onClick: @toggleForm }, "add new ticket"
 
   render: ->
-    React.DOM.div { className: "app-jira-tickets", onMouseDown: @handleMouseDown, onMouseUp: @handleMouseUp },
+    React.DOM.div { onMouseDown: @handleMouseDown, onMouseUp: @handleMouseUp },
       React.DOM.a { className: "test-type-tag", id: "active-tickets" if @state.tickets.length, onClick: @toggleTickets },
         "JIRA "
         if @state.tickets.length
