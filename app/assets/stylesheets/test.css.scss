@@ -57,14 +57,20 @@
   height: 66%;
   border-bottom: 1px solid #ddd;
   position: relative;
-}
 
-.test-header > div {
-  position: absolute;
-  bottom: 0;
-  vertical-align: bottom;
-  display: inline-block;
-  width: 100%;
+  > div {
+    position: absolute;
+    bottom: 0;
+    vertical-align: bottom;
+    display: inline-block;
+    width: 100%;
+  }
+
+  > a > h4 {
+    margin: 0;
+    padding: 5px;
+    font-size: 2vh;
+  }
 }
 
 .test-status {
@@ -140,28 +146,31 @@
 
 .test-link {
   color: #a8a8a8;
+
+  &:hover {
+    text-decoration: none;
+  }
 }
 
-.test-link:hover {
-	text-decoration: none;
-}
 
 .settings-test-link {
   color: #333;
+
+  &:hover {
+    text-decoration: none;
+  }
 }
 
-.settings-test-link:hover {
-	text-decoration: none;
-}
 
 .last-build-link {
   color: #fff;
+
+  &:hover {
+    text-decoration: none;
+    color: #a8a8a8;
+  }
 }
 
-.last-build-link:hover {
-  text-decoration: none;
-  color: #a8a8a8;
-}
 
 .test-type-tag {
 	background: #eee;
@@ -177,12 +186,6 @@
   -webkit-transition: color 0.2s;
   cursor: pointer;
   font-size: 1.5vh;
-}
-
-.test-header > a > h4 {
-  margin: 0;
-  padding: 5px;
-  font-size: 2vh;
 }
 
 .edit-test-link {
@@ -275,11 +278,11 @@ a.test-type-tag:hover {
 
 .test-modal-header {
   padding: 30px 30px 8px 30px;
-}
 
-.test-modal-header > h4 {
-  margin-top: 0;
-  margin-bottom: 0;
+  > h4 {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
 }
 
 #test-modal-label {

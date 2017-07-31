@@ -23,6 +23,6 @@
           React.DOM.span { className: "jira-person" }, @props.ticket.reporter
 
       React.DOM.p { className: "jira-summary" },
-        React.DOM.span { className: "summary-label" }, "Summary: "
+        React.DOM.span {}, "Summary: "
         @props.ticket.summary
       React.DOM.p { className: "jira-created" }, "Created on #{formatDate(@props.ticket.created)}" if @props.ticket.created

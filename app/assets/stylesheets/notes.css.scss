@@ -25,22 +25,22 @@ ul.notes-sub {
   list-style-type: none;
 	padding: 0;
   border: 1px solid #ddd;
-}
 
-ul.notes-sub > li {
-  float: none;
-  margin: 0;
-  list-style-type: none;
-	padding: 5px;
-}
+  > li {
+    float: none;
+    margin: 0;
+    list-style-type: none;
+    padding: 5px;
 
-ul.notes-sub > li > a {
-  border-right: none;
-  color: #000;
-}
+    > a {
+      border-right: none;
+      color: #000;
+    }
+  }
 
-ul.notes-sub > li.note-li {
-  border-bottom: 1px solid #ddd;
+  > li.note-li {
+    border-bottom: 1px solid #ddd;
+  }
 }
 
 .note-body {

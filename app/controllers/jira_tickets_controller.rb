@@ -11,8 +11,10 @@ class JiraTicketsController < ApplicationController
 
   def create
     @ticket = JiraTicket.create(jira_params)
-    @ticket.save_data_from_jira
-		flash[:info] = "Successfully added JIRA ticket #{ @ticket.number }"
+    if @ticket.save_data_from_jira
+      flash[:info] = "Successfully added JIRA ticket #{ @ticket.number }"
+    else
+      flash[:info] = "Error encountered when retrieving data from JIRA for ticket #{ @ticket.number }"
 
     render json: @ticket
   end

@@ -1,3 +1,6 @@
+$success: #8DC63F;
+$failing: #F15C22;
+
 .app-body {
   padding: 6px 20px;
 }
@@ -9,17 +12,17 @@
   height: 15.3vh;
   position: relative;
   padding: 8px;
-}
 
-.app-summary-container > h1 {
-  margin: 0;
-  font-size: 5.5vh;
-}
+  > h1 {
+    margin: 0;
+    font-size: 5.5vh;
+  }
 
-.app-summary-container > h2 {
-  color: #a8a8a8;
-  margin: 0;
-  font-size: 4vh;
+  > h2 {
+    color: #a8a8a8;
+    margin: 0;
+    font-size: 4vh;
+  }
 }
 
 .app-summary-header {
@@ -37,13 +40,12 @@ ul.recent-failed-list {
   z-index: 200;
   position: absolute;
   display: none;
-}
 
-ul.recent-failed-list > li {
-  list-style-type: none;
-  line-height: 1.8vh;
+  > li {
+    list-style-type: none;
+    line-height: 1.8vh;
+  }
 }
-
 
 .app-summary-title {
 	height: 100%;
@@ -64,7 +66,7 @@ ul.recent-failed-list > li {
 }
 
 .app-summary-passing > h2 > em, .app-show-passing > h2 > em {
-  color: #8DC63F;
+  color: $success;
   font-style: normal;
 }
 
@@ -91,13 +93,12 @@ ul.recent-failed-list > li {
   vertical-align: top;
   width: 50%;
   display: inline-block;
-}
 
-
-.app-summary-recent > p {
-  padding-left: 5px;
-  margin: 0;
-  font-size: 1.7vh;
+  > p {
+    padding-left: 5px;
+    margin: 0;
+    font-size: 1.7vh;
+  }
 }
 
 .app-summary-progress {
@@ -113,20 +114,20 @@ ul.recent-failed-list > li {
   display: inline-block;
   vertical-align: top;
   padding: 0 0.15vw;
-}
 
-.app-prog-slice div {
-  height: 100%;
-  width: 100%;
-  border-radius: 2px;
+  div {
+    height: 100%;
+    width: 100%;
+    border-radius: 2px;
+  }
 }
 
 .app-prog-success {
-  background-color: #8DC63F;
+  background-color: $success;
 }
 
 .app-prog-failing {
-  background-color: #F15C22;
+  background-color: $failing;
 }
 
 .app-prog-other {
@@ -147,7 +148,7 @@ ul.recent-failed-list > li {
 }
 
 .app-progress-success {
-  background-color: #8DC63F;
+  background-color: $success;
   border: none;
   margin-bottom: 0 !important;
   padding-bottom: 0;
@@ -162,7 +163,7 @@ ul.recent-failed-list > li {
 }
 
 .app-progress-bar {
-  background-color: #F15C22;
+  background-color: $failing;
   height: 100%;
 }
 
@@ -174,16 +175,21 @@ ul.recent-failed-list > li {
 .progress-summary {
 	width: 100%;
 	padding-left: 2px;
+
+  > p {
+    width: 49.5%;
+    margin-bottom: 0;
+    display: inline-block;
+  }
 }
 
 .link-title {
 	color: #333333;
   font-size: 1.5vh;
-}
 
-
-.link-title:hover {
-	text-decoration: none;
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 .total-passing {
@@ -202,11 +208,6 @@ ul.recent-failed-list > li {
   text-align: center;
 }
 
-.progress-summary > p {
-	width: 49.5%;
-	margin-bottom: 0;
-	display: inline-block;
-}
 
 #app-summary-col {
   padding: 5px;
@@ -214,25 +215,26 @@ ul.recent-failed-list > li {
 }
 
 
-.app-page-title > em {
-  color: #a8a8a8;
-  font-style: normal;
-}
 
 .app-page-title {
   margin-top: 10px;
   margin-bottom: 0;
   font-size: 3.7vh;
+
+  > em {
+    color: #a8a8a8;
+    font-style: normal;
+  }
 }
 
 .app-show-title {
   display: inline-block;
   vertical-align: bottom;
   width: 74%;
-}
 
-.app-show-title > h2 {
-  margin-bottom: 0;
+  > h2 {
+    margin-bottom: 0;
+  }
 }
 
 .app-show-passing {
@@ -242,9 +244,6 @@ ul.recent-failed-list > li {
   text-align: right;
 }
 
-.page-title > .app-summary-passing {
-  padding-top: 8px;
-}
 
 
 

@@ -25,13 +25,14 @@ class JiraTicket < ApplicationRecord
       ticket.updated = DateTime.parse(fields["updated"]) if fields["updated"]
 
       ticket.save
+      puts "it's working!"
     end
   end
 
   def save_data_from_jira
     auth = {username: ENV["jira_user"], password: ENV["jira_pass"] }
     res = HTTParty.get(json_url, basic_auth: auth)
-    return if res.code == 404
+    return false if res.code == 404
 
     jira_json = res.parsed_response
 
@@ -45,6 +46,8 @@ class JiraTicket < ApplicationRecord
     self.updated = DateTime.parse(fields["updated"]) if fields["updated"]
 
     self.save
+
+    return true
   end
 
   def parsed?

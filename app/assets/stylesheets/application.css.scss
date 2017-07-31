@@ -22,19 +22,15 @@
 @import "bootstrap";
 
 @font-face {
-font-family: 'Brandon Text Bold';
-font-style: normal;
-font-weight: normal;
-src: local('Brandon Text Bold'), url('HVDFonts-BrandonText-Bold.woff') format('woff');
+  font-family: 'Brandon Text Bold';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Brandon Text Bold'), url('HVDFonts-BrandonText-Bold.woff') format('woff');
 }
 
 h1, h2, h3 {
   font-family: "Brandon Text Bold", Helvetica, Arial, sans-serif !important;
   //font-weight: 400;
-}
-
-
-a:visited {
 }
 
 body {
@@ -51,28 +47,33 @@ body {
 
 a.navbar-brand {
   padding-top: 3px;
+
+  > img {
+    height: 140%;
+    width: auto;
+  }
 }
 
-a.navbar-brand > img {
-  height: 140%;
-  width: auto;
-}
 
 .page-title {
   padding-left: 20px;
-}
 
-.page-title > h2 {
-  margin-bottom: 0;
-}
+  > .app-summary-passing {
+    padding-top: 8px;
+  }
 
-.page-title > h4 {
-  margin-top: 0;
-  margin-bottom: 5px;
-}
+  > h2 {
+    margin-bottom: 0;
+  }
 
-.page-title > h5 {
-  margin-top: 5px;
+  > h4 {
+    margin-top: 0;
+    margin-bottom: 5px;
+  }
+
+  > h5 {
+    margin-top: 5px;
+  }
 }
 
 .open > a {

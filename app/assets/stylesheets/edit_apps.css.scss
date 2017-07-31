@@ -1,9 +1,9 @@
 .settings-toggle {
   color: #333;
-}
 
-.settings-toggle:hover {
-  text-decoration: none;
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 .settings-toggle-header {
@@ -17,11 +17,11 @@
   border-left: 1px solid #ddd;
   border-right: 1px solid #ddd;
   background-color: #fff;
-}
 
-.add-app-form > div > a {
-	margin-left: 8px;
- }
+  > div > a {
+    margin-left: 8px;
+  }
+}
 
 .edit-applications {
 	margin: 0 auto;
