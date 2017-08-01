@@ -1,5 +1,4 @@
 class JiraTicket < ApplicationRecord
-  validates_uniqueness_of :number
   validates :number, presence: true, allow_blank: false
 
   belongs_to :test

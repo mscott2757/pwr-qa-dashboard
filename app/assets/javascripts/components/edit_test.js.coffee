@@ -38,8 +38,7 @@
         ).autocomplete
           minLength: 0
           source: (request, response) ->
-            response $.ui.autocomplete.filter(appNames, extractLast(request.term))
-            return
+            response($.ui.autocomplete.filter(appNames, extractLast(request.term)))
           focus: ->
             false
           select: (e, ui) ->
