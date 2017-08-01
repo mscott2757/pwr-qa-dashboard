@@ -11,6 +11,7 @@ class JiraTicketsController < ApplicationController
       flash[:info] = "Successfully added JIRA ticket #{ @ticket.number }"
     else
       flash[:info] = "Error encountered when retrieving data from JIRA for ticket #{ @ticket.number }"
+    end
 
     render json: @ticket
   end
