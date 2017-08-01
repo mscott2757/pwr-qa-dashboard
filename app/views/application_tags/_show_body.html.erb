@@ -9,36 +9,32 @@
               <h4><%= test.name %></h4>
             <% end %>
             <div>
-              <div class="test-type-title">
-                <% if test.test_type %>
-                  <p class="test-type-tag"><%= test.test_type.name %></p>
-                <% end %>
+              <% if test.test_type %>
+                <p class="test-type-tag"><%= test.test_type.name %></p>
+              <% end %>
 
-                <%= react_component 'Notes', { notes: test.notes, test: test }, { class: "test-notes" } %>
-                <%= react_component 'TestJiraTickets', { tickets: test.jira_tickets, test: test }, { class: "jira-section" } %>
+              <%= react_component 'Notes', { notes: test.notes, test: test }, { class: "test-notes" } %>
+              <%= react_component 'TestJiraTickets', { tickets: test.jira_tickets, test: test }, { class: "jira-section" } %>
 
-                <%= link_to 'Build', build_test_path(test), remote: true, class: 'test-type-tag', id: "build-link-#{ test.id }"  %>
-              </div>
-              <p align="right" class="test-link-title"><%= link_to 'edit', edit_test_path(test), remote: true, class: 'edit-test-link', id: "edit-test-#{ test.id }"  %> </p>
-              <script>
-                $(".test-container-<%= test.id %>").hover(function() {
-                  $("#edit-test-<%= test.id %>").show();
-                }, function() {
-                  $("#edit-test-<%= test.id %>").hide();
-                });
-              </script>
+              <%= link_to 'Build', build_test_path(test), remote: true, class: 'test-type-tag', id: "build-link-#{ test.id }"  %>
             </div>
+            <p align="right" class="test-link-title"><%= link_to 'edit', edit_test_path(test), remote: true, class: 'edit-test-link', id: "edit-test-#{ test.id }"  %> </p>
+            <script>
+              $(".test-container-<%= test.id %>").hover(function() {
+                $("#edit-test-<%= test.id %>").show();
+              }, function() {
+                $("#edit-test-<%= test.id %>").hide();
+              });
+            </script>
           </div>
 
-          <div class="test-body">
-            <div class="test-status test-status-<%= test.status_css %>">
-              <% if test.failing? and test.last_successful_build %>
-                <p class="test-status-title"><%= link_to "last successful #{test.last_successful_build_display}", test.last_successful_build_url, class: 'last-build-link' %></p>
-              <% elsif !test.passing? and !test.failing? %>
-                <p class="test-status-title"><%= test.status_display %></p>
-              <% end %>
-              <p align="right" class="test-last-build"><%= link_to test.last_build_display, test.last_build_url, class: 'last-build-link' %></p>
-            </div>
+          <div class="test-body test-status-<%= test.status_css %>">
+            <% if test.failing? and test.last_successful_build %>
+              <p class="test-status-title"><%= link_to "last successful #{test.last_successful_build_display}", test.last_successful_build_url, class: 'last-build-link' %></p>
+            <% elsif !test.passing? and !test.failing? %>
+              <p class="test-status-title"><%= test.status_display %></p>
+            <% end %>
+            <p align="right" class="test-last-build"><%= link_to test.last_build_display, test.last_build_url, class: 'last-build-link' %></p>
           </div>
 
         </div>

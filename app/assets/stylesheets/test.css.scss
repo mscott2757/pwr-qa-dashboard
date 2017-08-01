@@ -50,6 +50,7 @@
   height: 34%;
   vertical-align: top;
   display: inline-block;
+  position: relative;
 }
 
 .test-header {
@@ -64,6 +65,8 @@
     vertical-align: bottom;
     display: inline-block;
     width: 100%;
+    margin-bottom: 0;
+    padding-left: 5px;
   }
 
   > a > h4 {
@@ -108,15 +111,6 @@
   right: 0;
 }
 
-.test-type-title {
-  color: #a8a8a8;
-  display: inline-block;
-  width: 79%;
-  margin-bottom: 0;
-  padding-left: 5px;
-	vertical-align: bottom;
-}
-
 .test-status-title {
   color: #fff;
   padding-left: 5px;
@@ -142,6 +136,9 @@
   margin-bottom: 5px;;
   width: 19%;
 	vertical-align: bottom;
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }
 
 .test-link {
