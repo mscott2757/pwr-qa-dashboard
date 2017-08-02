@@ -37,8 +37,6 @@ gem 'react-rails', '~> 1.0'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'bootstrap-sass', '~> 3.3.4'
-gem 'tether-rails'
-gem 'font-awesome-rails'
 gem 'whenever', require: false
 gem "bower-rails", "~> 0.11.0"
 

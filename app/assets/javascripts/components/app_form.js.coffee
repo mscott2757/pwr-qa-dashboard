@@ -11,11 +11,11 @@
       group: ReactDOM.findDOMNode(@refs.group).value
       threshold: @state.threshold
 
-    $.post "/application_tags", { application_tag: data }, ((data) =>
+    $.post("/application_tags", { application_tag: data }, ((data) =>
       @props.handleNewApp data
       @refs.name.value = ""
       @setState name: '')
-      , 'JSON'
+      , 'JSON')
 
   handleChange: (e) ->
     @setState "#{ e.target.name }": e.target.value

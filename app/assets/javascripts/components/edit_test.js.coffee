@@ -23,7 +23,7 @@
     return ids
 
   bindAutocomplete: ->
-    appNames = @props.applications.map (app) -> app.name
+    appNames = @props.applications.map((app) -> app.name)
     testID = @props.test.id
     $ ->
       split = (val) ->
