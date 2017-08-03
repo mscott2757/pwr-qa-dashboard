@@ -1,4 +1,4 @@
-require 'test_options'
+require 'app_options'
 
 # This model is used to encapsulate different applications
 class ApplicationTag < ApplicationRecord
