@@ -1,3 +1,4 @@
+# controller for environments
 class EnvironmentTagsController < ApplicationController
 	skip_before_action :disable_rotate
 

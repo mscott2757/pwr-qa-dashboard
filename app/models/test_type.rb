@@ -1,3 +1,4 @@
+# this model is used to represent test types like frontend or backend
 class TestType < ApplicationRecord
   has_many :tests
 

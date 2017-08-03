@@ -1,11 +1,14 @@
+
 require 'action_view'
 require 'httparty'
 require 'open-uri'
 require 'uri'
 require 'net/http'
 require 'set'
+
 include ActionView::Helpers::DateHelper
 
+# This class is used to encapsulate jenkins tests by pulling data from the Jenkins API
 class Test < ApplicationRecord
   validates_uniqueness_of :internal_name
   validates :internal_name, presence: true, allow_blank: false
@@ -20,7 +23,6 @@ class Test < ApplicationRecord
   belongs_to :environment_tag, optional: true
   belongs_to :test_type, optional: true
 
-
   def self.base_url
     "http://ci.powerreviews.io/job/qa-tests/view/All/"
   end
@@ -32,43 +34,39 @@ class Test < ApplicationRecord
 
     jobs_json["jobs"].each do |job|
       job_url = job["url"]
-      name = job["name"]
-      internal_name = job["name"]
+      name = internal_name = job["name"]
       test_json = Test.json_tree(job_url , "color,lastBuild[number],lastSuccessfulBuild[number],lastFailedBuild[number]")
-      next if !test_json["lastBuild"]
 
-      last_build = test_json["lastBuild"]["number"]
+      test_last_build = test_json["lastBuild"]
+      next if !test_last_build
+
+      test_params = {}
+      last_build = test_params[:last_build] = test_last_build["number"]
       last_build_json = Test.json_build_tree(job_url, last_build, "actions[causes[userName],parameters[value]],timestamp")
-      last_build_time = Time.at(last_build_json["timestamp"]/1000).to_datetime
+      test_params[:last_build_time] = Time.at(last_build_json["timestamp"]/1000).to_datetime
 
       env_name = ""
-      parameterized = false
+      test_params[:parameterized] = false
       last_build_json["actions"].each do |action|
-        if action["parameters"]
-          if action["parameters"][0]["value"] == "scheduler"
-            if last_build_time.in_time_zone("Pacific Time (US & Canada)").hour < 4
-              env_name = "qa"
-              internal_name += "-qa"
-            else
-              env_name = "dev"
-              internal_name += "-dev"
-            end
-          else
-            env_name = action["parameters"][0]["value"]
-            internal_name += "-#{env_name}"
+        if action.key?("parameters")
+          env_name = action["parameters"][0]["value"]
+          if env_name == "scheduler"
+            env_name = test_params[:last_build_time].in_time_zone("Pacific Time (US & Canada)").hour < ENV["param_hour"] ? "qa" : "dev"
           end
+          internal_name += "-#{env_name}"
 
           Test.where(internal_name: name).first.destroy if exists?(internal_name: name)
-          parameterized = true
+          test_params[:parameterized] = true
         end
       end
 
-      if !parameterized
-        if name.downcase.include?("dev")
+      if !test_params[:parameterized]
+        name_d = name.downcase
+        if name_d.include?("dev")
           env_name = "dev"
-        elsif name.downcase.include?("qa")
+        elsif name_d.include?("qa")
           env_name = "qa"
-        elsif name.downcase.include?("prod")
+        elsif name_d.include?("prod")
           env_name = "prod"
         end
       end
@@ -80,24 +78,22 @@ class Test < ApplicationRecord
         test = Test.new(name: name, internal_name: internal_name, job_url: job_url)
       end
 
-      test.parameterized = parameterized
-      test.last_build = last_build
-      test.last_build_time = last_build_time
+      test_params[:status] = test_json["color"]
 
-      if env_name != ""
+      if !env_name.blank?
         env_tag = EnvironmentTag.find_by_name(env_name)
         env_tag.tests << test
       end
 
-      test.status = test_json["color"]
-
       # last successful build
-      if test_json["lastSuccessfulBuild"]
-        test.last_successful_build = test_json["lastSuccessfulBuild"]["number"]
-        last_successful_build_json = test.json_build_tree(test.last_successful_build, "timestamp")
-        test.last_successful_build_time = Time.at(last_successful_build_json["timestamp"]/1000).to_datetime
+      test_last_successful = test_json["lastSuccessfulBuild"]
+      if test_last_successful
+        last_successful = test_params[:last_successful_build] = test_last_successful["number"]
+        last_successful_build_json = test.json_build_tree(last_successful, "timestamp")
+        test_params[:last_successful_build_time] = Time.at(last_successful_build_json["timestamp"]/1000).to_datetime
       end
 
+      test.update(test_params)
       test.save
     end
 
@@ -119,8 +115,8 @@ class Test < ApplicationRecord
   end
 
   def self.edit_all_as_json
-    Test.all.includes(:primary_app, :environment_tag, :test_type, :application_tags).as_json(only: [:name, :id, :parameterized, :group, :job_url],
-      include: { primary_app: { only: [:name, :id] }, test_type: {only: [:name, :id] }, application_tags: { only: [:name, :id] }, environment_tag: { only: [:name, :id] } }).uniq{ |test| test["name"] }.sort_by { |test| test["name"].downcase }
+    Test.all.includes(:primary_app, :environment_tag, :test_type, :application_tags).uniq{ |test| test.name }.sort_by { |test| test.name.downcase }.as_json(only: [:name, :id, :parameterized, :group, :job_url],
+      include: { primary_app: { only: [:name, :id] }, test_type: {only: [:name, :id] }, application_tags: { only: [:name, :id] }, environment_tag: { only: [:name, :id] } })
   end
 
   def self.json_tree(j_url, tree_attr)
@@ -181,10 +177,6 @@ class Test < ApplicationRecord
     "#{job_url}/#{last_successful_build}"
   end
 
-  def last_failed_build_url
-    "#{job_url}/#{last_failed_build}"
-  end
-
   def status_css
     passing? ? "passing" : failing? ? "failing" : "other"
   end
@@ -194,11 +186,11 @@ class Test < ApplicationRecord
   end
 
   def last_build_display
-    last_build_time.nil? ? "N/A" : "#{distance_of_time_in_words(last_build_time, Time.now)} ago"
+    last_build_time.present? ? "#{distance_of_time_in_words(last_build_time, Time.now)} ago" : "N/A"
   end
 
   def last_successful_build_display
-    last_build_time.nil? ? "N/A" : "#{distance_of_time_in_words(last_successful_build_time, Time.now)} ago"
+    last_build_time.present? ? "#{distance_of_time_in_words(last_successful_build_time, Time.now)} ago" : "N/A"
   end
 
   def status_display

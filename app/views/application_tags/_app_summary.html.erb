@@ -47,7 +47,7 @@
       </div>
 
       <div class="app-badges">
-        <%= react_component 'Notes', { notes: app.all_notes(@method), app: app }, { class: "app-notes" } %>
+        <%= react_component 'Notes', { notes: TestOptions.new(@method, @env_tag).all_notes(app), app: app }, { class: "app-notes" } %>
         <% if tests.any?{ |test| !test.jira_tickets.empty? } %>
           <%= react_component 'AppJiraTickets', { tickets: tests.map{ |test| test.jira_tickets }.flatten }, { class: "app-notes" } %>
         <% end %>

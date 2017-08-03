@@ -1,3 +1,4 @@
+# This model is represents the different environments that a test may run in
 class EnvironmentTag < ApplicationRecord
   validates_uniqueness_of :name
 

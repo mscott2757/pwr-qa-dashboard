@@ -1,3 +1,4 @@
+# controller for applications
 class ApplicationTagsController < ApplicationController
 	before_action :set_app_columns, only: [:index, :indirect, :refresh]
   before_action :set_method, only: [:show, :edit_app_col, :edit_test_col, :refresh]
@@ -15,19 +16,19 @@ class ApplicationTagsController < ApplicationController
 
   def set_tests
     @app = ApplicationTag.find(params[:id])
-    @tests = @app.show_tests_by_env(@method, @env_tag)
+    @tests = TestOptions.new(@method, @env_tag).show_tests_by_env(@app)
   end
 
 	def index
 		@method = "primary_tests"
 		session[:rotate] = true
     # @culprits = ApplicationTag.possible_culprits(@env_tag)
-    @applications = ApplicationTag.relevant_apps(@method, @env_tag)
+    @applications = ApplicationTag.relevant_apps(TestOptions.new(@method, @env_tag))
 	end
 
 	def indirect
 		@method = "tests"
-		@applications = ApplicationTag.relevant_apps(@method, @env_tag)
+    @applications = ApplicationTag.relevant_apps(TestOptions.new(@method, @env_tag))
 
 		respond_to do |format|
 			format.html { render template: "application_tags/index" }
@@ -75,7 +76,7 @@ class ApplicationTagsController < ApplicationController
   end
 
   def refresh
-		@applications = ApplicationTag.relevant_apps(@method, @env_tag)
+    @applications = ApplicationTag.relevant_apps(TestOptions.new(@method, @env_tag))
 
     respond_to do |format|
       format.js
@@ -86,7 +87,7 @@ class ApplicationTagsController < ApplicationController
   def edit_app_col
     session[:app_col] = params[:app_col]
     @app_col = params[:app_col].to_i
-    @applications = ApplicationTag.relevant_apps(@method, @env_tag)
+    @applications = ApplicationTag.relevant_apps(TestOptions.new(@method, @env_tag))
 
     respond_to do |format|
       format.js

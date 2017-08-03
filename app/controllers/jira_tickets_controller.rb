@@ -1,3 +1,4 @@
+# controller for jira tickets
 class JiraTicketsController < ApplicationController
   before_action :set_ticket, only: [:update, :destroy]
 
@@ -7,6 +8,7 @@ class JiraTicketsController < ApplicationController
 
   def create
     @ticket = JiraTicket.create(jira_params)
+
     if @ticket.save_data_from_jira
       flash[:info] = "Successfully added JIRA ticket #{ @ticket.number }"
     else

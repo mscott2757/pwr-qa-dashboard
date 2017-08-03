@@ -1,3 +1,4 @@
+# controller for notes
 class NotesController < ApplicationController
   def create
     @note = Note.create(note_params)

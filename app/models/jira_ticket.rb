@@ -1,11 +1,8 @@
+# This class is used to encapsulate jira tickets by pulling data from the JIRA API
 class JiraTicket < ApplicationRecord
   validates :number, presence: true, allow_blank: false
 
   belongs_to :test
-
-  def self.edit_all_as_json
-    JiraTicket.all.includes(:test).as_json(only: [:number, :id], include: { test: { only: [:name, :id] } } )
-  end
 
   def self.save_data_from_jira
     auth = {username: ENV["jira_user"], password: ENV["jira_pass"] }
@@ -16,15 +13,23 @@ class JiraTicket < ApplicationRecord
 
       fields = jira_json["fields"]
       ticket.summary = fields["summary"]
-      ticket.assignee = fields["assignee"]["displayName"] if fields["assignee"]
-      ticket.reporter = fields["reporter"]["displayName"] if fields["reporter"]
-      ticket.status = fields["status"]["name"] if fields["status"]
 
-      ticket.created = DateTime.parse(fields["created"]) if fields["created"]
-      ticket.updated = DateTime.parse(fields["updated"]) if fields["updated"]
+      assignee_field = fields["assignee"]
+      ticket.assignee = assignee_field["displayName"] if assignee_field
+
+      reporter_field = fields["reporter"]
+      ticket.reporter = reporter_field["displayName"] if reporter_field
+
+      status_field = fields["status"]
+      ticket.status = status_field["name"] if status_field
+
+      created_field = fields["created"]
+      ticket.created = DateTime.parse(created_field) if created_field
+
+      updated_field = fields["updated"]
+      ticket.updated = DateTime.parse(updated_field) if updated_field
 
       ticket.save
-      puts "it's working!"
     end
   end
 
@@ -37,24 +42,25 @@ class JiraTicket < ApplicationRecord
 
     fields = jira_json["fields"]
     self.summary = fields["summary"]
-    self.assignee = fields["assignee"]["displayName"] if fields["assignee"]
-    self.reporter = fields["reporter"]["displayName"] if fields["reporter"]
-    self.status = fields["status"]["name"] if fields["status"]
 
-    self.created = DateTime.parse(fields["created"]) if fields["created"]
-    self.updated = DateTime.parse(fields["updated"]) if fields["updated"]
+    assignee_field = fields["assignee"]
+    self.assignee = assignee_field["displayName"] if assignee_field
+
+    reporter_field = fields["reporter"]
+    self.reporter = reporter_field["displayName"] if reporter_field
+
+    status_field = fields["status"]
+    self.status = status_field["name"] if status_field
+
+    created_field = fields["created"]
+    self.created = DateTime.parse(created_field) if created_field
+
+    updated_field = fields["updated"]
+    self.updated = DateTime.parse(updated_field) if updated_field
 
     self.save
 
     return true
-  end
-
-  def parsed?
-    summary.present? || assignee.present? || reporter.present? || status.present? || created.present? || updated.present?
-  end
-
-  def edit_as_json
-    self.as_json(only: [:number, :id], include: { test: { only: [:name, :id] } } )
   end
 
   def jira_url

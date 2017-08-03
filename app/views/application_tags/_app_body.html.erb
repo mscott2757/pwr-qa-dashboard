@@ -7,7 +7,7 @@
       </div>
     </div>
     <% applications.each do |app| %>
-      <%= render partial: "app_summary", locals: { app: app, tests: app.tests_by_env(@method, @env_tag) } %>
+      <%= render partial: "app_summary", locals: { app: app, tests: TestOptions.new(@method, @env_tag).tests_by_env(app) } %>
     <% end %>
   </div>
 <script>

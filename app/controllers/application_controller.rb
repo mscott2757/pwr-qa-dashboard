@@ -37,7 +37,8 @@ class ApplicationController < ActionController::Base
 
 	def flash_message
 		[:error, :warning, :success, :info].each do |type|
-			return flash[type] unless flash[type].blank?
+      f_type = flash[type]
+			return f_type unless f_type.blank?
 		end
 		return ""
 	end
