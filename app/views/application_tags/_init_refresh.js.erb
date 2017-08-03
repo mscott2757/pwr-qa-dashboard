@@ -2,7 +2,7 @@
   window.setInterval(function () {
     $.ajax({
       type: 'GET',
-      url: '/application_tags/refresh?env_tag=<%= env_tag.id %>&method=<%= method %>',
+      url: '/application_tags/refresh?env_tag=<%= @options.env_tag.id %>&method=<%= @options.method %>',
     });
-  }, 60000);
+  }, 30000);
 </script>

@@ -3,14 +3,12 @@ class EnvironmentTagsController < ApplicationController
 	skip_before_action :disable_rotate
 
   def select_environment
-		if params[:stop_rotate]
-			session[:rotate] = false
-		end
+    session[:rotate] = false if params[:stop_rotate]
 
-    session[:env_id] = params[:id]
+    env_id = session[:env_id] = params[:id]
     respond_to do |format|
       format.html { redirect_back(fallback_location: root_path) }
-      format.json { render json: EnvironmentTag.find(params[:id]).to_json }
+      format.json { render json: EnvironmentTag.find(env_id).to_json }
     end
   end
 

@@ -2,12 +2,12 @@
   <div class="row">
     <div class="col-sm-<%= 12 / @app_col %>" id="app-summary-col">
       <div class="app-summary-container">
-        <h1><%= @env_tag.name.upcase %></h1>
-        <h2><%= ApplicationTag.page_title(@method) %></h2>
+        <h1><%= @options.env_name %></h1>
+        <h2><%= @options.page_title %></h2>
       </div>
     </div>
     <% applications.each do |app| %>
-      <%= render partial: "app_summary", locals: { app: app, tests: TestOptions.new(@method, @env_tag).tests_by_env(app) } %>
+      <%= render partial: "app_summary", locals: { app: app, tests: @options.tests_by_env(app) } %>
     <% end %>
   </div>
 <script>

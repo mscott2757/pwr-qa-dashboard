@@ -3,7 +3,7 @@
   <ul class="dropdown-menu">
     <% ([2,3,4,6] - [@test_col]).each do |col_num| %>
       <li>
-        <%= link_to col_num.to_s , edit_test_col_application_tags_path(test_col: col_num, method: @method, id: @app.id), remote: true %>
+        <%= link_to col_num.to_s , edit_test_col_application_tags_path(test_col: col_num, method: @options.method, id: @app.id), remote: true %>
       </li>
     <% end %>
   </ul>

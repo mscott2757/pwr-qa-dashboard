@@ -1,7 +1,7 @@
 # controller for applications
 class ApplicationTagsController < ApplicationController
 	before_action :set_app_columns, only: [:index, :indirect, :refresh]
-  before_action :set_method, only: [:show, :edit_app_col, :edit_test_col, :refresh]
+  before_action :set_options, only: [:show, :edit_app_col, :edit_test_col, :refresh]
   before_action :set_tests, only: [:show, :edit_test_col]
 	skip_before_action :disable_rotate, only: [:index]
 
@@ -10,25 +10,25 @@ class ApplicationTagsController < ApplicationController
     @app_col = session[:app_col].to_i
   end
 
-  def set_method
-    @method = params[:method]
+  def set_options
+    @options = AppOptions.new(params[:method], @env_tag)
   end
 
   def set_tests
     @app = ApplicationTag.find(params[:id])
-    @tests = TestOptions.new(@method, @env_tag).show_tests_by_env(@app)
+    @tests = @options.show_tests_by_env(@app)
   end
 
 	def index
-		@method = "primary_tests"
+    @options = AppOptions.new("primary_tests", @env_tag)
 		session[:rotate] = true
     # @culprits = ApplicationTag.possible_culprits(@env_tag)
-    @applications = ApplicationTag.relevant_apps(TestOptions.new(@method, @env_tag))
+    @applications = @options.relevant_apps
 	end
 
 	def indirect
-		@method = "tests"
-    @applications = ApplicationTag.relevant_apps(TestOptions.new(@method, @env_tag))
+    @options = AppOptions.new("tests", @env_tag)
+    @applications = @options.relevant_apps
 
 		respond_to do |format|
 			format.html { render template: "application_tags/index" }
@@ -76,7 +76,7 @@ class ApplicationTagsController < ApplicationController
   end
 
   def refresh
-    @applications = ApplicationTag.relevant_apps(TestOptions.new(@method, @env_tag))
+    @applications = @options.relevant_apps
 
     respond_to do |format|
       format.js
@@ -87,7 +87,7 @@ class ApplicationTagsController < ApplicationController
   def edit_app_col
     session[:app_col] = params[:app_col]
     @app_col = params[:app_col].to_i
-    @applications = ApplicationTag.relevant_apps(TestOptions.new(@method, @env_tag))
+    @applications = @options.relevant_apps
 
     respond_to do |format|
       format.js
