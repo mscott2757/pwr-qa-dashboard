@@ -1,3 +1,3 @@
 <%= render partial: '/layouts/settings_header', locals: { settings_config: 0 } %>
 
-<%= react_component 'Tests', { data: @tests, applications: @applications, environments: @environments, types: @types } %>
+<%= react_component 'Tests', { data: @tests, applications: ApplicationTag.all_as_json, environments: EnvironmentTag.all_as_json, types: TestType.all_as_json } %>

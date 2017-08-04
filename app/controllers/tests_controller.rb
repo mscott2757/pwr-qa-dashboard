@@ -8,21 +8,18 @@ class TestsController < ApplicationController
 
   def index
     @tests = Test.edit_all_as_json
-    @applications = ApplicationTag.all_as_json
-    @environments = EnvironmentTag.all_as_json
-		@types = TestType.all_as_json
   end
 
   def update
     name = @test.name
-    tests = @test.parameterized ? Test.where(name: name) : [ @test ]
+    tests = @test.parameterized ? Test.where(name: name) : [ @test ] # udpate tests with same name to sync across different environments
     test_params = params[:test]
 
     app_tags = test_params[:application_tags]
     if test_params[:modal]
       indirect_apps = app_tags.split(", ").map { |app_name| ApplicationTag.find_by_name(app_name) }
     else
-      indirect_apps = app_tags ? test_params[:application_tags].map { |app_id| ApplicationTag.find(app_id) } : []
+      indirect_apps = app_tags ? app_tags.map { |app_id| ApplicationTag.find(app_id) } : []
     end
 
     tests.each do |test|
@@ -42,8 +39,9 @@ class TestsController < ApplicationController
         test_type.tests.delete(test) if test_type
       end
 
-      test.application_tags.delete_all
-      test.application_tags.push(*indirect_apps)
+      test_app_tags = test.application_tags
+      test_app_tags.delete_all
+      test_app_tags.push(*indirect_apps)
 
       test.group = test_params[:group]
       test.environment_tag_id = test_params[:environment_tag] if !test.parameterized
@@ -62,18 +60,18 @@ class TestsController < ApplicationController
   end
 
   def edit
-    @applications = ApplicationTag.select_options
-    @environments = EnvironmentTag.select_options
-    @types = TestType.all.select_options
-
     respond_to do |format|
       format.js
     end
   end
 
   def build
-    name = @test.name
-    @response_msg = @test.start_build ? "Build for #{ name } successfully started" : "Error starting job for #{ name }. Token is likely not set."
+    if @test.start_build
+      flash[:info] = "Build for #{ @test.name } successfully started"
+    else
+      flash[:info] = "Error starting job for #{ @test.name }. Token is likely not set."
+    end
+
     respond_to do |format|
       format.js
     end

@@ -1,4 +1,5 @@
-$(".app-body").after("<%= j render(partial: 'tests/edit', locals: { test: @test, types: @types, applications: @applications, environments: @environments } ) %>");
+
+$(".app-body").after("<%= j render(partial: 'tests/edit', locals: { test: @test, types: TestType.select_options, applications: ApplicationTag.select_options, environments: EnvironmentTag.select_options } ) %>");
 
 $(".delete-modal-backdrop").click(function() {
 	this.remove();
@@ -21,7 +22,7 @@ $("#close-test-modal").click(function() {
 $( function() {
     var availableTags = [];
 
-		<% @applications.each do |app_tag| %>
+		<% ApplicationTag.select_options.each do |app_tag| %>
 			availableTags.push('<%= j app_tag.first %>');
 		<% end %>
 
