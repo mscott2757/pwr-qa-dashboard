@@ -19,6 +19,14 @@
   componentDidMount: ->
     window.addEventListener('mousedown', @pageClick, false)
 
+  componentDidUpdate: (prevProps, prevState) ->
+    if @state.show
+      tickets = $('ul.sub')[0]
+      rect = tickets.getBoundingClientRect()
+      if  rect.left < 0
+        console.log(rect)
+        $('ul.sub').css({ 'right': 'inherit' })
+
   ticketList: ->
     React.DOM.ul { className: "sub" },
       for ticket in @props.tickets
