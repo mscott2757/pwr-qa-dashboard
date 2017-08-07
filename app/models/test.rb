@@ -51,7 +51,8 @@ class Test < ApplicationRecord
         if action.key?("parameters")
           env_name = action["parameters"][0]["value"]
           if env_name == "scheduler"
-            env_name = test_params[:last_build_time].in_time_zone("Pacific Time (US & Canada)").hour < ENV["param_hour"] ? "qa" : "dev"
+            param_hour = ENV["param_hour"] ? ENV["param_hour"].to_i : 4
+            env_name = test_params[:last_build_time].in_time_zone("Pacific Time (US & Canada)").hour < param_hour ? "qa" : "dev"
           end
           internal_name += "-#{env_name}"
 
