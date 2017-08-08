@@ -2,3 +2,10 @@
 	margin: 0 auto;
 	width: 60%;
 }
+
+#header-fixed {
+  position: fixed;
+  top: 0px;
+  display: none;
+  background-color: white;
+}

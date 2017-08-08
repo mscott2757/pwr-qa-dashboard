@@ -29,8 +29,6 @@
 
     @replaceState curr_tests: curr_tests, all_tests: all_tests
 
-  addApp: (app_tag) ->
-
   render: ->
     React.DOM.div { className: 'tests' },
       React.DOM.div { className: 'test-search' },
