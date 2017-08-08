@@ -44,6 +44,7 @@
             React.DOM.th null, 'Application'
             React.DOM.th null, 'Environment'
             React.DOM.th null, 'Indirect Applications'
+            React.DOM.th null, 'Actions'
         React.DOM.tbody null,
           for test in @state.curr_tests
             React.createElement EditTest, key: test.id, test: test, handleEditTest: @updateTest, applications: @props.applications, environments: @props.environments, types: @props.types

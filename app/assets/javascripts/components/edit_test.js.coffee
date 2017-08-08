@@ -52,6 +52,7 @@
   componentDidUpdate: (prevProps, prevState) ->
     if @state.edit
       @bindAutocomplete()
+      $("#name-input").tooltip()
 
   handleToggle: (e) ->
     e.preventDefault()
@@ -67,6 +68,7 @@
       application_tags: @mapAppNames(ReactDOM.findDOMNode(@refs.application_tags).value)
       test_type: ReactDOM.findDOMNode(@refs.test_type).value
       group: ReactDOM.findDOMNode(@refs.group).value
+      name: ReactDOM.findDOMNode(@refs.name).value
     $.ajax
       method: 'PUT'
       url: "/tests/#{ @props.test.id }"
@@ -95,8 +97,6 @@
       React.DOM.td null,
         React.DOM.div { className: "edit-test-name" },
           React.DOM.a { href: @props.test.job_url, className: 'settings-test-link', target: "_blank" }, @props.test.name
-        React.DOM.div { className: "edit-test-toggle" },
-          React.DOM.a { className: 'btn btn-default btn-sm', onClick: @handleToggle }, 'Edit'
 
       if "test_type" of @props.test
         React.DOM.td null, @props.test.test_type.name
@@ -114,6 +114,10 @@
 
       React.DOM.td null, @applicationTagsFormat()
 
+      React.DOM.td null,
+        React.DOM.a { className: 'btn btn-default btn-sm edit-test-btn', onClick: @handleToggle }, 'Edit'
+        React.DOM.a { className: 'btn btn-danger btn-sm' }, 'Delete'
+
   defaultTestType: ->
     if "test_type" of @props.test then @props.test.test_type.id else 0
 
@@ -123,10 +127,7 @@
     else
       React.DOM.tr null,
         React.DOM.td null,
-          React.DOM.div { className: "edit-test-name" }, @props.test.name
-          React.DOM.div { className: "edit-test-toggle" },
-            React.DOM.a { className: 'btn btn-default btn-sm edit-test-update', onClick: @handleEdit }, 'update'
-            React.DOM.a { className: 'btn btn-danger btn-sm', onClick: @handleToggle}, 'cancel'
+          React.DOM.input { className: 'form-control', id: "name-input", type: "text", ref: 'name', defaultValue: @props.test.name, title: "Warning: Only change name if it has changed on Jenkins" }
 
         React.DOM.td null,
           React.DOM.select { className: 'form-control', defaultValue: @defaultTestType(), ref: 'test_type' },
@@ -165,4 +166,8 @@
               ref: 'application_tags'
               defaultValue: @applicationTagsFormat()
               id: "tags-#{ @props.test.id }"
+
+        React.DOM.td null,
+          React.DOM.a { className: 'btn btn-default btn-sm edit-test-update', onClick: @handleEdit }, 'update'
+          React.DOM.a { className: 'btn btn-danger btn-sm', onClick: @handleToggle}, 'cancel'
 

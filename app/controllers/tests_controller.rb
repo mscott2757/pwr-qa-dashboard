@@ -44,7 +44,14 @@ class TestsController < ApplicationController
       test_app_tags.push(*indirect_apps)
 
       test.group = test_params[:group]
-      test.environment_tag_id = test_params[:environment_tag] if !test.parameterized
+
+      test.name = test_params[:name]
+      if !test.parameterized
+        test.internal_name = test.name
+        test.environment_tag_id = test_params[:environment_tag]
+      else
+        test.internal_name = "#{ test.name }-#{ test.env_tag.name }"
+      end
 
       test.save
     end
