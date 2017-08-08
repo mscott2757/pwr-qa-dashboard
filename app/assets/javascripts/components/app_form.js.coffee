@@ -33,13 +33,15 @@
   render: ->
     React.DOM.form { onSubmit: @handleSubmit, className: 'form-inline add-app-form' },
       React.DOM.div { className: 'form-group', id: 'app-form-group' },
-        React.DOM.input { type: 'text', className: 'form-control', placeholder: 'Name', name: 'name', ref: "name", onChange: @handleChange }
-        React.DOM.input { type: 'number', className: 'form-control app-group-input', placeholder: 'Group', name: 'group', ref: "group", onChange: @handleChange }
-        React.DOM.div { className: "threshold-container" },
-          React.DOM.p { className: "threshold-label" }, "Threshold"
+        React.DOM.div {},
+          React.DOM.input { type: 'text', className: 'form-control', placeholder: 'Name', name: 'name', ref: "name", onChange: @handleChange }
+        React.DOM.div {},
+          React.DOM.input { type: 'number', className: 'form-control', placeholder: 'Group', name: 'group', ref: "group", onChange: @handleChange }
+        React.DOM.div {},
           React.DOM.div { id: "threshold-slider" }
           React.DOM.p { className: "threshold-display" }, "#{@state.threshold}%"
 
-        React.DOM.button { type: 'submit', className: 'btn btn-primary add-app', disabled: !@valid() }, 'Add App'
+        React.DOM.div {},
+          React.DOM.button { type: 'submit', className: 'btn pwr-confirm-btn', disabled: !@valid() }, 'Add App'
 
 

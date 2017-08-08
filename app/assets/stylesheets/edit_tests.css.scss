@@ -1,3 +1,8 @@
+tbody#test-table-body > tr > td {
+  border-left: none;
+  border-right: none;
+}
+
 .applications {
 	margin: 0 auto;
 	width: 60%;
@@ -12,4 +17,32 @@
 
 .edit-test-btn {
   margin-right: 8px;
+}
+
+.name-field {
+  width: 34%;
+}
+
+.type-field {
+  width: 7%;
+}
+
+.group-field {
+  width: 14%;
+}
+
+.app-field {
+  width: 10%;
+}
+
+.env-field {
+  width: 8%;
+}
+
+.indirect-field {
+  width: 17%;
+}
+
+.actions-field {
+  width: 10%;
 }

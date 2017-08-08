@@ -1,6 +1,6 @@
 # controller for tests
 class TestsController < ApplicationController
-  before_action :set_test, only: [:update, :edit, :build]
+  before_action :set_test, only: [:update, :edit, :build, :destroy]
 
   def set_test
     @test = Test.find(params[:id])
@@ -82,6 +82,19 @@ class TestsController < ApplicationController
     respond_to do |format|
       format.js
     end
+  end
+
+  def destroy
+    if @test.parameterized
+      Test.where(name: @test.name).each do |test|
+        test.destroy
+      end
+    else
+      @test.destroy
+    end
+
+		flash[:info] = "Successfully deleted #{ @test.name }"
+    head :no_content
   end
 
 end

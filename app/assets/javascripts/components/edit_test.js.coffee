@@ -79,6 +79,9 @@
         @setState edit: false
         @props.handleEditTest @props.test, data
 
+  stopParent: (e) ->
+    e.stopPropagation()
+
   parameterizedEnvLabel: ->
     React.DOM.a
       className: 'parameterized-env-label'
@@ -92,11 +95,21 @@
     else
       return ""
 
+  handleDelete: (e) ->
+    e.stopPropagation()
+    $.ajax
+      method: 'DELETE'
+      url: "/tests/#{ @props.test.id }"
+      dataType: 'JSON'
+      success: () =>
+        @props.handleDeleteTest @props.test
+
+
   testRow: ->
-    React.DOM.tr null,
+    React.DOM.tr { onClick: @handleToggle },
       React.DOM.td null,
         React.DOM.div { className: "edit-test-name" },
-          React.DOM.a { href: @props.test.job_url, className: 'settings-test-link', target: "_blank" }, @props.test.name
+          React.DOM.a { href: @props.test.job_url, className: 'settings-test-link', target: "_blank", onClick: @stopParent }, @props.test.name
 
       if "test_type" of @props.test
         React.DOM.td null, @props.test.test_type.name
@@ -115,8 +128,7 @@
       React.DOM.td null, @applicationTagsFormat()
 
       React.DOM.td null,
-        React.DOM.a { className: 'btn btn-default btn-sm edit-test-btn', onClick: @handleToggle }, 'Edit'
-        React.DOM.a { className: 'btn btn-danger btn-sm' }, 'Delete'
+        React.DOM.a { className: 'btn btn-sm pwr-danger-btn', onClick: @handleDelete }, 'delete'
 
   defaultTestType: ->
     if "test_type" of @props.test then @props.test.test_type.id else 0
@@ -168,6 +180,6 @@
               id: "tags-#{ @props.test.id }"
 
         React.DOM.td null,
-          React.DOM.a { className: 'btn btn-default btn-sm edit-test-update', onClick: @handleEdit }, 'update'
-          React.DOM.a { className: 'btn btn-danger btn-sm', onClick: @handleToggle}, 'cancel'
+          React.DOM.a { className: 'btn btn-sm pwr-confirm-btn edit-test-update', onClick: @handleEdit }, 'save'
+          React.DOM.a { className: 'btn btn-sm pwr-danger-btn', onClick: @handleToggle}, 'cancel'
 

@@ -47,6 +47,6 @@
                   React.createElement DeleteModalTest, test: test, key: test.id
 
           React.DOM.div { className: 'delete-modal-buttons' },
-            React.DOM.a { className: 'btn btn-danger btn-sm delete-modal-button', onClick: @handleDelete }, 'Confirm'
-            React.DOM.a { className: 'btn btn-default btn-sm delete-modal-button', onClick: @props.handleClose }, 'Cancel'
+            React.DOM.a { className: 'btn pwr-danger-btn btn-sm delete-modal-button', onClick: @handleDelete }, 'confirm'
+            React.DOM.a { className: 'btn btn-default btn-sm delete-modal-button', onClick: @props.handleClose }, 'cancel'
 

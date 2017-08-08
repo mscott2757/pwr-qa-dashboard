@@ -33,6 +33,7 @@
 
   showModal: (e) ->
     e.preventDefault()
+    e.stopPropagation()
     @props.handleDeleteModal @props.app
 
   handleDelete: (e) ->
@@ -64,17 +65,16 @@
           React.DOM.p { className: "app-threshold-display" }, "#{@state.threshold}%"
 
       React.DOM.td null,
-        React.DOM.a { className: 'btn btn-default btn-sm edit-test-update', onClick: @handleEdit }, 'Update'
-        React.DOM.a { className: 'btn btn-danger btn-sm', onClick: @handleToggle }, 'Cancel'
+        React.DOM.a { className: 'btn pwr-confirm-btn btn-sm edit-test-update', onClick: @handleEdit }, 'save'
+        React.DOM.a { className: 'btn pwr-danger-btn btn-sm', onClick: @handleToggle }, 'cancel'
 
   editAppRow: ->
-    React.DOM.tr null,
+    React.DOM.tr { onClick: @handleToggle },
       React.DOM.td null, @props.app.name
       React.DOM.td null, @props.app.group
       React.DOM.td null, @thresholdFormat()
       React.DOM.td null,
-        React.DOM.a { className: 'btn btn-default btn-sm edit-test-update', onClick: @handleToggle }, 'Edit'
-        React.DOM.a { className: 'btn btn-danger btn-sm', onClick: @showModal }, "Delete"
+        React.DOM.a { className: 'btn pwr-danger-btn btn-sm', onClick: @showModal }, "delete"
 
   render: ->
     if @state.edit

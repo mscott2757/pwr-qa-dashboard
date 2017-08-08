@@ -37,6 +37,35 @@ body {
   background-color: #f1f1f1;
 }
 
+.form-control, select, .btn, .btn-sm {
+  border-radius: 0;
+  -webkit-appearance: none;
+}
+
+.pwr-danger-btn {
+  color: white;
+  background-color: #f05e24;
+  border-color: #f05e24;
+
+  &:hover {
+    color: #f05e24;
+    background-color: white;
+    border-color: #f05e24;
+  }
+}
+
+.pwr-confirm-btn {
+  color: white;
+  background-color: #fbb817;
+  border-color: #fbb817;
+
+  &:hover {
+    color: #fbb817;
+    background-color: white;
+    border-color: #fbb817;
+  }
+}
+
 .ui-helper-hidden-accessible {
   display: none;
 }
