@@ -36,9 +36,15 @@
     width: 25%;
   }
 
-  tr > td {
-    border-left: none;
-    border-right: none;
+  tr {
+    &:hover {
+      background-color: #ebebeb;
+    }
+
+    > td {
+      border-left: none;
+      border-right: none;
+    }
   }
 }
 

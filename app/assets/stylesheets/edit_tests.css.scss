@@ -1,6 +1,14 @@
-tbody#test-table-body > tr > td {
-  border-left: none;
-  border-right: none;
+tbody#test-table-body {
+  > tr {
+    &:hover {
+      background-color: #ebebeb;
+    }
+
+    td > {
+      border-left: none;
+      border-right: none;
+    }
+  }
 }
 
 .applications {
