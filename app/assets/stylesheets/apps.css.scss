@@ -29,7 +29,7 @@ $failing: #F15C22;
   vertical-align: top;
   height: 36%;
   width: 100%;
-  padding-bottom: 8px;
+  padding-bottom: 1vh;
 }
 
 ul.recent-failed-list {
@@ -113,11 +113,16 @@ ul.recent-failed-list {
   height: 100%;
   display: inline-block;
   vertical-align: top;
-  padding: 0 0.15vw;
+  padding: 0 0.32vw;
+
+  &:first-child, &:last-child {
+    padding: 0;
+  }
 
   div {
     height: 100%;
     width: 100%;
+    border-radius: 1.3px;
   }
 }
 
@@ -137,7 +142,7 @@ ul.recent-failed-list {
   height: 33%;
   width: 100%;
   vertical-align: top;
-  padding-top: 8px;
+  padding-top: 1vh;
 }
 
 .app-progress-failing {

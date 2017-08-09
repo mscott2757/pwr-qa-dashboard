@@ -39,7 +39,7 @@
           React.DOM.div
             className: "add-ticket-buttons"
             React.DOM.button
-              className: 'btn btn-primary btn-sm add-note-btn'
+              className: 'btn pwr-confirm-btn btn-sm add-note-btn'
               disabled: !@valid()
               "Create"
             React.DOM.a

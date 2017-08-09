@@ -80,7 +80,7 @@ which will start the server at **localhost:3000**
 
 To run in production, first precompile assets then start the server
 ```bash
-rake assets:precompile
+rake assets:precompile RAILS_ENV=production
 rails server -e production
 ```
 Alternatively, you can also specify the port with

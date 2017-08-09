@@ -4,7 +4,7 @@ tbody#test-table-body {
       background-color: #ebebeb;
     }
 
-    td > {
+    > td {
       border-left: none;
       border-right: none;
     }
@@ -36,7 +36,7 @@ tbody#test-table-body {
 }
 
 .group-field {
-  width: 14%;
+  width: 7%;
 }
 
 .app-field {
@@ -48,7 +48,7 @@ tbody#test-table-body {
 }
 
 .indirect-field {
-  width: 17%;
+  width: 24%;
 }
 
 .actions-field {
