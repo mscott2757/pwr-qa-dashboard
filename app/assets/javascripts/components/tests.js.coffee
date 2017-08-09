@@ -58,7 +58,9 @@
   render: ->
     React.DOM.div { className: 'tests' },
       React.DOM.div { className: 'test-search' },
-        React.DOM.div { className: 'search-form' },
+        React.DOM.div {},
+          React.DOM.div {},
+            React.DOM.span { className: 'parameterized-env-label' }, "#{@state.curr_tests.length} total tests"
           React.DOM.input { className: 'form-control', id: 'search-input', placeholder: "Search for a test",  type: "text", onChange: @search }
           React.DOM.img { className: 'search-icon', src: "https://cdn1.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-512.png" }
       React.DOM.table { className: 'table table-bordered edit-test-table' },

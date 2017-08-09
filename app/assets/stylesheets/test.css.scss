@@ -4,7 +4,7 @@
 
 .tests {
 	margin: 0 auto;
-  padding: 0 15px;
+  padding: 15px;
 	width: 100%;
 }
 
@@ -316,17 +316,35 @@ a.test-type-tag:hover {
   font-weight: bold;
 }
 
-.search-form {
-  width: 50%;
-  margin: 0 auto;
-}
-
 #search-input {
   display: inline-block;
 }
 
 .test-search {
   padding: 15px;
+  background-color: white;
+  border-left: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+
+  > div {
+    width: 50%;
+    margin-left: auto;
+    margin-right: 0;
+
+    > div {
+      display: inline-block;
+      width: 25%;
+      padding-right: 15px;
+      text-align: right;
+    }
+
+    > input {
+      width: 75%;
+      margin-right: auto;
+      margin-left: 0;
+    }
+  }
 }
 
 .search-icon {
