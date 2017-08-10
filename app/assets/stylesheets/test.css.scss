@@ -45,7 +45,6 @@
   border: 1px solid #ddd;
   height: 16.5vh;
   padding: 8px;
-  word-break: break-all;
 }
 
 .test-body {
@@ -71,10 +70,9 @@
     margin-bottom: 0;
   }
 
-  > a > h4 {
+  > a > p {
     margin: 0;
-    padding-bottom: 5px;
-    font-size: 2vh;
+    font-size: 1.85vh;
   }
 }
 

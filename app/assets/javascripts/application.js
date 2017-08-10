@@ -36,3 +36,4 @@ $(document).ajaxComplete(function(event, request) {
     });
 	}
 });
+

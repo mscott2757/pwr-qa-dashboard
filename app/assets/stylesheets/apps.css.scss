@@ -113,11 +113,7 @@ ul.recent-failed-list {
   height: 100%;
   display: inline-block;
   vertical-align: top;
-  padding: 0 0.32vw;
-
-  &:first-child, &:last-child {
-    padding: 0;
-  }
+  padding: 0 0.16vw;
 
   div {
     height: 100%;

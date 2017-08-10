@@ -104,7 +104,6 @@
       success: () =>
         @props.handleDeleteTest @props.test
 
-
   testRow: ->
     React.DOM.tr { onClick: @handleToggle },
       React.DOM.td null,

@@ -99,8 +99,10 @@ class Test < ApplicationRecord
     end
 
     # remove old versions of test
-    all.each do |test|
-      test.destroy if !test.parameterized and !curr_tests.include?(test.internal_name)
+    if ENV["delete_old"] and ENV["delete_old"] == "true"
+      all.each do |test|
+        test.destroy if !test.parameterized and !curr_tests.include?(test.internal_name)
+      end
     end
   end
 
@@ -116,8 +118,12 @@ class Test < ApplicationRecord
   end
 
   def self.edit_all_as_json
-    Test.all.includes(:primary_app, :environment_tag, :test_type, :application_tags).uniq{ |test| test.name }.sort_by { |test| test.name.downcase }.as_json(only: [:name, :id, :parameterized, :group, :job_url],
-      include: { primary_app: { only: [:name, :id] }, test_type: {only: [:name, :id] }, application_tags: { only: [:name, :id] }, environment_tag: { only: [:name, :id] } })
+    Test.all.includes(:primary_app, :environment_tag, :test_type, :application_tags).uniq{ |test| test.name }
+        .sort_by { |test| test.name.downcase }.as_json(only: [:name, :id, :parameterized, :group, :job_url], include: { primary_app: { only: [:name, :id] }, test_type: {only: [:name, :id] }, application_tags: { only: [:name, :id] }, environment_tag: { only: [:name, :id] } } )
+  end
+
+  def p_env_tags
+    parameterized ? Test.where(name: name).map{ |test| test.env_tag.as_json(only: [:name, :id]) } : []
   end
 
   def self.json_tree(j_url, tree_attr)
