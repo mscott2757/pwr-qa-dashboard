@@ -87,6 +87,11 @@ Alternatively, you can also specify the port with
 ```bash
 rails server -e production -p PORT_NUMBER
 ```
+If you're going to be running in on port 80, you will likely need the
+**rvmsudo** command.
+```bash
+rvmsudo rails server -e production -p 80
+```
 
 ## Dependencies
 
