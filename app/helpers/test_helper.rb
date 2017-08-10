@@ -72,7 +72,7 @@ module TestHelper
   end
 
   def all_tickets(tests)
-    tests.map{ |test| test.jira_tickets }.flatten
+    tests.map{ |test| test.jira_tickets }.flatten.uniq { |ticket| ticket.name }
   end
 
 end
