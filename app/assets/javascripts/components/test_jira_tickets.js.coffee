@@ -39,9 +39,7 @@
     if @state.show_tickets
       tickets = $('ul.sub')[0]
       rect = tickets.getBoundingClientRect()
-      console.log(rect)
       if rect.right > (window.innerWidth || document.documentElement.clientWidth)
-        console.log(rect)
         $('ul.sub').css({ 'right': '0' })
 
   ticketList: ->

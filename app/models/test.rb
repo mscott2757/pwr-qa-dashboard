@@ -106,17 +106,6 @@ class Test < ApplicationRecord
     end
   end
 
-  def self.set_internal_names
-    Test.all.each do |test|
-      if test.parameterized
-        test.destroy
-      else
-        test.internal_name = test.name
-        test.save
-      end
-    end
-  end
-
   def self.edit_all_as_json
     Test.all.includes(:primary_app, :environment_tag, :test_type, :application_tags).uniq{ |test| test.name }
         .sort_by { |test| test.name.downcase }.as_json(only: [:name, :id, :parameterized, :group, :job_url], include: { primary_app: { only: [:name, :id] }, test_type: {only: [:name, :id] }, application_tags: { only: [:name, :id] }, environment_tag: { only: [:name, :id] } } )
@@ -138,14 +127,6 @@ class Test < ApplicationRecord
 
   def edit_as_json
     self.as_json(only: [:name, :id, :parameterized, :group, :job_url], include: { primary_app: { only: [:name, :id] }, test_type: { only: [:name, :id] }, application_tags: { only: [:name, :id] }, environment_tag: { only: [:name, :id] } })
-  end
-
-  def default_test_type_id
-    test_type ? self.test_type.id : 0
-  end
-
-  def default_primary_app_id
-    primary_app ? self.primary_app.id : 0
   end
 
   def json_tree(tree_attr)
@@ -182,26 +163,6 @@ class Test < ApplicationRecord
 
   def last_successful_build_url
     "#{job_url}/#{last_successful_build}"
-  end
-
-  def status_css
-    passing? ? "passing" : failing? ? "failing" : "other"
-  end
-
-  def indirect_apps_display
-    application_tags.map{ |app_tag| app_tag.name }.join(", ")
-  end
-
-  def last_build_display
-    last_build_time.present? ? "#{distance_of_time_in_words(last_build_time, Time.now)} ago" : "N/A"
-  end
-
-  def last_successful_build_display
-    last_build_time.present? ? "#{distance_of_time_in_words(last_successful_build_time, Time.now)} ago" : "N/A"
-  end
-
-  def status_display
-    in_progress? ? "in progress" : not_built? ? "not built" : aborted? ? "aborted" : disabled? ? "disabled" : "N/A"
   end
 
   def in_progress?

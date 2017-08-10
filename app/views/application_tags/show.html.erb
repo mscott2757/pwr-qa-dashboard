@@ -4,13 +4,13 @@
       <h2 class="app-page-title"><%= @options.env_name %> / <%= @options.page_title %> / <%= @app.name %></h2>
     </div>
     <div class="app-show-passing">
-      <h2><em><%= @tests.count{ |test| test.passing? } %></em>/<%= @tests.count %></h2>
+      <h2><em><%= total_passing(@tests) %></em>/<%= @tests.count %></h2>
     </div>
 	</div>
   <div class="app-progress-header">
-    <%= render partial: "progress_bar", locals: { passing_percent: @tests.count{ |test| test.passing? }/@tests.count.to_f*100.0,
-                                                    other_percent: @tests.count{ |test| !test.passing? and !test.failing? }/@tests.count.to_f*100,
-                                                  failing_percent: @tests.count{ |test| test.failing? }/@tests.count.to_f*100 } %>
+    <%= render partial: "progress_bar", locals: { passing_percent: percent_passing(@tests),
+                                                    other_percent: percent_other(@tests),
+                                                  failing_percent: percent_failing(@tests) } %>
   </div>
 </div>
 

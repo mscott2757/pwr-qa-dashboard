@@ -20,7 +20,7 @@
 								<%= f.label "Test Type" %>
 							</div>
 							<div class="col-sm-7">
-								<%= f.select :test_type, options_for_select(types, test.default_test_type_id), {}, { class: 'form-control' } %>
+								<%= f.select :test_type, options_for_select(types, default_type(test)), {}, { class: 'form-control' } %>
 							</div>
 						</div>
 
@@ -38,7 +38,7 @@
 								<%= f.label "Primary App" %>
 							</div>
 							<div class="col-sm-7">
-								<%= f.select :primary_app, options_for_select(applications, test.default_primary_app_id), {}, { class: 'form-control' } %>
+								<%= f.select :primary_app, options_for_select(applications, default_app(test)), {}, { class: 'form-control' } %>
 							</div>
 						</div>
 
@@ -56,7 +56,7 @@
 								<%= f.label "Indirect Applications" %>
 							</div>
 							<div class="col-sm-7">
-								<%= f.text_area :application_tags, value: test.indirect_apps_display , class: 'form-control', id: "indirect-autocomplete" %>
+								<%= f.text_area :application_tags, value: indirect_apps(test) , class: 'form-control', id: "indirect-autocomplete" %>
 							</div>
 						</div>
 

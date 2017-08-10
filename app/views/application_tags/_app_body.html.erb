@@ -10,9 +10,10 @@
       <%= render partial: "app_summary", locals: { app: app, tests: @options.tests_by_env(app) } %>
     <% end %>
   </div>
+</div>
+
 <script>
 $(document).click(function() {
   $("ul.recent-failed-list").hide();
 });
 </script>
-</div>

@@ -9,23 +9,23 @@
       </div>
 
       <div class="app-summary-passing">
-        <h2><em><%= tests.count{ |test| test.passing? } %></em>/<%= tests.count %></h2>
+        <h2><em><%= total_passing(tests) %></em>/<%= tests.count %></h2>
       </div>
     </div>
 
     <div class="app-summary-progress">
-      <%= render partial: "progress_bar", locals: { passing_percent: tests.count{ |test| test.passing? }/tests.count.to_f*100.0,
-                                                      other_percent: tests.count{ |test| !test.passing? and !test.failing? }/tests.count.to_f*100,
-                                                    failing_percent: tests.count{ |test| test.failing? }/tests.count.to_f*100 } %>
+      <%= render partial: "progress_bar", locals: { passing_percent: percent_passing(tests),
+                                                      other_percent: percent_other(tests),
+                                                    failing_percent: percent_failing(tests) } %>
     </div>
 
     <div class="app-summary-info">
 
       <div class="app-summary-recent">
-        <% if tests.any?{ |test| test.failing? } %>
-          <a class="test-type-tag" id="failed-toggle-<%= app.id %>">Recent Failed <span class="badge" id="qa-badge"><%= tests.count{ |test| test.failing? } %></span></a>
+        <% if any_failing?(tests) %>
+          <a class="test-type-tag" id="failed-toggle-<%= app.id %>">Recent Failed <span class="badge" id="qa-badge"><%= total_failing(tests) %></span></a>
           <ul class="recent-failed-list" id="recent-failed-<%= app.id %>">
-            <% tests.select{ |test| test.failing? }.each do |test| %>
+            <% all_failing(tests).each do |test| %>
               <li><%= link_to test.name, test.job_url, class: 'link-title', target: "_blank" %></li>
             <% end %>
           </ul>
@@ -48,8 +48,8 @@
 
       <div class="app-badges">
         <%= react_component 'Notes', { notes: @options.all_notes(app), app: app }, { class: "app-notes" } %>
-        <% if tests.any?{ |test| !test.jira_tickets.empty? } %>
-          <%= react_component 'AppJiraTickets', { tickets: tests.map{ |test| test.jira_tickets }.flatten }, { class: "app-notes" } %>
+        <% if any_tickets?(tests) %>
+          <%= react_component 'AppJiraTickets', { tickets: all_tickets(tests) }, { class: "app-notes" } %>
         <% end %>
       </div>
 
