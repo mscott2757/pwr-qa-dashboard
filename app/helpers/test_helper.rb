@@ -75,4 +75,9 @@ module TestHelper
     tests.map{ |test| test.jira_tickets }.flatten.uniq { |ticket| ticket.number }
   end
 
+  def culprit_format(app, env_tag)
+    options = AppOptions.new("tests", env_tag)
+    "Warning #{ app.total_failing(options) } of #{ options.total_tests(app) } indirect tests for #{ app.name } are failing"
+  end
+
 end

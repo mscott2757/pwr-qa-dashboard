@@ -7,7 +7,6 @@ class ApplicationTagsController < ApplicationController
 
   def set_app_columns
     session[:app_col] = 2 if !session.include?(:app_col)
-    @app_col = session[:app_col].to_i
   end
 
   def set_options
@@ -22,7 +21,7 @@ class ApplicationTagsController < ApplicationController
 	def index
     @options = AppOptions.new("primary_tests", @env_tag)
 		session[:rotate] = true
-    # @culprits = ApplicationTag.possible_culprits(@env_tag)
+    @culprits = ApplicationTag.culprits(@env_tag)
     @applications = @options.relevant_apps
 	end
 
@@ -36,18 +35,17 @@ class ApplicationTagsController < ApplicationController
 	end
 
   def create
-    @app_tag = ApplicationTag.new(app_params)
-    if @app_tag.save
-			flash[:info] = "Successfully added #{ @app_tag.name }"
-      render json: @app_tag.edit_as_json
+    @app = ApplicationTag.new(app_params)
+    if @app.save
+			flash[:info] = "Successfully added #{ @app.name }"
+      render json: @app.edit_as_json
     else
-      render json: @app_tag.errors, status: :unprocessable_entity
+      render json: @app.errors, status: :unprocessable_entity
     end
   end
 
   def show
     session[:test_col] = 4 if !session.include?(:test_col)
-    @test_col = session[:test_col].to_i
   end
 
   def update
@@ -86,7 +84,6 @@ class ApplicationTagsController < ApplicationController
 
   def edit_app_col
     session[:app_col] = params[:app_col]
-    @app_col = params[:app_col].to_i
     @applications = @options.relevant_apps
 
     respond_to do |format|
@@ -97,7 +94,6 @@ class ApplicationTagsController < ApplicationController
 
   def edit_test_col
     session[:test_col] = params[:test_col]
-    @test_col = params[:test_col].to_i
 
     respond_to do |format|
       format.js

@@ -1,7 +1,7 @@
 <div class="app-body">
   <div class="row">
     <% tests.each do |test| %>
-      <div class="col-sm-<%= 12 / @test_col %>" id="test-summary-col">
+      <div class="col-sm-<%= 12 / session[:test_col].to_i %>" id="test-summary-col">
         <div class="test-container test-container-<%= test.id %>">
 
           <div class="test-header">

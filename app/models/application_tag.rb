@@ -35,21 +35,15 @@ class ApplicationTag < ApplicationRecord
     as_json(only: [:name, :id, :threshold, :group], include: { primary_tests: { only: [:name, :id] }, tests: { only: [:name, :id] } })
   end
 
-  def self.possible_culprits(env_tag)
+  def self.culprits(env_tag)
     options = AppOptions.new("tests", env_tag)
-    options.relevant_apps.select{ |app| app.culprit?(env_tag) }
+    options.relevant_apps.select{ |app| app.culprit?(options) }
   end
 
-  def culprit?(env_tag)
-    options = AppOptions.new("tests", env_tag)
+  def culprit?(options)
     total = options.total_tests(self)
     percent_failing_f = (total > 0) ? total_failing(options).to_f / total : 0.0
-    percent_failing_f >= threshold / 100.0
-  end
-
-  def culprit_format(env_tag)
-    options = AppOptions.new("tests", env_tag)
-    "Warning #{ total_failing(options) } of #{ options.total_tests(self) } indirect tests for #{ name } are failing"
+    return percent_failing_f >= threshold / 100.0
   end
 
   def failing_tests(options)

@@ -1,7 +1,7 @@
 <li class="dropdown" id="col-dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tests per row: <b><%= @test_col.to_s %></b> <span class="caret"></span></a>
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tests per row: <b><%= session[:test_col] %></b> <span class="caret"></span></a>
   <ul class="dropdown-menu">
-    <% ([2,3,4] - [@test_col]).each do |col_num| %>
+    <% ([ 2,3,4 ] - [ session[:test_col].to_i ]).each do |col_num| %>
       <li>
         <%= link_to col_num.to_s , edit_test_col_application_tags_path(test_col: col_num, method: @options.method, id: @app.id), remote: true %>
       </li>

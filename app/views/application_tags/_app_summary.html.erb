@@ -1,4 +1,4 @@
-<div class="col-sm-<%= 12 / @app_col %>" id="app-summary-col">
+<div class="col-sm-<%= 12 / session[:app_col].to_i %>" id="app-summary-col">
   <div class="app-summary-container" id="app-container-<%= app.id %>">
     <div class="app-summary-header">
 
