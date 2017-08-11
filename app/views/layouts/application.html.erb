@@ -84,8 +84,6 @@
       <% if @culprits %>
         <%= render partial: "/application_tags/show_culprits.js.erb", locals: { culprits: @culprits } %>
       <% end %>
-      console.log("<%= controller_name %>")
-      console.log("<%= controller.action_name %>")
 
       <% if session[:rotate] %>
         <%= render partial: '/layouts/rotate_env.js', locals: { next_env: EnvironmentTag.get_next_env(@env_tag) } %>

@@ -28,6 +28,9 @@
       )
       , 'JSON'
 
+  componentDidMount: ->
+    ReactDOM.findDOMNode(@refs.author).focus()
+
   render: ->
     React.DOM.div { className: "add-note-form" },
       React.DOM.form { onSubmit: @handleSumbit, className: "note-form" },

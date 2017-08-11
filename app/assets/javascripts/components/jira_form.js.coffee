@@ -19,6 +19,9 @@
       )
       , 'JSON'
 
+  componentDidMount: ->
+    ReactDOM.findDOMNode(@refs.number).focus()
+
 
   render: ->
     React.DOM.div
